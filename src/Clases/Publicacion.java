@@ -5,7 +5,16 @@ public class Publicacion {
     private float precio;
     private int stock;
     private String id;
-    // reviews
+    private String reviews;
     private int rating;
+    private Usuario dueno; //dueno de la publicacion
     // lista de tipoEnvio
+
+
+
+
+
+
+
+
 }

@@ -27,42 +27,36 @@ public class Envio {
         return express;
     }
 
-    public void setExpress(boolean express) {
-        this.express = express;
-    }
-
     public float getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
     }
 
     public E_Envio getTipoEnvio() {
         return tipoEnvio;
     }
 
-    public void setTipoEnvio(E_Envio tipoEnvio) {
-        this.tipoEnvio = tipoEnvio;
-    }
-
     public int getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(int distancia) {
-        this.distancia = distancia;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Envio envio = (Envio) o;
-        return express == envio.express && Float.compare(envio.precio, precio) == 0 && distancia == envio.distancia && tipoEnvio == envio.tipoEnvio;
-    }
+    public boolean equals(Object o)
+    {
+        boolean rta = false;
 
+        if(o != null)
+        {
+            if(o instanceof Envio)
+            {
+                Envio aux = (Envio) o;
+                if(getDistancia() == aux.getDistancia() && getTipoEnvio().equals(aux.getTipoEnvio()) && getPrecio() == aux.getPrecio())
+                {
+                    rta = true;
+                }
+            }
+        }
+        return rta;
+    }
     @Override
     public int hashCode() {
         return 9;
@@ -76,5 +70,22 @@ public class Envio {
                 ", tipoEnvio=" + tipoEnvio +
                 ", distancia=" + distancia +
                 '}';
+    }
+
+    public int compareTo(Object o)
+    {
+        int rta = 0;
+
+        if(o != null)
+        {
+            if(o instanceof Envio)
+            {
+                Envio aux = (Envio)o;
+                Float auxUno = new Float(getPrecio());  //estos dos errores no impide que compile el programa
+                Float auxDos = new Float(aux.getPrecio());
+                rta = auxDos.compareTo(auxUno);
+            }
+        }
+        return rta;
     }
 }

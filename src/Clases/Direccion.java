@@ -37,60 +37,51 @@ public class Direccion {
         cp = "";
     }
 
+    //getters y setters
+
+
     public String getProvincia() {
         return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
     }
 
     public String getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
     public String getCalle() {
         return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
     }
 
     public String getAltura() {
         return altura;
     }
 
-    public void setAltura(String altura) {
-        this.altura = altura;
-    }
-
     public String getDepartamento() {
         return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
     }
 
     public String getCp() {
         return cp;
     }
 
-    public void setCp(String cp) {
-        this.cp = cp;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Direccion direccion = (Direccion) o;
-        return Objects.equals(provincia, direccion.provincia) && Objects.equals(ciudad, direccion.ciudad) && Objects.equals(calle, direccion.calle) && Objects.equals(altura, direccion.altura) && Objects.equals(departamento, direccion.departamento) && Objects.equals(cp, direccion.cp);
+    public boolean equals(Object o)
+    {
+        boolean rta = false;
+
+        if(o != null)
+        {
+            if(o instanceof Direccion)
+            {
+                Direccion aux = (Direccion) o;
+                if(getCalle().equals(aux.getCalle()) && getAltura().equals(aux.getAltura()))
+                {
+                    rta = true;
+                }
+            }
+        }
+
+        return rta;
     }
 
     @Override
@@ -109,4 +100,23 @@ public class Direccion {
                 ", cp='" + cp + '\'' +
                 '}';
     }
+
+    public int compareTo(Object o)
+    {
+        int rta = 0;
+
+        if(o != null)
+        {
+            if(o instanceof Direccion)
+            {
+                Direccion aux = (Direccion)o;
+                Integer auxUno = new Integer(getAltura());  //estos dos errores no impide que compile el programa
+                Integer auxDos = new Integer(aux.getAltura());
+                rta = auxDos.compareTo(auxUno);
+            }
+        }
+        return rta;
+    }
+
+
 }

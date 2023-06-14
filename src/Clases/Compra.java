@@ -1,4 +1,12 @@
 package Clases;
 
-public class Compra {
+public class Compra
+{
+
+
+
+
+
+
+
 }
