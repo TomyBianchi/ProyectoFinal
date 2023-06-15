@@ -2,7 +2,7 @@ package Enums;
 
 public enum E_Envio
 {
-    Tierra("Por tierra"), Avion ("Aereo"), Barco("Maritimo");
+    Tierra("Por tierra"), Avion ("Aéreo"), Barco("Marítimo");
 
 
     private String nombre;

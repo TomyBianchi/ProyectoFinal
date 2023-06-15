@@ -2,7 +2,7 @@ package Enums;
 
 public enum E_TipoUsuario
 {
-    NORMAL("Usuario normal (compra y venta)"), VENTA("Usuario solo de venta");
+    NORMAL("Usuario normal (compra y venta)"), VENTA("Usuario sólo de venta");
 
 
     private String nombre;

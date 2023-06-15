@@ -2,7 +2,7 @@ package Enums;
 
 public enum E_Pago
 {
-    DEBITO("Debito"), CREDITO("Credito");
+    DEBITO("Débito"), CREDITO("Crédito");
 
 
     private String nombre;
