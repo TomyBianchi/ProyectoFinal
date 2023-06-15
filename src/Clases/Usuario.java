@@ -1,9 +1,8 @@
 package Clases;
 
 import Enums.E_TipoUsuario;
-import Genericas.G_Direccion;
-import Genericas.G_MetodoDePago;
-import Genericas.G_Publicacion;
+import Genericas.GeneUnoDM;
+import Genericas.GeneDosPU;
 
 public class Usuario {
     private String mail;
@@ -14,10 +13,10 @@ public class Usuario {
     private E_TipoUsuario tipoUsuario;
     private String dni; // vale como ID
     private boolean verificado; // true: identidad verificada, false: no verificada
-    private G_Publicacion<String,Publicacion> listaPublicaciones; //lista generica de publicaciones
+    private GeneDosPU<String,Publicacion> listaPublicaciones; //lista generica de publicaciones
     private Venta ventas; //adentro de venta hay una lista de todas las ventas que hizo el usuario
-    private G_Direccion direcciones; //lista generica, en donde guardo las direcciones
-    private G_MetodoDePago metodosDePago; //lista generica de metodos de pago
+    private GeneUnoDM direcciones; //lista generica, en donde guardo las direcciones
+    private GeneUnoDM metodosDePago; //lista generica de metodos de pago
     private float promedioVentas;
 
     //constructores
@@ -32,10 +31,10 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
         this.verificado = verificado;
-        this.listaPublicaciones = new G_Publicacion<>();
+        this.listaPublicaciones = new GeneDosPU<>();
         this.ventas = ventas;
-        this.direcciones = new G_Direccion();
-        this.metodosDePago = new G_MetodoDePago();
+        this.direcciones = new GeneUnoDM();
+        this.metodosDePago = new GeneUnoDM();
         this.promedioVentas = promedioVentas;
     }
     public Usuario() {
@@ -83,7 +82,7 @@ public class Usuario {
         return verificado;
     }
 
-    public G_Publicacion<String, Publicacion> getListaPublicaciones() {
+    public GeneDosPU<String, Publicacion> getListaPublicaciones() {
         return listaPublicaciones;
     }
 
@@ -91,11 +90,11 @@ public class Usuario {
         return ventas;
     }
 
-    public G_Direccion getDirecciones() {
+    public GeneUnoDM getDirecciones() {
         return direcciones;
     }
 
-    public G_MetodoDePago getMetodosDePago() {
+    public GeneUnoDM getMetodosDePago() {
         return metodosDePago;
     }
 

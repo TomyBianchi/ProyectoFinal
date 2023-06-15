@@ -1,23 +1,23 @@
 package Clases;
 
-import Genericas.G_Publicacion;
+import Genericas.GeneDosPU;
 
 public class Venta
 {
-    private G_Publicacion<String,Publicacion> publicaciones; //coleccion de publicaciones que se vendieron
+    private GeneDosPU<String,Publicacion> publicaciones; //coleccion de publicaciones que se vendieron
     private float totalRecaudado; //total recaudado con la lista de publicaciones
 
     public Venta(float totalRecaudado) {
-        this.publicaciones = new G_Publicacion<>();
+        this.publicaciones = new GeneDosPU<>();
         this.totalRecaudado = totalRecaudado;
     }
     public Venta() {
-        this.publicaciones = new G_Publicacion<>();
+        this.publicaciones = new GeneDosPU<>();
         this.totalRecaudado = 0;
     }
 
     //getters y setters
-    public G_Publicacion<String, Publicacion> getPublicaciones() {
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
 

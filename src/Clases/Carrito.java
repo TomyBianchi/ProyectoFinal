@@ -1,29 +1,29 @@
 package Clases;
 
 import Enums.E_Envio;
-import Genericas.G_Publicacion;
+import Genericas.GeneDosPU;
 
 public class Carrito
 {
     //atributos
-    private G_Publicacion<String,Publicacion> publicaciones; //publicaciones disponibles en el carrito
+    private GeneDosPU<String,Publicacion> publicaciones; //publicaciones disponibles en el carrito
     private MetodoDePago elegido; //metodo de pago que eligio el usuario
     private E_Envio envio; // envio que tiene que elegir el usuario
 
     //constructor
-    public Carrito(G_Publicacion publicaciones, MetodoDePago elegido, E_Envio envio) {
-        this.publicaciones = new G_Publicacion<>();
+    public Carrito(GeneDosPU publicaciones, MetodoDePago elegido, E_Envio envio) {
+        this.publicaciones = new GeneDosPU<>();
         this.elegido = elegido;
         this.envio = envio;
     }
     public Carrito() {
-        this.publicaciones = new G_Publicacion<>();
+        this.publicaciones = new GeneDosPU<>();
         this.elegido = null;
         this.envio = null;
     }
 
     //getters y setters
-    public G_Publicacion<String, Publicacion> getPublicaciones() {
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
 

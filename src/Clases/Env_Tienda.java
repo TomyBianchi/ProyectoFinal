@@ -1,27 +1,26 @@
 package Clases;
 
 
-import Genericas.G_Publicacion;
-import Genericas.G_Usuario;
+import Genericas.GeneDosPU;
 
 /**
  * Envoltorio
  */
 public class Env_Tienda
 {
-    private G_Usuario<String, Usuario> usuarios;
-    private G_Publicacion<String,Publicacion> publicaciones;
+    private GeneDosPU<String, Usuario> usuarios;
+    private GeneDosPU<String,Publicacion> publicaciones;
 
     //constructor
 
 
     public Env_Tienda() {
-        this.usuarios = new G_Usuario<>();
-        this.publicaciones = new G_Publicacion<>();
+        this.usuarios = new GeneDosPU<>();
+        this.publicaciones = new GeneDosPU<>();
     }
 
 
 
 
-    
+
 }

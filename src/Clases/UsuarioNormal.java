@@ -1,18 +1,18 @@
 package Clases;
 
 import Enums.E_TipoUsuario;
-import Genericas.G_Publicacion;
+import Genericas.GeneDosPU;
 
 public class UsuarioNormal extends Usuario
 {
     //atributos
-    private G_Publicacion<String, Publicacion> favoritas;
+    private GeneDosPU<String, Publicacion> favoritas;
     private Carrito carrito; 
     private Compra compras; // clase la cual tiene una coleccion de publicaciones las cuales ya fueron compradas por este comprador
 
     public UsuarioNormal(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, Venta ventas, float promedioVentas) {
         super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, ventas, promedioVentas);
-        this.favoritas = new G_Publicacion<>();
+        this.favoritas = new GeneDosPU<>();
         this.carrito = new Carrito();
         this.compras = new Compra();
     }
@@ -24,7 +24,7 @@ public class UsuarioNormal extends Usuario
     }
 
     //getters y setters
-    public G_Publicacion<String, Publicacion> getFavoritas() {
+    public GeneDosPU<String, Publicacion> getFavoritas() {
         return favoritas;
     }
 
