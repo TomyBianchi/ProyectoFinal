@@ -8,7 +8,7 @@ public class Periferico {
     private String nombre;
     private String id; // autogenerable
     // foto
-    private E_Estado estado; // true: nuevo, false: usado
+    private E_Estado estado;
     private String marca;
     private String modelo;
     private String origen;

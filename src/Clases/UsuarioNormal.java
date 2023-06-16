@@ -10,8 +10,14 @@ public class UsuarioNormal extends Usuario
     private Carrito carrito; 
     private Compra compras; // clase la cual tiene una coleccion de publicaciones las cuales ya fueron compradas por este comprador
 
-    public UsuarioNormal(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, Venta ventas, float promedioVentas) {
-        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, ventas, promedioVentas);
+    public UsuarioNormal(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas) {
+        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, ventas, promedioVentas);
+        this.favoritas = new GeneDosPU<>();
+        this.carrito = new Carrito();
+        this.compras = new Compra();
+    }
+    public UsuarioNormal(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) {
+        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
         this.favoritas = new GeneDosPU<>();
         this.carrito = new Carrito();
         this.compras = new Compra();

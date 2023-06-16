@@ -2,7 +2,7 @@ package Interfaces;
 
 
 /**
- * Interface que van a implementar varias clases las cuales sean necesarias agregar, borrar, modificar y listar.
+ * Interfaz que van a implementar las clases en las cuales sea necesario agregar, borrar, modificar y listar elementos.
  * @author  tomy
  */
 public interface I_ABML {

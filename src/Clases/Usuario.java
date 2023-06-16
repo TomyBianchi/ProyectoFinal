@@ -12,7 +12,6 @@ public class Usuario {
     private String numeroTelefono;
     private E_TipoUsuario tipoUsuario;
     private String dni; // vale como ID
-    private boolean verificado; // true: identidad verificada, false: no verificada
     private GeneDosPU<String,Publicacion> listaPublicaciones; //lista generica de publicaciones
     private Venta ventas; //adentro de venta hay una lista de todas las ventas que hizo el usuario
     private GeneUnoDM direcciones; //lista generica, en donde guardo las direcciones
@@ -22,7 +21,7 @@ public class Usuario {
     //constructores
 
 
-    public Usuario(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, Venta ventas, float promedioVentas) {
+    public Usuario(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas) {
         this.mail = mail;
         this.contrasena = contrasena;
         this.nombre = nombre;
@@ -30,12 +29,25 @@ public class Usuario {
         this.numeroTelefono = numeroTelefono;
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
-        this.verificado = verificado;
         this.listaPublicaciones = new GeneDosPU<>();
         this.ventas = ventas;
         this.direcciones = new GeneUnoDM();
         this.metodosDePago = new GeneUnoDM();
         this.promedioVentas = promedioVentas;
+    }
+    public Usuario(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) {
+        this.mail = mail;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.numeroTelefono = numeroTelefono;
+        this.tipoUsuario = tipoUsuario;
+        this.dni = dni;
+        this.listaPublicaciones = new GeneDosPU<>();
+        this.ventas = null;
+        this.direcciones = new GeneUnoDM();
+        this.metodosDePago = new GeneUnoDM();
+        this.promedioVentas = 0;
     }
     public Usuario() {
         this.mail = "";
@@ -45,9 +57,8 @@ public class Usuario {
         this.numeroTelefono = "";
         this.tipoUsuario = null;
         this.dni = "";
-        this.verificado = false;
         this.listaPublicaciones = null;
-        this.ventas = ventas;
+        this.ventas = null;
         this.direcciones = null;
         this.metodosDePago = null;
         this.promedioVentas = 0;
@@ -76,10 +87,6 @@ public class Usuario {
 
     public String getDni() {
         return dni;
-    }
-
-    public boolean isVerificado() {
-        return verificado;
     }
 
     public GeneDosPU<String, Publicacion> getListaPublicaciones() {
@@ -134,7 +141,6 @@ public class Usuario {
                 ", numeroTelefono='" + numeroTelefono + '\'' +
                 ", tipoUsuario=" + tipoUsuario +
                 ", dni='" + dni + '\'' +
-                ", verificado=" + verificado +
                 ", listaPublicaciones=" + listaPublicaciones +
                 ", ventas=" + ventas +
                 ", direcciones=" + direcciones +

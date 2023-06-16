@@ -6,14 +6,16 @@ import java.util.HashSet;
 
 
 /**
- * Clase generica que en este programa la van a estar usando Usuario, con una GeneUnoDM de MetodosDePago, y otra con direcciones
+ * Clase genérica que utiliza la clase Usuario para sus listas de métodos de pago y de direcciones.
  * @param <T>
  */
 public class GeneUnoDM<T> implements I_ABML
 {
     private HashSet<T> set;
 
-
-
-
+    //metodos
+    public void agregar(T elemento)
+    {
+        set.add(elemento);
+    }
 }

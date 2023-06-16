@@ -11,9 +11,16 @@ public class UsuarioVenta extends Usuario{
     private String cuit;
     private E_CondFiscal condicionFiscal;
 
-    public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, Venta ventas, float promedioVentas, boolean verificado1, String url, String cuit, E_CondFiscal condicionFiscal) {
-        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, ventas, promedioVentas);
-        this.verificado = verificado1;
+    public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) {
+        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, ventas, promedioVentas);
+        this.verificado = verificado;
+        this.url = url;
+        this.cuit = cuit;
+        this.condicionFiscal = condicionFiscal;
+    }
+    public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) {
+        super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
+        this.verificado = verificado;
         this.url = url;
         this.cuit = cuit;
         this.condicionFiscal = condicionFiscal;
@@ -27,7 +34,6 @@ public class UsuarioVenta extends Usuario{
     }
 
     //getters y setters
-    @Override
     public boolean isVerificado() {
         return verificado;
     }
