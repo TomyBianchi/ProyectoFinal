@@ -15,8 +15,23 @@ public class GeneDosPU<K,T> implements I_ABML
 
     //metodos
 
+    /**
+     * Método que agrega un elemento al mapa genérico. La clave va a ser el DNI del usuario.
+     * @param key clave (DNI)
+     * @param elemento - usuario o publicacion
+     */
     public void agregar(K key, T elemento)
     {
         mapa.put(key,elemento);
+    }
+
+    /**
+     * Método que retorna si el mapa contiene una clave pasada por parámetro. La clave va a ser el DNI del usuario.
+     * @param key clave (DNI)
+     * @return Retorna verdadero si contiene la clave, falso si no la contiene.
+     */
+    public boolean contieneClave(K key)
+    {
+        return mapa.containsKey(key);
     }
 }
