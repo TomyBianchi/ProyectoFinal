@@ -20,8 +20,16 @@ public class GestionTienda
         this.publicaciones = new GeneDosPU<>();
     }
 
-    //métodos
 
+
+
+
+
+
+
+
+
+    //métodos
     /**
      * Método que verifica en la lista de usuarios si ya existe la clave que se pasa por parámetro. La clave va a ser el DNI del usuario.
      * @param key - clave (DNI)
@@ -43,7 +51,7 @@ public class GestionTienda
      * @param dni
      * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ClaveDuplicadaException
+    public void agregarUsuario(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ClaveDuplicadaException
     {
         if(usuarios.contieneClave(dni))
         {
@@ -70,7 +78,7 @@ public class GestionTienda
      * @param condicionFiscal
      * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ClaveDuplicadaException
+    public void agregarPublicacion(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ClaveDuplicadaException
     {
         if(usuarios.contieneClave(dni))
         {
@@ -79,4 +87,11 @@ public class GestionTienda
         UsuarioVenta usuario = new UsuarioVenta(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, url, cuit, condicionFiscal);
         usuarios.agregar(dni,usuario); //pasa como clave el dni del vendedor
     }
+
+
+
+
+
+
+
 }
