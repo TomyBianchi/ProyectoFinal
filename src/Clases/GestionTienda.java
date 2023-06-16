@@ -58,15 +58,6 @@ public class GestionTienda
         Matcher matcher = pattern.matcher(contrasena);
         return matcher.find();
     }
-    /**
-     * Método que verifica en la lista de usuarios si ya existe la clave que se pasa por parámetro. La clave va a ser el DNI del usuario.
-     * @param key - clave (DNI)
-     * @return Retorna verdadero si contiene la clave, falso si no la contiene.
-     */
-    public boolean siExiste(String key)
-    {
-        return usuarios.contieneClave(key);
-    }
 
     /**
      * Método que agrega un usuario del tipo UsuarioNormal a la lista de usuarios. Lanza la excepción ClaveDuplicadaException si el dni o el mail ya existen.
@@ -78,6 +69,7 @@ public class GestionTienda
      * @param tipoUsuario
      * @param dni
      * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
+     * @throws ConstrasenaInvalidaException Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
      */
     public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ClaveDuplicadaException, ConstrasenaInvalidaException
     {
@@ -121,6 +113,7 @@ public class GestionTienda
      * @param cuit
      * @param condicionFiscal
      * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
+     * @throws ConstrasenaInvalidaException Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
      */
     public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ClaveDuplicadaException, ConstrasenaInvalidaException
     {
