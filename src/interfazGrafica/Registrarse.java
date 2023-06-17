@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Registrarse extends JFrame {
 
@@ -41,9 +42,10 @@ public class Registrarse extends JFrame {
 	private JTextField apellidoTxt;
 	private JTextField numeroTxt;
 	private JTextField DniTxt;
-	private JTextField contrasenaTxt;
-	private JTextField repetirContrasenaTxt;
 	private E_TipoUsuario tUsuario;
+	private JPasswordField contrasena;
+	private JPasswordField repetirContrasena;
+	private Usuario usuario;
 
 	/**
 	 * Launch the application.
@@ -91,6 +93,7 @@ public class Registrarse extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(10, 162, 230, 172);
+		/*algoritmo para subir imagenes desde google solo hay que reemplazar el nombre en este caso el lblNewLabel_1 **/
 		try {
 			URL url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmB_yYU4CYzZ812uRN9sfmtOtaUAnxkamDtg&usqp=CAU");
 			Image imagen = ImageIO.read(url);
@@ -133,11 +136,6 @@ public class Registrarse extends JFrame {
 		DniTxt.setColumns(10);
 		DniTxt.setBounds(516, 297, 263, 29);
 		contentPane.add(DniTxt);
-		
-		contrasenaTxt = new JTextField();
-		contrasenaTxt.setColumns(10);
-		contrasenaTxt.setBounds(516, 337, 263, 29);
-		contentPane.add(contrasenaTxt);
 		
 		JLabel usuariolbl = new JLabel("USUARIO");
 		usuariolbl.setBounds(428, 104, 78, 14);
@@ -200,12 +198,12 @@ public class Registrarse extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				if(nombreTxt.getText().length()<=0 && Usuariotxt.getText().length()<=0&& mailTxt.getText().length()<=0&& apellidoTxt.getText().length()<=0&& numeroTxt.getText().length()<=0&& DniTxt.getText().length()<=0&& contrasenaTxt.getText().length()<=0&& repetirContrasenaTxt.getText().length()<=0)
+				if(nombreTxt.getText().length()<=0 && Usuariotxt.getText().length()<=0&& mailTxt.getText().length()<=0&& apellidoTxt.getText().length()<=0&& numeroTxt.getText().length()<=0&& DniTxt.getText().length()<=0)
 				{
 				JOptionPane.showMessageDialog(null, "te faltan Completar Campos");
 				}else
 				{
-					if(!contrasenaTxt.getText().equals(repetirContrasenaTxt.getText()))
+					if(!contrasena.getText().equals(repetirContrasena.getText()))
 					{
 						JOptionPane.showMessageDialog(null, "las contraseñas no coinciden");
 					}else
@@ -233,11 +231,6 @@ public class Registrarse extends JFrame {
 		btnNewButton.setBounds(596, 481, 110, 39);
 		contentPane.add(btnNewButton);
 		
-		repetirContrasenaTxt = new JTextField();
-		repetirContrasenaTxt.setColumns(10);
-		repetirContrasenaTxt.setBounds(516, 377, 263, 29);
-		contentPane.add(repetirContrasenaTxt);
-		
 		JLabel DniLbl = new JLabel("DNI");
 		DniLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		DniLbl.setBounds(372, 304, 145, 14);
@@ -256,9 +249,18 @@ public class Registrarse extends JFrame {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel_2.setBounds(387, 450, 116, 14);
 		contentPane.add(lblNewLabel_2);
+		
+		contrasena = new JPasswordField();
+		contrasena.setBounds(516, 341, 263, 25);
+		contentPane.add(contrasena);
+		
+		repetirContrasena = new JPasswordField();
+		repetirContrasena.setBounds(516, 381, 263, 25);
+		contentPane.add(repetirContrasena);
 	}
 	public void ocultarVentana()
 	{
 		this.dispose();
 	}
+
 }

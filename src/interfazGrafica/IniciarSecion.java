@@ -1,6 +1,11 @@
 package interfazGrafica;
 
 import java.awt.EventQueue;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -11,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -19,12 +25,13 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
+import javax.swing.JPasswordField;
 
 public class IniciarSecion extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField mailTxt;
+	private JPasswordField contrasenaTxt;
 
 	/**
 	 * Launch the application.
@@ -56,30 +63,45 @@ public class IniciarSecion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Mail");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 108, 126, 30);
-		contentPane.add(lblNewLabel);
+		JLabel mailLbl = new JLabel("Mail");
+		mailLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		mailLbl.setBounds(10, 108, 126, 30);
+		contentPane.add(mailLbl);
 		
 		JLabel lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContrasea.setBounds(0, 138, 126, 30);
+		lblContrasea.setBounds(10, 149, 126, 30);
 		contentPane.add(lblContrasea);
 		
-		textField = new JTextField();
-		textField.setBounds(129, 149, 257, 30);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(129, 108, 257, 30);
-		contentPane.add(textField_1);
+		mailTxt = new JTextField();
+		mailTxt.setColumns(10);
+		mailTxt.setBounds(129, 112, 257, 23);
+		contentPane.add(mailTxt);
 		
 		JButton btnNewButton = new JButton("LOGIN");
 		btnNewButton.setIcon(null);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+			
+			String mailStr = lecturaArchi(mailTxt.getText());	
+			char[] aux3 = contrasenaTxt.getPassword(); 	
+			String aux4=String.valueOf(aux3);
+			String contraStr = lecturaArchi(aux4);
+			
+			
+			if(mailStr != "*" && contraStr != "*" && mailStr.equals(mailTxt.getText()) && contraStr.equals(aux4))
+			{
+				
+				JOptionPane.showMessageDialog(null, "felicidades ingresaste a la tienda");
+				ocultarVentana();
+			
+				
+			}else
+			{
+				JOptionPane.showMessageDialog(null, "algun dato es invalido");
+			}
+				
 				
 			}
 		});
@@ -154,6 +176,33 @@ public class IniciarSecion extends JFrame {
         }
 		
 		contentPane.add(imagen_3);
+		
+		contrasenaTxt = new JPasswordField();
+		contrasenaTxt.setBounds(129, 153, 257, 23);
+		contentPane.add(contrasenaTxt);
+	}
+	
+	public String lecturaArchi(String string)
+	{
+		 String line = "";
+		   try {
+	            FileReader fileReader = new FileReader("archiPrueba.txt");
+	            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+	            while ((line = bufferedReader.readLine()) != null && !string.equals(line)) { }
+
+	            bufferedReader.close();
+	        } catch (IOException e) {
+	            System.out.println("Error al leer el archivo: " + e.getMessage());
+	        }
+		   if(line != null)
+		   {
+			   line = string;
+		   }else
+		   {
+			   line = "*";
+		   }
+		   return line;
 	}
 
 	public void ocultarVentana()
