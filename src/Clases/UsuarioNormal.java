@@ -1,9 +1,12 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Enums.E_TipoUsuario;
 import Genericas.GeneDosPU;
 
 public class UsuarioNormal extends Usuario
+implements Serializable
 {
     //atributos
     private GeneDosPU<String, Publicacion> favoritas;

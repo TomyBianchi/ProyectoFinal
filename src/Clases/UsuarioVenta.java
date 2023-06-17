@@ -1,9 +1,12 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Enums.E_CondFiscal;
 import Enums.E_TipoUsuario;
 
-public class UsuarioVenta extends Usuario{
+public class UsuarioVenta extends Usuario
+implements Serializable{
 
     //atributos
     private boolean verificado; // true: identidad verificada, false: no verificada

@@ -2,9 +2,10 @@ package Clases;
 
 import Enums.E_Envio;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Envio {
+public class Envio implements Serializable{
     private boolean express;
     private float precio;
     private E_Envio tipoEnvio;

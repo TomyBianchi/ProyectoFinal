@@ -1,8 +1,10 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Enums.E_Pago;
 
-public class MetodoDePago
+public class MetodoDePago implements Serializable
 {
     private E_Pago tipoPago; //tipo de metodo de pago
     private String nombre; //nombre que aparece en la tarjeta

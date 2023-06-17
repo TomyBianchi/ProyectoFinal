@@ -38,29 +38,59 @@ public class GestionTienda
     /**
      * Método para verificar si la contraseña contiene al menos una letra mayúsucla.
      * @param contrasena
-     * @return - buscar
+     * @return Retorna true si encuentra al menos una mayúscula en el string, sino false.
      */
     private boolean verificarMayuscula(String contrasena)
     {
+        // El objeto Pattern representa un patrón de expresión regular que se utiliza junto con el objeto Matcher para realizar
+        // operaciones de búsqueda y manipulación de strings.
+        // "(?=.*[A-Z])" es una expresión regular que busca al menos una letra mayúscula en el string.
         Pattern pattern = Pattern.compile("(?=.*[A-Z])");
         Matcher matcher = pattern.matcher(contrasena);
+        // El método find() busca el patrón en el string y devuelve true si encuentra una coincidencia, sino false.
         return matcher.find();
     }
 
     /**
      * Método para verificar si la contraseña contiene al menos un número.
      * @param contrasena
-     * @return - buscar
+     * @return Retorna true si encuentra al menos un número en la cadena de texto, sino false.
      */
     private boolean verificarNumero(String contrasena)
     {
+        // "(?=.*\\d)" es una expresión regular que busca al menos un dígito numérico en el string.
         Pattern pattern = Pattern.compile("(?=.*\\d)");
         Matcher matcher = pattern.matcher(contrasena);
         return matcher.find();
     }
 
     /**
+     * Método para verificar que la contraseña cumpla los requisistos mínimos.
+     * @param contrasena
+     * @return Retorna true si la contraseña cumple los requisitos, sino false.
+     */
+    public boolean verificarContrasena(String contrasena)
+    {
+        if(contrasena.length() < 8)
+        {
+            return false;
+        }
+        else if (!verificarMayuscula(contrasena))
+        {
+            return false;
+        }
+        else if (!verificarNumero(contrasena))
+        {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
      * Método que agrega un usuario del tipo UsuarioNormal a la lista de usuarios. Lanza la excepción ClaveDuplicadaException si el dni o el mail ya existen.
+     * Lanza la excepción ContrasenaInvalidaException si la contraseña ingresada no cumple los requisitos mínimos.
      * @param mail
      * @param contrasena
      * @param nombre
@@ -81,18 +111,11 @@ public class GestionTienda
         {
             throw new ClaveDuplicadaException("Error: El mail ingresado ya existe.");
         }
-        else if(contrasena.length() < 8)
+        else if(!verificarContrasena(contrasena))
         {
             throw new ConstrasenaInvalidaException("Error: La contraseña debe tener por lo menos 8 caracteres.");
         }
-        else if (!verificarMayuscula(contrasena))
-        {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe contener al menos una mayúscula.");
-        }
-        else if (!verificarNumero(contrasena))
-        {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe contener al menos un número.");
-        }
+
         else {
             UsuarioNormal usuario = new UsuarioNormal(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
             usuarios.agregar(dni,usuario); //pasa como clave el dni del usuario

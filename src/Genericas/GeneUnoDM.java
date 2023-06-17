@@ -2,6 +2,7 @@ package Genericas;
 
 import Interfaces.I_ABML;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
  * Clase genérica que utiliza la clase Usuario para sus listas de métodos de pago y de direcciones.
  * @param <T>
  */
-public class GeneUnoDM<T> implements I_ABML<T>
+public class GeneUnoDM<T> implements I_ABML<T>, Serializable
 {
     private HashSet<T> set;
 

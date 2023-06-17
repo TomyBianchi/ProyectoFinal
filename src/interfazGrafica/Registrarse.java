@@ -2,14 +2,23 @@ package interfazGrafica;
 
 import java.awt.EventQueue;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 import Clases.Usuario;
 import Clases.UsuarioNormal;
 import Clases.UsuarioVenta;
 import Enums.E_TipoUsuario;
+import Enums.E_CondFiscal;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -20,7 +29,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
-
+import java.io.BufferedReader;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Label;
@@ -30,8 +39,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.io.ObjectOutputStream;
+
 
 public class Registrarse extends JFrame {
 
@@ -43,6 +55,7 @@ public class Registrarse extends JFrame {
 	private JTextField numeroTxt;
 	private JTextField DniTxt;
 	private E_TipoUsuario tUsuario;
+	private E_CondFiscal a;
 	private JPasswordField contrasena;
 	private JPasswordField repetirContrasena;
 	private Usuario usuario;
@@ -210,11 +223,14 @@ public class Registrarse extends JFrame {
 					{
 						if(tUsuario.compareTo(E_TipoUsuario.NORMAL)==0)
 						{
-							Usuario nuevo = new UsuarioNormal(); //faltarian pasarle los parametros asi lo creamos
-							//nuevo.agregar nose si esta esta funcion hecha o si existe algo parecido
+							Usuario user = new UsuarioNormal(mailTxt.getText(),contrasena.getText(),nombreTxt.getText(),apellidoTxt.getText(),numeroTxt.getText(),E_TipoUsuario.NORMAL,DniTxt.getText());
+							guardarObjetoEnArchivo(user,"archiPrueba.txt");
+
 						}else
 						{
-							Usuario nuevo = new UsuarioVenta();
+							Usuario user = new UsuarioVenta(mailTxt.getText(),contrasena.getText(),nombreTxt.getText(),apellidoTxt.getText(),numeroTxt.getText(),E_TipoUsuario.VENTA,DniTxt.getText(),true,"","",E_CondFiscal.MONOTRIBUTO_A);
+							guardarObjetoEnArchivo(user,"archiPrueba.txt");
+
 						}
 						
 						JOptionPane.showMessageDialog(null, "Usuario creado con exito!");
@@ -258,6 +274,23 @@ public class Registrarse extends JFrame {
 		repetirContrasena.setBounds(516, 381, 263, 25);
 		contentPane.add(repetirContrasena);
 	}
+	
+
+	   public static boolean guardarObjetoEnArchivo(Usuario user, String rutaArchivo) {
+	        try {
+	            FileOutputStream fileOutputStream = new FileOutputStream(rutaArchivo, true);
+	            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+	            objectOutputStream.writeObject(user);
+
+	            objectOutputStream.close();
+	            fileOutputStream.close();
+	            return true;
+	        } catch (IOException e) {
+	            System.out.println("Error al guardar el objeto en el archivo: " + e.getMessage());
+	            return false;
+	        }
+	    }
 	public void ocultarVentana()
 	{
 		this.dispose();

@@ -1,8 +1,10 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Genericas.GeneTresE;
 
-public class Publicacion {
+public class Publicacion implements Serializable{
     private Periferico periferico;
     private float precio;
     private int stock;

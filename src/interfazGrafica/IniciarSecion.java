@@ -12,6 +12,11 @@ import javax.imageio.ImageIO;
 
 import java.awt.Image;
 
+import Clases.Usuario;
+import Clases.UsuarioNormal;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -84,16 +89,19 @@ public class IniciarSecion extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 			
-			String mailStr = lecturaArchi(mailTxt.getText());	
+			String mailStr = mailTxt.getText();	
 			char[] aux3 = contrasenaTxt.getPassword(); 	
-			String aux4=String.valueOf(aux3);
-			String contraStr = lecturaArchi(aux4);
 			
+			String contraStr=String.valueOf(aux3);
 			
-			if(mailStr != "*" && contraStr != "*" && mailStr.equals(mailTxt.getText()) && contraStr.equals(aux4))
+			Usuario user = compararObjetosEnArchivo("archiPrueba.txt",mailStr,contraStr);
+			
+			if(user!=null)
 			{
 				
 				JOptionPane.showMessageDialog(null, "felicidades ingresaste a la tienda");
+				TiendaPrincipal a = new TiendaPrincipal();
+				a.setUser(user);
 				ocultarVentana();
 			
 				
@@ -182,28 +190,32 @@ public class IniciarSecion extends JFrame {
 		contentPane.add(contrasenaTxt);
 	}
 	
-	public String lecturaArchi(String string)
-	{
-		 String line = "";
-		   try {
-	            FileReader fileReader = new FileReader("archiPrueba.txt");
-	            BufferedReader bufferedReader = new BufferedReader(fileReader);
+    public static Usuario compararObjetosEnArchivo(String rutaArchivo,String mail,String contra) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(rutaArchivo);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-	            while ((line = bufferedReader.readLine()) != null && !string.equals(line)) { }
+            while (true) {
+                try {
+                    Usuario usuario = (Usuario) objectInputStream.readObject();
 
-	            bufferedReader.close();
-	        } catch (IOException e) {
-	            System.out.println("Error al leer el archivo: " + e.getMessage());
-	        }
-		   if(line != null)
-		   {
-			   line = string;
-		   }else
-		   {
-			   line = "*";
-		   }
-		   return line;
-	}
+                    // Comparar los datos del objeto
+                    if (usuario.getNombre().equals(mail)&&usuario.getContrasena().equals(contra)){
+                        return usuario;
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    // Llegamos al final del archivo o se produjo un error
+                    break;
+                }
+            }
+
+            objectInputStream.close();
+            fileInputStream.close();
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return null;
+    }
 
 	public void ocultarVentana()
 	{

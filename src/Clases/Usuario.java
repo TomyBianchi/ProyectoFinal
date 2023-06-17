@@ -1,10 +1,11 @@
 package Clases;
 
 import Enums.E_TipoUsuario;
+import java.io.Serializable;
 import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
-public class Usuario {
+public class Usuario implements Serializable{
     private String mail;
     private String contrasena;
     private String nombre;
@@ -71,6 +72,9 @@ public class Usuario {
 
     public String getNombre() {
         return nombre;
+    }
+    public String getContrasena() {
+        return contrasena;
     }
 
     public String getApellido() {

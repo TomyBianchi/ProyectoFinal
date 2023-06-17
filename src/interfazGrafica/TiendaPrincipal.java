@@ -6,7 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import Clases.GestionTienda;
 import Clases.Usuario;
+import Enums.E_TipoUsuario;
+import Excepciones.ClaveDuplicadaException;
+import Excepciones.ConstrasenaInvalidaException;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -16,10 +20,15 @@ public class TiendaPrincipal {
 
 	private JFrame frame;
 	private Usuario usuario;
+	private String s;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		GestionTienda MercadoLibre = new GestionTienda();
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,7 +59,9 @@ public class TiendaPrincipal {
 		
 		JLabel lblNewLabel = new JLabel("tienda COnstruyendose");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(203, 151, 189, 20);
+		lblNewLabel.setBounds(203, 151, 189, 20);	
+		
+		
 		frame.getContentPane().add(lblNewLabel);
 		
 	
@@ -62,22 +73,28 @@ public class TiendaPrincipal {
 				IniciarSecion secion = new IniciarSecion();
 				secion.setVisible(true);
 				btnNewButton.setVisible(false);
-				
-				
+			
 			}
 		});
 		btnNewButton.setBounds(27, 11, 105, 23);
 		frame.getContentPane().add(btnNewButton);
 		
-		JLabel lblNewLabel_1 = new JLabel("ayuda porfavo");
-		lblNewLabel_1.setBounds(50, 15, 221, 14);
-		frame.getContentPane().add(lblNewLabel_1);
 	
 	
 		
 		
 	}
 	//metodos aux
+	public void setUser(Usuario user) //arreglar
+	{
+		this.usuario = user;
+		JLabel lblNewLabel_1 = new JLabel(user.getNombre());
+		lblNewLabel_1.setBounds(50, 15, 221, 14);
+		frame.getContentPane().add(lblNewLabel_1);
+		frame.setComponentZOrder(lblNewLabel_1, 1);
+		lblNewLabel_1.setOpaque(true);
+	
+	}
 	public void ocultarVentana()
 	{
 		frame.dispose();

@@ -2,9 +2,10 @@ package Genericas;
 
 import Interfaces.I_ABML;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GeneTresE <T> implements I_ABML<T>
+public class GeneTresE <T> implements I_ABML<T>, Serializable
 {
     private ArrayList<T> lista;
 

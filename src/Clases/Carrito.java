@@ -1,9 +1,11 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Enums.E_Envio;
 import Genericas.GeneDosPU;
 
-public class Carrito
+public class Carrito implements Serializable
 {
     //atributos
     private GeneDosPU<String,Publicacion> publicaciones; //publicaciones disponibles en el carrito

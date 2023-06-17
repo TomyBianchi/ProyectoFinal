@@ -1,8 +1,10 @@
 package Clases;
 
+import java.io.Serializable;
+
 import Genericas.GeneDosPU;
 
-public class Compra
+public class Compra implements Serializable
 {
     private GeneDosPU<String,Publicacion> publicaciones; //coleccion de publicaciones que se compraron
     private float totalGastado; //total gastado en esas compras

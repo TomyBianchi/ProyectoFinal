@@ -3,6 +3,7 @@ package Genericas;
 import Interfaces.I_ABML;
 import Interfaces.I_IBML_Map;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * y la clase Usuario para su lista de publicaciones.
  * @author tomas
  */
-public class GeneDosPU<K,T> implements I_IBML_Map<T,K>
+public class GeneDosPU<K,T> implements I_IBML_Map<T,K>, Serializable
 {
     private HashMap<K,T> mapa;
 
