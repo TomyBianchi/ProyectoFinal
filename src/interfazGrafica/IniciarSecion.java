@@ -46,6 +46,7 @@ public class IniciarSecion extends JFrame {
 			public void run() {
 				try {
 					IniciarSecion frame = new IniciarSecion();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,16 +60,16 @@ public class IniciarSecion extends JFrame {
 	 */
 	public IniciarSecion() {
 		setTitle("INICIAR SECION");
-		this.setLocationRelativeTo(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 563, 320);
+		this.setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel mailLbl = new JLabel("Mail");
+		JLabel mailLbl = new JLabel("Usuario");
 		mailLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		mailLbl.setBounds(10, 108, 126, 30);
 		contentPane.add(mailLbl);
@@ -102,6 +103,7 @@ public class IniciarSecion extends JFrame {
 				JOptionPane.showMessageDialog(null, "felicidades ingresaste a la tienda");
 				TiendaPrincipal a = new TiendaPrincipal();
 				a.setUser(user);
+				a.getVisible();
 				ocultarVentana();
 			
 				

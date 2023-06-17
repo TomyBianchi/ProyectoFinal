@@ -68,6 +68,7 @@ public class Registrarse extends JFrame {
 			public void run() {
 				try {
 					Registrarse frame = new Registrarse();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
