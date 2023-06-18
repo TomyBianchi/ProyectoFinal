@@ -1,6 +1,7 @@
 package Clases;
 
 import Enums.E_CondFiscal;
+import Enums.E_Estado;
 import Enums.E_TipoUsuario;
 import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
@@ -169,20 +170,29 @@ public class GestionTienda
 
 
     //agregar publicacion
-
-    /**
-     * Este método agrega un objeto del tipo Publicacion a la lista de publicaciones. Genera un ID automático.
-     * @param periferico
-     * @param precio
-     * @param stock
-     * @param dueno dueño
-     */
-    public void agregarPublicacion(Periferico periferico, float precio, int stock, Usuario dueno)
+    public Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String tags, String plataformas, String color, float peso, boolean inalambrico)
     {
-        Publicacion publicacion = new Publicacion(periferico,precio,stock,dueno);
-        String idPublicacion = GeneradorUUID.generarID();
-        publicaciones.agregar(String.valueOf(idPublicacion),publicacion);
+        String id = GeneradorUUID.generarID();
+        Periferico periferico = new Periferico(nombre,id,estado,marca,modelo,origen,tags,plataformas,color,peso,inalambrico);
+        return periferico;
     }
+    public Publicacion crearPublicacion(Periferico periferico, float precio, int stock, Usuario dueno)
+    {
+        String id = GeneradorUUID.generarID();
+        Publicacion publicacion = new Publicacion(periferico,precio,stock,id,dueno);
+        return publicacion;
+    }
+    public void agregarPublicacion(String nombre, E_Estado estado, String marca, String modelo, String origen, String tags, String plataformas, String color, float peso, boolean inalambrico, float precio, int stock, String mailDueno)
+    {
+        Periferico periferico = crearPeriferico(nombre,estado,marca,modelo,origen,tags,plataformas,color,peso,inalambrico);
+        //buscar dueno por mail y retornarlo
+        //Publicacion publicacion = crearPublicacion(periferico,precio,stock,dueno);
+        //publicaciones.agregar(publicacion.getId(), publicacion);
+    }
+
+
+
+    //agregar envio
 
     /**
      * Es un metodo para agregar un envio a la publicacion que especifique el usuario.
@@ -193,6 +203,10 @@ public class GestionTienda
         publicacion.agregarEnvio(envioAgregar); //se agregar el envio en la publicacion
         publicaciones.modificar(publicacion.getId(),publicacion);
     }
+
+    
+
+    //otras
 
     /**
      * Es una funcion la cual returna true si el mail ya esta en la base de datos, en caso contrario returna false

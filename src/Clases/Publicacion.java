@@ -24,12 +24,12 @@ public class Publicacion implements Serializable{
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
     }
-    //constructor sin reviews, rating ni id (porque se autogenera) para agregar publicacion
-    public Publicacion(Periferico periferico, float precio, int stock, Usuario dueno) {
+    //constructor sin reviews ni rating para agregar publicacion
+    public Publicacion(Periferico periferico, float precio, int stock, String id, Usuario dueno) {
         this.periferico = periferico;
         this.precio = precio;
         this.stock = 0;
-        this.id = "";
+        this.id = id;
         this.reviews = "";
         this.rating = rating;
         this.dueno = dueno;
