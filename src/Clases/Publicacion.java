@@ -5,6 +5,7 @@ import java.io.Serializable;
 import Genericas.GeneTresE;
 
 public class Publicacion implements Serializable{
+    private String nombrePublicacion;
     private Periferico periferico;
     private float precio;
     private int stock;
@@ -15,7 +16,8 @@ public class Publicacion implements Serializable{
     private Usuario dueno; //dueno de la publicacion
     private GeneTresE<Envio> envios; //lista de envios disponibles de la publicacion.
 
-    public Publicacion(Periferico periferico, float precio, int stock, String id, String reviews, int rating, Usuario dueno) {
+    public Publicacion(String nombrePublicacion, Periferico periferico, float precio, int stock, String id, String reviews, int rating, Usuario dueno) {
+        this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
         this.stock = stock;
@@ -27,17 +29,19 @@ public class Publicacion implements Serializable{
     }
 
     //constructor sin reviews, rating ni id (porque se autogenera) para agregar publicacion
-    public Publicacion(Periferico periferico, float precio, int stock, Usuario dueno,String urlFoto) {
+    public Publicacion(String nombrePublicacion,Periferico periferico, float precio, int stock, Usuario dueno,String urlFoto,String id) {
 
+        this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
         this.stock = 0;
         this.id = id;
         this.reviews = "";
-        this.rating = rating;
+        this.rating = 0;
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
         this.urlFoto = urlFoto;
+        this.stock = stock;
     }
     public Publicacion() {
         this.periferico = null;
@@ -50,6 +54,17 @@ public class Publicacion implements Serializable{
         this.envios = new GeneTresE<>();
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getNombrePublicacion() {
+        return nombrePublicacion;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
 
     public Periferico getPeriferico() {
         return periferico;

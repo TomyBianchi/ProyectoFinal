@@ -16,8 +16,8 @@ public class Usuario implements Serializable{
     private String dni; // vale como ID
     private GeneDosPU<String,Publicacion> listaPublicaciones; //lista generica de publicaciones
     private Venta ventas; //adentro de venta hay una lista de todas las ventas que hizo el usuario
-    private GeneUnoDM direcciones; //lista generica, en donde guardo las direcciones
-    private GeneUnoDM metodosDePago; //lista generica de metodos de pago
+    private GeneUnoDM<Direccion> direcciones; //lista generica, en donde guardo las direcciones. En caso de los de solo venta, es la direccoin desde donde se envia el producto
+    private GeneUnoDM<MetodoDePago> metodosDePago; //lista generica de metodos de pago
     private float promedioVentas;
 
     //constructores
@@ -171,6 +171,13 @@ public class Usuario implements Serializable{
         }
         return rta;
     }
+
+    public void agregarPublicacion(Publicacion pub)
+    {
+        listaPublicaciones.agregar(pub.getId(),pub);
+    }
+
+
 
 
 }

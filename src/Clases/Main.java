@@ -1,14 +1,17 @@
 package Clases;
 
 import Enums.E_CondFiscal;
+import Enums.E_Estado;
 import Enums.E_TipoUsuario;
 import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
+import Genericas.GeneDosPU;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
@@ -40,8 +43,22 @@ public class Main {
             System.out.print(e.getMessage());
         };
 
-        //System.out.print(tienda.toString());
 
+        GeneDosPU<String,Usuario> usuarios = tienda.getUsuarios();
+        HashMap<String,Usuario> mapa = usuarios.getMapa();
+        Usuario tomas = mapa.get("1");
+
+
+        tienda.agregarPublicacion("Auriculares Hyperx Cloud Flight, perfecto estado", E_Estado.USADO,"Hyperx","Cloud Flight","EEUU","PS4/PS5/PC","Rojo",200,true,35000,1,tomas,"foto.com");
+        tienda.agregarPublicacion("Joystick ps4", E_Estado.USADO,"Sony","Joystick","EEUU","PS3/PS4/PS5/PC","Negro",150,true,12000,1,tomas,"fotito.com");
+
+
+
+
+
+
+//        System.out.print(tienda.toString());
+//
         GestionConsolaComandos consola = new GestionConsolaComandos(tienda);
         consola.menuPrincipal();
 

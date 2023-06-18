@@ -21,6 +21,7 @@ public class GeneDosPU<K,T> implements I_IBML_Map<T,K>, Serializable
         this.mapa = new HashMap<>();
     }
 
+
     //getters del mapa
     public HashMap<K, T> getMapa() {
         return mapa;
@@ -81,7 +82,6 @@ public class GeneDosPU<K,T> implements I_IBML_Map<T,K>, Serializable
             Map.Entry<K,T> entry = it.next();
             if(entry.getKey().equals(key))
             {
-                it.remove();
                 mapa.put(key, elementoNuevo);
             }
         }

@@ -32,9 +32,15 @@ public class GestionTienda
     }
 
 
-    //métodos
+    //getters
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+    public GeneDosPU<String, Usuario> getUsuarios() {
+        return usuarios;
+    }
 
-    //agregar usuarios
+    //metodos
 
     /**
      * Método para verificar si la contraseña contiene al menos una letra mayúsucla.
@@ -168,25 +174,48 @@ public class GestionTienda
     }
 
 
-    //agregar publicacion
-    public Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String tags, String plataformas, String color, float peso, boolean inalambrico)
+    /**
+     * Se crea un periferico para después agregarlo a una publicacion
+     * @param nombre
+     * @param estado
+     * @param marca
+     * @param modelo
+     * @param origen
+     * @param plataformas
+     * @param color
+     * @param peso
+     * @param inalambrico
+     * @return
+     */
+    public Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico)
     {
         String id = GeneradorUUID.generarID();
-        Periferico periferico = new Periferico(nombre,id,estado,marca,modelo,origen,tags,plataformas,color,peso,inalambrico);
+        Periferico periferico = new Periferico(nombre,id,estado,marca,modelo,origen,plataformas,color,peso,inalambrico);
         return periferico;
     }
-    public Publicacion crearPublicacion(Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto)
+
+    /**
+     * Se crea una publicacion.
+     * @param nombre
+     * @param periferico
+     * @param precio
+     * @param stock
+     * @param dueno
+     * @param urlFoto
+     * @return
+     */
+    public Publicacion crearPublicacion(String nombre,Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto)
     {
         String id = GeneradorUUID.generarID();
-        Publicacion publicacion = new Publicacion(periferico,precio,stock,dueno,urlFoto);
+        Publicacion publicacion = new Publicacion(nombre,periferico,precio,stock,dueno,urlFoto,id);
         return publicacion;
     }
-    public void agregarPublicacion(String nombre, E_Estado estado, String marca, String modelo, String origen, String tags, String plataformas, String color, float peso, boolean inalambrico, float precio, int stock, String mailDueno)
+    public void agregarPublicacion(String nombre, E_Estado estado, String marca, String modelo, String origen,String plataformas, String color, float peso, boolean inalambrico, float precio, int stock, Usuario dueno, String urlFoto)
     {
-        Periferico periferico = crearPeriferico(nombre,estado,marca,modelo,origen,tags,plataformas,color,peso,inalambrico);
-        //buscar dueno por mail y retornarlo
-        //Publicacion publicacion = crearPublicacion(periferico,precio,stock,dueno);
-        //publicaciones.agregar(publicacion.getId(), publicacion);
+        Periferico periferico = crearPeriferico(nombre,estado,marca,modelo,origen,plataformas,color,peso,inalambrico);
+        Publicacion publicacion = crearPublicacion(nombre,periferico,precio,stock,dueno,urlFoto);
+        publicaciones.agregar(publicacion.getId(), publicacion);
+        dueno.agregarPublicacion(publicacion);
     }
 
 

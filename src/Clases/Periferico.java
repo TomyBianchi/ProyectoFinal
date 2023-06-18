@@ -12,20 +12,19 @@ public class Periferico {
     private String marca;
     private String modelo;
     private String origen;
-    private String tags;
     private String plataformas;
     private String color;
     private float peso;
     private boolean inalambrico; // true: inalámbrico, false: con cable
 
-    public Periferico(String nombre, String id, E_Estado estado, String marca, String modelo, String origen, String tags, String plataformas, String color, float peso, boolean inalambrico) {
+    public Periferico(String nombre, String id, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico) {
         this.nombre = nombre;
         this.id = id;
         this.estado = estado;
         this.marca = marca;
         this.modelo = modelo;
         this.origen = origen;
-        this.tags = tags;
+
         this.plataformas = plataformas;
         this.color = color;
         this.peso = peso;
@@ -38,7 +37,6 @@ public class Periferico {
         marca = "";
         modelo = "";
         origen = "";
-        tags = "";
         plataformas = "";
         color = "";
         peso = 0;
@@ -69,9 +67,7 @@ public class Periferico {
         return origen;
     }
 
-    public String getTags() {
-        return tags;
-    }
+
 
     public String getPlataformas() {
         return plataformas;
@@ -117,12 +113,11 @@ public class Periferico {
     public String toString() {
         return "Periferico{" +
                 "nombre='" + nombre + '\'' +
-                ", id=" + id +
+                ", id='" + id + '\'' +
                 ", estado=" + estado +
                 ", marca='" + marca + '\'' +
                 ", modelo='" + modelo + '\'' +
                 ", origen='" + origen + '\'' +
-                ", tags='" + tags + '\'' +
                 ", plataformas='" + plataformas + '\'' +
                 ", color='" + color + '\'' +
                 ", peso=" + peso +

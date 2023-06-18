@@ -6,11 +6,11 @@ import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
+import Genericas.GeneDosPU;
 
 import javax.xml.stream.events.Namespace;
 import java.nio.channels.SelectableChannel;
-import java.util.EmptyStackException;
-import java.util.Scanner;
+import java.util.*;
 
 import static Clases.Main.teclado;
 
@@ -350,11 +350,122 @@ public class GestionConsolaComandos
         }
         while (decision > 6 || decision < 1);
 
+        if(decision == 1)
+        {
+            verPublicacionesActivas(usuario);
+        }
+
 
 
     }
 
+    public void verPublicacionesActivas(Usuario usuario)
+    {
+        UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
 
+
+         HashMap<String,Publicacion> publicaciones = recorrerPublicaciones();
+        int rta = -1;
+        String opcion = "";
+        System.out.print(espacio + "1 para volver al menu anterior, 2 para agregar algun producto al carrito. " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+
+        do
+        {
+            System.out.print(espacio + "Opcion: ");
+            rta = teclado.nextInt();
+            teclado.nextLine();
+            if ((rta != 1 && rta != 2))
+            {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+            }
+        }
+        while (rta != 1 && rta != 2);
+
+        if(rta == 1)
+        {
+            paginaDos(usuario);
+        }
+        else
+        {
+            Publicacion pub = null;
+            recorrerPublicaciones();
+            do
+            {
+                System.out.print(espacio + "Nombre del producto que desea agregar al carrito: ");
+                opcion = teclado.nextLine();
+                pub = busquedaPublicacionPorNombre(publicaciones,opcion);
+
+                if(pub == null) //significa que no lo encontro
+                {
+                    System.out.print("\n" + espacio + "Nombre Incorrecto, proba con alguno de los nombres de la lista.\n");
+                }
+            }
+            while(pub == null);
+
+            usuarioNormal.agregarCarrito(pub);
+            pub.setStock(pub.getStock() - 1);
+
+            System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
+            verPublicacionesActivas(usuario);
+        }
+
+    }
+    public Publicacion busquedaPublicacionPorNombre(HashMap<String,Publicacion> mapa, String nombre)
+    {
+        Publicacion pub = null;
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Publicacion aux = null;
+            Map.Entry<String,Publicacion> entry = it.next();
+             aux = entry.getValue();
+             if(aux.getStock() >= 1) {
+
+
+                 if (aux.getNombrePublicacion().equals(nombre)) {
+                     pub = aux;
+                     return pub;
+                 }
+             }
+        }
+        return pub;
+    }
+    public HashMap<String,Publicacion> recorrerPublicaciones()
+    {
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        GeneDosPU<String,Publicacion> lista = tienda.getPublicaciones();
+        HashMap<String,Publicacion> mapa = lista.getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones
+
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion pub  = entry.getValue();
+            if(pub.getStock() >= 1) { // muestro solo los productos que tienen stock
+
+
+                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
+                System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
+                System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
+                System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
+                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + pub.getRating() + codigoReset + "\n");
+            }
+        }
+        return mapa;
+    }
 
 
 

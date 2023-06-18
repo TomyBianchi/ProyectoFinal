@@ -37,6 +37,11 @@ public class Carrito implements Serializable
         return envio;
     }
 
+    public void agregarPublicacion(Publicacion publicacion)
+    {
+        publicaciones.agregar(publicacion.getId(),publicacion);
+    }
+
 
     //no hace falta el equals ni el compareTo, un carrito nunca se va comparar con otro carrito.
     @Override

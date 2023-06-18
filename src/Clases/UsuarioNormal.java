@@ -95,5 +95,10 @@ implements Serializable
         return rta;
     }
 
+    public void agregarCarrito(Publicacion publicacion)
+    {
+        carrito.agregarPublicacion(publicacion);
+    }
+
 
 }
