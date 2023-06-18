@@ -20,6 +20,11 @@ public class GeneUnoDM<T> implements I_ABML<T>, Serializable
         this.set = new HashSet<>();
     }
 
+    //getter del set
+    public HashSet<T> getSet() {
+        return set;
+    }
+
     //metodos
     /**
      * Método que agrega un elemento al set genérico.
@@ -63,14 +68,18 @@ public class GeneUnoDM<T> implements I_ABML<T>, Serializable
         while (it.hasNext())
         {
             T element = it.next();
-            if(elemento.equals(elemento))
+            if(element.equals(elemento))
             {
-                set.remove(elemento);
+                it.remove();
                 set.add(elementoNuevo);
             }
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        return "GeneUnoDM{" +
+                "set=" + set +
+                '}';
+    }
 }

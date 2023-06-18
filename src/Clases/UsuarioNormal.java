@@ -71,7 +71,7 @@ implements Serializable
 
     @Override
     public String toString() {
-        return super.toString() + "UsuarioNormal{" +
+        return super.toString() + "     UsuarioNormal{" +
                 "favoritas=" + favoritas +
                 ", carrito=" + carrito +
                 ", compras=" + compras +

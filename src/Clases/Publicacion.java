@@ -135,5 +135,15 @@ public class Publicacion implements Serializable{
         return rta;
     }
 
+    //metodos
+
+    /**
+     * Agrega un envio a la lista de envios, se pueden agregar todos los que el vendedor quiera.
+     */
+    public void agregarEnvio(Envio envio)
+    {
+        envios.agregar(envio);
+    }
+
 
 }

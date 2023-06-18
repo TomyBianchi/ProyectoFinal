@@ -5,8 +5,11 @@ package Excepciones;
  * @author Ludmila
  */
 public class ExcepcionClaveDuplicada extends Exception {
+
     public ExcepcionClaveDuplicada(String info)
     {
         super(info);
     }
+
+
 }

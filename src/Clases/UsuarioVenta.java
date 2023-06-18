@@ -79,7 +79,7 @@ implements Serializable{
 
     @Override
     public String toString() {
-        return super.toString() + "UsuarioVenta{" +
+        return super.toString() + "     UsuarioVenta{" +
                 "verificado=" + verificado +
                 ", url='" + url + '\'' +
                 ", cuit='" + cuit + '\'' +

@@ -5,9 +5,14 @@ import Enums.E_TipoUsuario;
 import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
+import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
 import ClasesExtra.GeneradorUUID;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.PrimitiveIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,19 +102,23 @@ public class GestionTienda
      * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
      * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste
+    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste,ExcepcionNumeroRepetido
     {
         if(usuarios.contieneClave(dni))
         {
             throw new ExcepcionClaveDuplicada("Error: El DNI ingresado ya existe.");
         }
-        else if (usuarios.contieneClave(mail))
+        else if (mailRepetido(mail))
         {
-            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe.");
+            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe en otra cuenta. Inicia sesion con tu cuenta o proba con un mail distinto a ", mail);
         }
         else if(!verificarContrasena(contrasena))
         {
-            throw new ExcepcionConstrasenaInvalida("Error: La contraseña debe tener por lo menos 8 caracteres.");
+            throw new ExcepcionConstrasenaInvalida("Error: Recorda que la contraseña tiene que tener minimo 8 caracteres, una mayuscula y un numero.");
+        }
+        else if(numeroRepetido(numeroTelefono))
+        {
+            throw new ExcepcionNumeroRepetido("Error: El numero introducido ya existe en otra cuenta. Inicia sesion con tu cuenta o proba con un numero distinto a ", numeroTelefono);
         }
         else {
             UsuarioNormal usuario = new UsuarioNormal(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
@@ -134,19 +143,23 @@ public class GestionTienda
      * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
      * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste
+    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste, ExcepcionNumeroRepetido
     {
         if(usuarios.contieneClave(dni))
         {
             throw new ExcepcionClaveDuplicada("Error: El DNI ingresado ya existe.");
         }
-        else if(usuarios.contieneClave(mail))
+        else if(mailRepetido(mail))
         {
-            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe.");
+            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe. Proba con un mail distinto a ", mail);
         }
         else if(!verificarContrasena(contrasena))
         {
-            throw new ExcepcionConstrasenaInvalida("Error: La contraseña debe tener por lo menos 8 caracteres.");
+            throw new ExcepcionConstrasenaInvalida("Error: Recorda que la contraseña tiene que tener minimo 8 caracteres, una mayuscula y un numero.");
+        }
+        else if(numeroRepetido(numeroTelefono))
+        {
+            throw new ExcepcionNumeroRepetido("Error: El numero introducido ya existe en otra cuenta. Inicia sesion con tu cuenta o proba con un numero distinto a ", numeroTelefono);
         }
         else {
             UsuarioVenta usuario = new UsuarioVenta(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, url, cuit, condicionFiscal);
@@ -171,4 +184,56 @@ public class GestionTienda
         publicaciones.agregar(String.valueOf(idPublicacion),publicacion);
     }
 
+    /**
+     * Es un metodo para agregar un envio a la publicacion que especifique el usuario.
+     * @param publicacion Publicacion a la que se le va a agregar el envio.
+     * @param envioAgregar Envio a agregar
+     */
+    public void agregarEnvioPublicacion(Publicacion publicacion, Envio envioAgregar) {
+        publicacion.agregarEnvio(envioAgregar); //se agregar el envio en la publicacion
+        publicaciones.modificar(publicacion.getId(),publicacion);
+    }
+
+    /**
+     * Es una funcion la cual returna true si el mail ya esta en la base de datos, en caso contrario returna false
+     * @return
+     */
+    public boolean mailRepetido(String mail)
+    {
+        HashMap<String, Usuario> mapa = usuarios.getMapa();
+        Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator();
+        boolean rta = false;
+        while(it.hasNext()) {
+            Map.Entry<String, Usuario> entry = it.next();
+            Usuario usuario = entry.getValue();
+            if (usuario.getMail().equals(mail)) {
+                rta = true;
+            }
+        }
+        return rta;
+    }
+
+    public boolean numeroRepetido(String numero)
+    {
+        HashMap<String, Usuario> mapa = usuarios.getMapa();
+        Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator();
+        boolean rta = false;
+        while(it.hasNext()) {
+            Map.Entry<String, Usuario> entry = it.next();
+            Usuario usuario = entry.getValue();
+            if (usuario.getNumeroTelefono().equals(numero)) {
+                rta = true;
+            }
+        }
+        return rta;
+    }
+
+
+    @Override
+    public String toString() {
+        return "GestionTienda{ " +
+                "Usuarios = " + "\n" + usuarios +
+                ", publicaciones=  \n" + publicaciones +
+                '}';
+    }
 }

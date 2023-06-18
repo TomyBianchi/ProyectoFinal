@@ -6,6 +6,7 @@ import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
 public class Usuario implements Serializable{
+    
     private String mail;
     private String contrasena;
     private String nombre;
@@ -138,7 +139,7 @@ public class Usuario implements Serializable{
     }
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "  Usuario (CLASE USUARIO){ " +
                 "mail='" + mail + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
@@ -150,7 +151,7 @@ public class Usuario implements Serializable{
                 ", direcciones=" + direcciones +
                 ", metodosDePago=" + metodosDePago +
                 ", promedioVentas=" + promedioVentas +
-                '}';
+                '}' + "\n";
     }
 
 

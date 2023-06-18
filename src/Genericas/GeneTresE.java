@@ -13,6 +13,11 @@ public class GeneTresE <T> implements I_ABML<T>, Serializable
         this.lista = new ArrayList<>();
     }
 
+    //getter de la lista
+    public ArrayList<T> getLista() {
+        return lista;
+    }
+
     public void agregar(T element)
     {
         lista.add(element);
@@ -42,8 +47,10 @@ public class GeneTresE <T> implements I_ABML<T>, Serializable
         }
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "GeneTresE{" +
+                "lista=" + lista +
+                '}';
+    }
 }
