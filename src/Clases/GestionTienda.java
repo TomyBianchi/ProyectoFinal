@@ -1,12 +1,12 @@
 package Clases;
 
-
 import Enums.E_CondFiscal;
 import Enums.E_TipoUsuario;
 import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Genericas.GeneDosPU;
+import ClasesExtra.GeneradorUUID;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,11 +26,9 @@ public class GestionTienda
     }
 
 
-
-
-
-
     //métodos
+
+    //agregar usuarios
 
     /**
      * Método para verificar si la contraseña contiene al menos una letra mayúsucla.
@@ -157,5 +155,20 @@ public class GestionTienda
     }
 
 
+    //agregar publicacion
+
+    /**
+     * Este método agrega un objeto del tipo Publicacion a la lista de publicaciones. Genera un ID automático.
+     * @param periferico
+     * @param precio
+     * @param stock
+     * @param dueno dueño
+     */
+    public void agregarPublicacion(Periferico periferico, float precio, int stock, Usuario dueno)
+    {
+        Publicacion publicacion = new Publicacion(periferico,precio,stock,dueno);
+        String idPublicacion = GeneradorUUID.generarID();
+        publicaciones.agregar(String.valueOf(idPublicacion),publicacion);
+    }
 
 }
