@@ -7,9 +7,18 @@ import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
+
 public class Main {
-    public static void main(String[] args)
-    {
+
+    static Scanner teclado = new Scanner(System.in);
+    public static void main(String[] args) throws InterruptedException, URISyntaxException {
+
+
         GestionTienda tienda = new GestionTienda();
 
         try
@@ -31,7 +40,10 @@ public class Main {
             System.out.print(e.getMessage());
         };
 
-        System.out.print(tienda.toString());
+        //System.out.print(tienda.toString());
+
+        GestionConsolaComandos consola = new GestionConsolaComandos(tienda);
+        consola.menuPrincipal();
 
 
 

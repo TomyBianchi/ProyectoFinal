@@ -74,7 +74,7 @@ implements Serializable
         return super.toString() + "     UsuarioNormal{" +
                 "favoritas=" + favoritas +
                 ", carrito=" + carrito +
-                ", compras=" + compras +
+                ", compras=" + compras + "\n\n\n" +
                 '}';
     }
 

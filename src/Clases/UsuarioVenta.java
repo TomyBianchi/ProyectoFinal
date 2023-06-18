@@ -83,7 +83,7 @@ implements Serializable{
                 "verificado=" + verificado +
                 ", url='" + url + '\'' +
                 ", cuit='" + cuit + '\'' +
-                ", condicionFiscal=" + condicionFiscal +
+                ", condicionFiscal=" + condicionFiscal + "\n\n\n" +
                 '}';
     }
 

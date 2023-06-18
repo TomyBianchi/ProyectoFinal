@@ -89,8 +89,8 @@ public class GeneDosPU<K,T> implements I_IBML_Map<T,K>, Serializable
 
     @Override
     public String toString() {
-        return " Recorro mapa de GENEDOS " +
-                " = " + mapa+ "  " +
+        return " Recorro mapa de GENEDOS \n " +
+                " =  " + mapa.toString() + "  " +
                 '}';
     }
 }

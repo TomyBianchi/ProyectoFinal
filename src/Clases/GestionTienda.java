@@ -231,9 +231,9 @@ public class GestionTienda
 
     @Override
     public String toString() {
-        return "GestionTienda{ " +
+        return "GestionTienda{\n " +
                 "Usuarios = " + "\n" + usuarios +
-                ", publicaciones=  \n" + publicaciones +
+                "\n\nPublicaciones=  \n" + publicaciones +
                 '}';
     }
 }
