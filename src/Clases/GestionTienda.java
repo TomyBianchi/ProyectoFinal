@@ -3,8 +3,9 @@ package Clases;
 
 import Enums.E_CondFiscal;
 import Enums.E_TipoUsuario;
-import Excepciones.ClaveDuplicadaException;
-import Excepciones.ConstrasenaInvalidaException;
+import Excepciones.ExcepcionClaveDuplicada;
+import Excepciones.ExcepcionConstrasenaInvalida;
+import Excepciones.ExcepcionMailYaExiste;
 import Genericas.GeneDosPU;
 
 import java.util.regex.Matcher;
@@ -23,10 +24,6 @@ public class GestionTienda
         this.usuarios = new GeneDosPU<>();
         this.publicaciones = new GeneDosPU<>();
     }
-
-
-
-
 
 
 
@@ -98,24 +95,24 @@ public class GestionTienda
      * @param numeroTelefono
      * @param tipoUsuario
      * @param dni
-     * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
-     * @throws ConstrasenaInvalidaException Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
+     * @throws ExcepcionClaveDuplicada Se lanza esta excepción cuando la clave está duplicada.
+     * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
+     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ClaveDuplicadaException, ConstrasenaInvalidaException
+    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste
     {
         if(usuarios.contieneClave(dni))
         {
-            throw new ClaveDuplicadaException("Error: El DNI ingresado ya existe.");
+            throw new ExcepcionClaveDuplicada("Error: El DNI ingresado ya existe.");
         }
         else if (usuarios.contieneClave(mail))
         {
-            throw new ClaveDuplicadaException("Error: El mail ingresado ya existe.");
+            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe.");
         }
         else if(!verificarContrasena(contrasena))
         {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe tener por lo menos 8 caracteres.");
+            throw new ExcepcionConstrasenaInvalida("Error: La contraseña debe tener por lo menos 8 caracteres.");
         }
-
         else {
             UsuarioNormal usuario = new UsuarioNormal(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
             usuarios.agregar(dni,usuario); //pasa como clave el dni del usuario
@@ -135,40 +132,29 @@ public class GestionTienda
      * @param url
      * @param cuit
      * @param condicionFiscal
-     * @throws ClaveDuplicadaException Se lanza esta excepción cuando la clave está duplicada.
-     * @throws ConstrasenaInvalidaException Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
+     * @throws ExcepcionClaveDuplicada Se lanza esta excepción cuando la clave está duplicada.
+     * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
+     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ClaveDuplicadaException, ConstrasenaInvalidaException
+    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste
     {
         if(usuarios.contieneClave(dni))
         {
-            throw new ClaveDuplicadaException("Error: El DNI ingresado ya existe.");
+            throw new ExcepcionClaveDuplicada("Error: El DNI ingresado ya existe.");
         }
         else if(usuarios.contieneClave(mail))
         {
-            throw new ClaveDuplicadaException("Error: El mail ingresado ya existe.");
+            throw new ExcepcionMailYaExiste("Error: El mail ingresado ya existe.");
         }
-        else if(contrasena.length() < 8)
+        else if(!verificarContrasena(contrasena))
         {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe tener por lo menos 8 caracteres.");
-        }
-        else if (!verificarMayuscula(contrasena))
-        {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe contener al menos una mayúscula.");
-        }
-        else if (!verificarNumero(contrasena))
-        {
-            throw new ConstrasenaInvalidaException("Error: La contraseña debe contener al menos un número.");
+            throw new ExcepcionConstrasenaInvalida("Error: La contraseña debe tener por lo menos 8 caracteres.");
         }
         else {
             UsuarioVenta usuario = new UsuarioVenta(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, url, cuit, condicionFiscal);
             usuarios.agregar(dni,usuario); //pasa como clave el dni del vendedor
         }
     }
-
-
-
-
 
 
 

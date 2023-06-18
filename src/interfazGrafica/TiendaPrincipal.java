@@ -9,9 +9,6 @@ import javax.swing.SwingConstants;
 
 import Clases.GestionTienda;
 import Clases.Usuario;
-import Enums.E_TipoUsuario;
-import Excepciones.ClaveDuplicadaException;
-import Excepciones.ConstrasenaInvalidaException;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
