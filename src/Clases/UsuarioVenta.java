@@ -21,9 +21,8 @@ implements Serializable{
         this.cuit = cuit;
         this.condicionFiscal = condicionFiscal;
     }
-    public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) {
+    public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, String url, String cuit, E_CondFiscal condicionFiscal) {
         super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni);
-        this.verificado = verificado;
         this.url = url;
         this.cuit = cuit;
         this.condicionFiscal = condicionFiscal;

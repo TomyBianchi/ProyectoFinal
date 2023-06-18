@@ -135,7 +135,6 @@ public class GestionTienda
      * @param numeroTelefono
      * @param tipoUsuario
      * @param dni
-     * @param verificado
      * @param url
      * @param cuit
      * @param condicionFiscal
@@ -143,7 +142,7 @@ public class GestionTienda
      * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
      * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
      */
-    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste, ExcepcionNumeroRepetido
+    public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni,String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste, ExcepcionNumeroRepetido
     {
         if(usuarios.contieneClave(dni))
         {
@@ -162,7 +161,7 @@ public class GestionTienda
             throw new ExcepcionNumeroRepetido("Error: El numero introducido ya existe en otra cuenta. Inicia sesion con tu cuenta o proba con un numero distinto a ", numeroTelefono);
         }
         else {
-            UsuarioVenta usuario = new UsuarioVenta(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, verificado, url, cuit, condicionFiscal);
+            UsuarioVenta usuario = new UsuarioVenta(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, url, cuit, condicionFiscal);
             usuarios.agregar(dni,usuario); //pasa como clave el dni del vendedor
         }
     }
@@ -213,6 +212,46 @@ public class GestionTienda
         return rta;
     }
 
+    /**
+     * Es un metodo el cual returna true si la clave va con el usuario, en caso contrario returna false
+     * @param clave clave a ingresar
+     * @return returna true si es correcto, false si no lo es
+     */
+    public Usuario claveConfirmacion(String usuario, String clave) //usuario puede ser mail o dni
+    {
+        HashMap<String, Usuario> mapa = usuarios.getMapa();
+
+        Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator(); //para recorrerlo
+        boolean rta = false;
+        while(it.hasNext()) {
+            Map.Entry<String, Usuario> entry = it.next();
+            Usuario auxUsuario = entry.getValue();
+            if (auxUsuario.getDni().equals(usuario) || auxUsuario.getMail().equals(usuario)) {
+                if (auxUsuario.getContrasena().equals(clave)) {
+                    return auxUsuario;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Es un metodo que returna true si existe el usuario, evaluado por dni o mail pasado por parametro
+     * @param metodo Mail o DNI a buscar
+     * @return Returna true si existe, en caso contrario returna false
+     */
+    public boolean existeUsuario(String metodo)
+    {
+        boolean rta = false;
+        if(mailRepetido(metodo) || usuarios.contieneClave(metodo)) //significa que si esta en la base de datos
+        {
+            rta = true;
+            return rta;
+        }
+        return rta;
+
+    }
+
     public boolean numeroRepetido(String numero)
     {
         HashMap<String, Usuario> mapa = usuarios.getMapa();
@@ -227,6 +266,8 @@ public class GestionTienda
         }
         return rta;
     }
+
+
 
 
     @Override

@@ -23,8 +23,8 @@ public class Main {
 
         try
         {
-            tienda.agregar("tomy.bianchi@hotmail.com","Tometo1234","Tomas","Bianchi","2233128691", E_TipoUsuario.NORMAL,"44956816");
-            tienda.agregar("Ludmila.Ippoliti@gmail.com","Ludmila1234","Ludmila","Ippiliti","2237658907", E_TipoUsuario.VENTA,"428767765",true,"www.nike.com","204287677659", E_CondFiscal.MONOTRIBUTO_B);
+            tienda.agregar("tomy","Aa1234567","Tomas","Bianchi","2233128691", E_TipoUsuario.NORMAL,"1");
+            tienda.agregar("Ludmila.Ippoliti@gmail.com","Ludmila1234","Ludmila","Ippiliti","2237658907", E_TipoUsuario.VENTA,"428767765","www.nike.com","204287677659", E_CondFiscal.MONOTRIBUTO_B);
             tienda.agregar("Mayi.Mauro@gmail.com","Mati1234","Matias","Mauro","2234321123", E_TipoUsuario.NORMAL,"432348890");
         }
         catch (ExcepcionClaveDuplicada e){

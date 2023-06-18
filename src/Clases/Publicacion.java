@@ -11,6 +11,7 @@ public class Publicacion implements Serializable{
     private String id;
     private String reviews;
     private int rating;
+    private String urlFoto;
     private Usuario dueno; //dueno de la publicacion
     private GeneTresE<Envio> envios; //lista de envios disponibles de la publicacion.
 
@@ -25,7 +26,7 @@ public class Publicacion implements Serializable{
         this.envios = new GeneTresE<>();
     }
     //constructor sin reviews, rating ni id (porque se autogenera) para agregar publicacion
-    public Publicacion(Periferico periferico, float precio, int stock, Usuario dueno) {
+    public Publicacion(Periferico periferico, float precio, int stock, Usuario dueno,String urlFoto) {
         this.periferico = periferico;
         this.precio = precio;
         this.stock = 0;
@@ -34,6 +35,7 @@ public class Publicacion implements Serializable{
         this.rating = rating;
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
+        this.urlFoto = urlFoto;
     }
     public Publicacion() {
         this.periferico = null;
