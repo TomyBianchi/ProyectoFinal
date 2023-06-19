@@ -44,6 +44,14 @@ public class UsuarioNormal extends Usuario implements Serializable
     {
         carrito.agregarPublicacion(publicacion);
     }
+    public void agregarcompra(Publicacion publicacion)
+    {
+        compras.agregarCompra(publicacion);
+    }
+    public void agregarFavorito(Publicacion publicacion)
+    {
+        favoritas.agregar(publicacion.getId(),publicacion);
+    }
 
     // GETTERS, SETTERS Y OTROS
     public GeneDosPU<String, Publicacion> getFavoritas() {

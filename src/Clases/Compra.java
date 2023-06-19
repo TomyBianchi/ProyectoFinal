@@ -28,6 +28,11 @@ public class Compra implements Serializable
         return publicaciones;
     }
 
+    public void agregarCompra(Publicacion pub)
+    {
+        publicaciones.agregar(pub.getId(),pub);
+    }
+
     public float getTotalGastado() {
         float total = 0;
         HashMap<String,Publicacion> mapa = getPublicaciones().getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones

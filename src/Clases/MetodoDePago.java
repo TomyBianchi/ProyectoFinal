@@ -63,7 +63,7 @@ public class MetodoDePago implements Serializable
             if(o instanceof MetodoDePago)
             {
                 MetodoDePago aux = (MetodoDePago) o;
-                if(getNumeroTarjeta().equals(aux.getNumeroTarjeta()))
+                if(getUltimosCuatroTargeta().equals(aux.getTipoPago()))
                 {
                     rta = true;
                 }

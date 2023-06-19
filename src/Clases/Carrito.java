@@ -42,6 +42,11 @@ public class Carrito implements Serializable
         publicaciones.agregar(publicacion.getId(),publicacion);
     }
 
+    public void borrarPublicacion(Publicacion publicacion)
+    {
+        publicaciones.borrar(publicacion.getId());
+    }
+
     // No hace falta el equals ni el compareTo, un carrito nunca se va comparar con otro carrito.
     @Override
     public int hashCode() {

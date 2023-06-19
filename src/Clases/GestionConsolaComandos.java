@@ -9,6 +9,7 @@ import Genericas.GeneDosPU;
 import Genericas.GeneTresE;
 import Genericas.GeneUnoDM;
 
+import javax.swing.plaf.DesktopPaneUI;
 import java.util.*;
 
 import static Clases.Main.teclado;
@@ -413,7 +414,7 @@ public class GestionConsolaComandos
          HashMap<String,Publicacion> publicaciones = recorrerPublicaciones();
         int rta = -1;
         String opcion = "";
-        System.out.print(espacio + "1 para volver al menú anterior, 2 para agregar un producto al carrito. " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+        System.out.print(espacio + "1 para volver al menú anterior, 2 para agregar un producto al carrito, o 3 para agregar una publicacion a favoritos. " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
 
         do
         {
@@ -425,13 +426,13 @@ public class GestionConsolaComandos
                 System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
             }
         }
-        while (rta != 1 && rta != 2);
+        while (rta != 1 && rta != 2 && rta != 3);
 
         if(rta == 1)
         {
             paginaDos(usuario);
         }
-        else
+        else if(rta == 2)
         {
             Publicacion pub = null;
             recorrerPublicaciones();
@@ -448,11 +449,32 @@ public class GestionConsolaComandos
             }
             while(pub == null);
 
+            //System.out.print("\nARRIBA DE AGREGARCARRITO\n\n");
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
-
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
-            paginaDos(usuario);
+            verPublicacionesActivas(usuario);
+        }
+        else
+        {
+            Publicacion pub = null;
+            recorrerPublicaciones();
+            do
+            {
+                System.out.print(espacio + "Nombre del producto que desea agregar a favoritos: ");
+                opcion = teclado.nextLine();
+                pub = busquedaPublicacionPorNombre(publicaciones,opcion);
+
+                if(pub == null) //significa que no lo encontro
+                {
+                    System.out.print("\n" + espacio + "Nombre incorrecto, pruebe con alguno de los nombres de la lista.\n");
+                }
+            }
+            while(pub == null);
+
+            usuarioNormal.agregarFavorito(pub);
+            System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito a tus favoritos\n");
+            verPublicacionesActivas(usuario);
         }
 
     }
@@ -1336,50 +1358,41 @@ public class GestionConsolaComandos
         String codigoReset = "\u001B[0m";
 
 
-        HashMap<String,Publicacion> publicaciones = recorrerCarrito(usuario); //se recorre el carrito
+        HashMap<String,Publicacion> mapa = recorrerCarrito(usuario); //se recorre el carrito
+        Iterator<Map.Entry<String,Publicacion>> iterator = mapa.entrySet().iterator();
         int rta = -1;
         String opcion = "";
         System.out.print(espacio + "1 para volver al menú anterior, 2 para comprar lo que hay en el carrito " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
 
-//        do
-//        {
-//            System.out.print(espacio + "Opción: ");
-//            rta = teclado.nextInt();
-//            teclado.nextLine();
-//            if ((rta != 1 && rta != 2))
-//            {
-//                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
-//            }
-//        }
-//        while (rta != 1 && rta != 2);
-//
-//        if(rta == 1)
-//        {
-//            paginaDos(usuario);
-//        }
-//        else
-//        {
-//            Publicacion pub = null;
-//            recorrerPublicaciones();
-//            do
-//            {
-//                System.out.print(espacio + "Nombre del producto que desea agregar al carrito: ");
-//                opcion = teclado.nextLine();
-//                pub = busquedaPublicacionPorNombre(publicaciones,opcion);
-//
-//                if(pub == null) //significa que no lo encontro
-//                {
-//                    System.out.print("\n" + espacio + "Nombre incorrecto, pruebe con alguno de los nombres de la lista.\n");
-//                }
-//            }
-//            while(pub == null);
-//
-//            usuarioNormal.agregarCarrito(pub);
-//            pub.setStock(pub.getStock() - 1);
-//
-//            System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
-//            paginaDos(usuario);
-//        }
+        do
+        {
+            System.out.print(espacio + "Opción: ");
+            rta = teclado.nextInt();
+            teclado.nextLine();
+            if ((rta != 1 && rta != 2))
+            {
+                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
+            }
+        }
+        while (rta != 1 && rta != 2);
+
+        if(rta == 1)
+        {
+            paginaDos(usuario);
+        }
+        else
+        {
+            if(!iterator.hasNext())
+            {
+                System.out.print("\n");
+                System.out.print(espacio + "No podes comprar, el carrito esta vacio.\n");
+                paginaDos(usuario);
+            }
+
+        comprarProductos(usuarioNormal,mapa);
+
+
+        }
     }
     public HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
     {
@@ -1406,20 +1419,258 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion pub  = entry.getValue();
-            if(pub.getStock() >= 1) { // muestro solo los productos que tienen stock
 
 
                 System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
                 System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
                 System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
-                System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
                 System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
                 System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + pub.getRating() + codigoReset + "\n");
-            }
+
         }
         return mapa;
     }
+    public void comprarProductos(UsuarioNormal usuarioNormal, HashMap<String,Publicacion> carrito)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+        float sumaProductos = 0;
+
+        Iterator<Map.Entry<String,Publicacion>> itCarrito = carrito.entrySet().iterator();
+
+
+        while (itCarrito.hasNext()) { //itera con todas las publicaciones del carrito
+
+
+            GeneUnoDM<MetodoDePago> metodos = usuarioNormal.getMetodosDePago(); //para recorrer los metodos
+            HashSet<MetodoDePago> set = metodos.getSet();
+            Iterator<MetodoDePago> it = set.iterator();
+
+            System.out.print("\n");
+            System.out.print("\n");
+            System.out.print(espacio + "Tenes estos metodos de pago disponibles." + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+            System.out.print("\n");
+            System.out.print("\n");
+            while(it.hasNext())
+                {
+                    MetodoDePago aux = it.next();
+                    System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.print("\n");
+                    System.out.print(espacio + "Tipo de tarjeta: " + aux.getTipoPago());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Tarjeta: " + aux.getUltimosCuatroTargeta());
+                    System.out.print("\n");
+                    System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                }
+
+
+            String cuatroUlt = " ";
+            boolean bandera = false;
+
+            System.out.print("\n");
+            System.out.print(espacio + "Decime los ultimos 4 numeros de la tarjeta con la que desea pagar: ");
+            cuatroUlt = teclado.next();
+
+            GeneUnoDM<MetodoDePago> metodosTres = usuarioNormal.getMetodosDePago(); //para recorrer los metodos
+            HashSet<MetodoDePago> setTres = metodos.getSet();
+            Iterator<MetodoDePago> ite = set.iterator();
+
+            while (ite.hasNext())
+            {
+                MetodoDePago auxDos = ite.next();
+                if(auxDos.getUltimosCuatroTargeta().substring(auxDos.getUltimosCuatroTargeta().length() - 4).equals(cuatroUlt.substring(cuatroUlt.length() - 4)))
+                {
+                    System.out.print("\n");
+                    System.out.print(espacio + "Metodo de pago Encontrado.\n\n");
+                    bandera = true;
+                }
+            }
+            if(!bandera) {
+
+
+                System.out.print("\n");
+                System.out.print(espacio + "No se encontro un metodo de pago con esas caracteristicas\n\n");
+                System.out.print("\n");
+                carrito(usuarioNormal);
+            }
+
+            System.out.print("\n\n\n");
+            System.out.print(espacio + "Direcciones disponibles: ");
+
+            //se recorren las direcciones disponibles del usuario
+            GeneUnoDM<Direccion> metodosCuatro = usuarioNormal.getDirecciones(); //para recorrer los metodos
+            HashSet<Direccion> setCuatro = metodosCuatro.getSet();
+            Iterator<Direccion> iteratorCuatro = setCuatro.iterator();
+
+            if(!iteratorCuatro.hasNext())
+            {
+                System.out.print("\n");
+                System.out.print(espacio + "No tiene Direcciones agregadas, agregue una direccion antes de poder avanzar.");
+                System.out.print("\n");
+                paginaDos(usuarioNormal);
+            }
+            else
+            {
+
+                System.out.print("\n");
+                System.out.print("\n");
+                while(iteratorCuatro.hasNext())
+                {
+                    Direccion aux = iteratorCuatro.next();
+                    System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.print("\n");
+                    System.out.print(espacio + "Provincia: " + aux.getProvincia());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Ciudad: " + aux.getCiudad());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Calle: " + aux.getCalle());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Altura: " + aux.getAltura());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Departamento: " + aux.getDepartamento());
+                    System.out.print("\n");
+                    System.out.print(espacio +"Codigo postal: " + aux.getCp());
+                    System.out.print("\n");
+                    System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                }
+            }
+            String calle = "";
+            String altura = "";
+            boolean banderaDos = false;
+
+            System.out.print("\n");
+            System.out.print(espacio + "Decime la calle y altura de la direccion a la que queres mandar el envio. \n");
+            System.out.print(espacio + "Calle: ");
+            calle = teclado.next();
+
+            System.out.print("\n");
+            teclado.nextLine();
+
+            System.out.print(espacio + "Altura: ");
+            altura = teclado.next();
+            System.out.print("\n");
+
+
+            GeneUnoDM<Direccion> metodosCinco = usuarioNormal.getDirecciones(); //para recorrer los metodos
+            HashSet<Direccion> setCinco = metodosCinco.getSet();
+            Iterator<Direccion> iteratorCinco = setCinco.iterator();
+
+            while (iteratorCinco.hasNext()) {
+                Direccion aux = iteratorCinco.next();
+                if (aux.getCalle().equals(calle) && aux.getAltura().equals(altura)) {
+                    System.out.print("\n");
+                    System.out.print(espacio + "Direccion encontrada.\n\n");
+                    banderaDos = true;
+                }
+            }
+            if (!banderaDos) {
+                System.out.print("\n");
+                System.out.print(espacio + "No se encontro una direccion con esas caracteristicas\n\n");
+                System.out.print("\n");
+                carrito(usuarioNormal);
+            }
+
+            System.out.print("\n");
+            System.out.print(espacio + "Ahora vas a seleccionar el medio de envio que mas te interese. Tenes que escribir el nombre del tiopo.\n");
+
+            Map.Entry<String,Publicacion>entry = itCarrito.next();
+            Publicacion auxialiar = entry.getValue();
+
+            GeneTresE<Envio> geneTresLista = auxialiar.getEnvios(); //bajo todos los envios disponibles de cada una de las publicaciones
+            ArrayList<Envio> arrayLista = geneTresLista.getLista();
+            Envio auxEnvio = null;
+
+            for(int i = 0; i < arrayLista.size(); i++)
+            {
+                auxEnvio  = arrayLista.get(i);
+                System.out.print(espacio + "Tipo de envio: " + auxEnvio.getTipoEnvio() + "\n");
+                System.out.print(espacio + "Precio: " + auxEnvio.getPrecio() + "\n");
+                String rtaSimple = "";
+                if(auxEnvio.isExpress())
+                {
+                    rtaSimple = "si";
+                }
+                else
+                {
+                    rtaSimple = "no";
+                }
+                System.out.print(espacio + "EnvioExpress: " + rtaSimple + "\n");
+            }
+
+            System.out.print("\n\n");
+            teclado.nextLine();
+            System.out.print(espacio + "Opcion: ");
+            String respuestaEnvio = teclado.next();
+            boolean banderaEnvio = false;
+
+
+            for(int i = 0; i < arrayLista.size(); i++) {
+
+                auxEnvio = arrayLista.get(i);
+                System.out.print("\n");
+                if(respuestaEnvio.equals(auxEnvio.getTipoEnvio().getNombre()))
+                {
+                    System.out.print(espacio + "Envio escrito correctamente.\n");
+                    banderaEnvio = true;
+                }
+            }
+            if(!banderaEnvio)
+            {
+                System.out.print(espacio + "Ese envio no existe.\n");
+                carrito(usuarioNormal);
+            }
+
+            sumaProductos+= auxialiar.getPrecio() + auxEnvio.getPrecio();
+
+        }
+
+        System.out.print("\n\n");
+
+        int respuestaFinal = 0;
+        do
+        {
+            System.out.print(espacio + "¿Esta seguro de hacer la compra?.1-Si 2-No. La suma de los productos es " + sumaProductos + "$.");
+            System.out.print("\n");
+            teclado.nextLine();
+            System.out.print(espacio + "Opcion: ");
+            respuestaFinal = teclado.nextInt();
+            if (respuestaFinal < 1 && respuestaFinal > 2)
+            {
+                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
+            }
+        }
+        while(respuestaFinal < 1 && respuestaFinal > 2);
+
+        if(respuestaFinal == 1)
+        {
+            System.out.print(espacio + "Felicidades por realizar su compra. Los plazos de envios y caracteristicas de su compra se veran en Mis Compras.\n" + espacio +"El comprobante fue enviado a su direccion de mail " + usuarioNormal.getMail());
+            System.out.print("\n");
+            agregarCarritoACompras(carrito,usuarioNormal);
+        }
+        else
+        {
+            System.out.print(espacio + "Los elementos se quedaran dentro de su carrito.");
+        }
+        paginaDos(usuarioNormal);
+    }
+    public void agregarCarritoACompras(HashMap<String,Publicacion> carrito, UsuarioNormal usuarioNormal)
+    {
+        Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion pub = entry.getValue();
+            usuarioNormal.agregarcompra(pub); //se agregar a compras
+            usuarioNormal.getCarrito().borrarPublicacion(pub); //se elimina del carrito
+        }
+
+    }
+
 
 
 }

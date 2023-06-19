@@ -213,6 +213,11 @@ public class GestionTienda
         return publicacion;
     }
 
+    public void agregarDireccion(Usuario usuario, Direccion direccion)
+    {
+        usuario.agregarDireccion(direccion);
+    }
+
     /**
      * Método para agregar un envío a la publicación que especifique el usuario.
      * @param publicacion Publicación a la que se le va a agregar el envío.
