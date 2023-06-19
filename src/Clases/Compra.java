@@ -43,7 +43,7 @@ public class Compra implements Serializable
             Publicacion aux = entry.getValue();
             total += aux.getPrecio();
         }
-        return totalGastado;
+        return total;
     }
 
     @Override

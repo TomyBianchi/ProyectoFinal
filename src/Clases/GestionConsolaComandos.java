@@ -385,7 +385,7 @@ public class GestionConsolaComandos
         }
         else if(decision == 4)
         {
-
+            favoritos(usuario);
         }
         else if(decision == 5)
         {
@@ -1245,7 +1245,7 @@ public class GestionConsolaComandos
             System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
             System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + aux.getRating() + codigoReset + "\n");
         }
-        System.out.print(espacio + "Total Gastado: " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
+        System.out.print(espacio + "Total Gastado (sin contar envios): " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
         miCuenta(usuario);
     }
     public void mostrarVentas(Usuario usuario)
@@ -1576,7 +1576,9 @@ public class GestionConsolaComandos
             }
 
             System.out.print("\n");
-            System.out.print(espacio + "Ahora vas a seleccionar el medio de envio que mas te interese. Tenes que escribir el nombre del tiopo.\n");
+            System.out.print(espacio + "Ahora vas a seleccionar el medio de envio que mas te interese. Tenes que escribir el nombre del tipo de envio.\n");
+            System.out.print("\n");
+
 
             Map.Entry<String,Publicacion>entry = itCarrito.next();
             Publicacion auxialiar = entry.getValue();
@@ -1670,7 +1672,113 @@ public class GestionConsolaComandos
         }
 
     }
+    public void favoritos(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
 
+        UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
+        boolean bandera = false; //para recorrer los favoritos
+        String decision = " ";
+        Publicacion pub = null;
+
+        GeneDosPU<String, Publicacion> favoritos = usuarioNormal.getFavoritas();
+        HashMap<String,Publicacion>  mapa = favoritos.getMapa();
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+
+
+        if(!it.hasNext())
+        {
+            System.out.print(espacio + "No hay nada en tus favoritos.");
+            paginaDos(usuario);
+        }
+
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion publi  = entry.getValue();
+
+                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + publi.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + publi.getUrlFoto() + codigoReset + "\n");
+                System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + publi.getPrecio() + codigoReset + "\n");
+                System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + publi.getDueno().getNombre() + codigoReset + "\n");
+                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + publi.getRating() + codigoReset + "\n");
+
+        }
+
+        int rta = -1;
+        String opcion = "";
+        System.out.print(espacio + "¿Que desea hacer? 1-Volver al menu 2-Agregar Favorito a Carrito: " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+
+        do
+        {
+            System.out.print(espacio + "Opción: ");
+            rta = teclado.nextInt();
+            teclado.nextLine();
+            if ((rta != 1 && rta != 2))
+            {
+                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
+            }
+        }
+        while (rta != 1 && rta != 2);
+
+        if(rta == 1)
+        {
+            paginaDos(usuarioNormal);
+        }
+        else if(rta == 2)
+        {
+
+            Iterator<Map.Entry<String,Publicacion>> iterator = mapa.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Publicacion> entry = iterator.next();
+                Publicacion publi = entry.getValue();
+
+                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + publi.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + publi.getUrlFoto() + codigoReset + "\n");
+                System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + publi.getPrecio() + codigoReset + "\n");
+                System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + publi.getDueno().getNombre() + codigoReset + "\n");
+                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + publi.getRating() + codigoReset + "\n");
+
+            }
+
+
+            do {
+                System.out.print("\n");
+                System.out.print(espacio + "Nombre de la publicacion: ");
+                decision = teclado.nextLine();
+                System.out.print("\n");
+
+                Iterator<Map.Entry<String,Publicacion>> iteratorDos = mapa.entrySet().iterator();
+                while (iteratorDos.hasNext())
+                {
+                    Map.Entry<String, Publicacion> entry = iteratorDos.next();
+                    Publicacion publi = entry.getValue();
+
+                    if (decision.equals(publi.getNombrePublicacion())) {
+                        bandera = true; //se encontro, nombre correcto
+                        pub = publi;
+                    }
+                }
+                if(!bandera)
+                {
+                    System.out.print(espacio + "Esa publicacion no esta en tus favoritos. Intenta denuevo.\n");
+                }
+            }while (!bandera);
+
+            usuarioNormal.agregarCarrito(pub);
+            pub.setStock(pub.getStock() - 1);
+            System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
+            paginaDos(usuarioNormal);
+        }
+
+
+    }
 
 
 }
