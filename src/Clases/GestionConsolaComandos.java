@@ -403,7 +403,12 @@ public class GestionConsolaComandos
 
     public void verPublicacionesActivas(Usuario usuario)
     {
-        UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
+        UsuarioNormal usuarioNormal = null;
+
+        if(usuario instanceof  UsuarioNormal) {
+             usuarioNormal = (UsuarioNormal) usuario;
+        }
+
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
         String codigoSubrayado = "\u001B[4m";
@@ -434,6 +439,11 @@ public class GestionConsolaComandos
         }
         else if(rta == 2)
         {
+            if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
+            {
+                System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto al carrito.\n");
+                paginaDos(usuario);
+            }
             Publicacion pub = null;
             recorrerPublicaciones();
             do
@@ -457,6 +467,11 @@ public class GestionConsolaComandos
         }
         else
         {
+            if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
+            {
+                System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto al carrito.\n");
+                paginaDos(usuario);
+            }
             Publicacion pub = null;
             recorrerPublicaciones();
             do
@@ -516,6 +531,7 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion pub  = entry.getValue();
+            Periferico aux = pub.getPeriferico();
             if(pub.getStock() >= 1) { // muestro solo los productos que tienen stock
 
 
@@ -524,8 +540,8 @@ public class GestionConsolaComandos
                 System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
                 System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
                 System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
+                System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + aux.isEstado() + codigoReset + "\n");
                 System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
-                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + pub.getRating() + codigoReset + "\n");
             }
         }
         return mapa;
@@ -645,6 +661,7 @@ public class GestionConsolaComandos
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAux + codigoReset);
 
         System.out.print("\n");
+        teclado.nextLine();
         System.out.print(espacio + "Nombre del Periferico: ");
         nombrePeri = teclado.nextLine();
 
@@ -660,6 +677,7 @@ public class GestionConsolaComandos
             }
         }
         while (deciEstado < 1 || deciEstado > 2);
+
         if(deciEstado == 1)
         {
             tipoEstado = E_Estado.NUEVO;
@@ -670,6 +688,7 @@ public class GestionConsolaComandos
         }
 
         System.out.print("\n");
+        teclado.nextLine();
         System.out.print(espacio + "Marca: ");
         marca = teclado.nextLine();
 
@@ -682,6 +701,7 @@ public class GestionConsolaComandos
         origenPais = teclado.nextLine();
 
         System.out.print("\n");
+
         System.out.print(espacio + "Plataformas: ");
         plataformasDisponibles = teclado.nextLine();
 
@@ -1237,13 +1257,14 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion aux = entry.getValue();
+            Periferico auxPer = aux.getPeriferico();
 
             System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + aux.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
             System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + aux.getUrlFoto() + codigoReset + "\n");
             System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + aux.getPrecio() + codigoReset + "\n");
             System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
-            System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + aux.getRating() + codigoReset + "\n");
+            System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
         }
         System.out.print(espacio + "Total Gastado (sin contar envios): " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
         miCuenta(usuario);
@@ -1276,13 +1297,15 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion aux = entry.getValue();
+            Periferico auxPer = aux.getPeriferico();
+
 
             System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + aux.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
             System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + aux.getUrlFoto() + codigoReset + "\n");
             System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + aux.getPrecio() + codigoReset + "\n");
             System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
-            System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + aux.getRating() + codigoReset + "\n");
+            System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
         }
         System.out.print(espacio + "Total Ganado: " + codigoNegrita + codigoSubrayado + ventasHechas.getTotalRecaudado() + codigoReset + "\n");
         miCuenta(usuario);
@@ -1419,6 +1442,7 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion pub  = entry.getValue();
+            Periferico auxPer = pub.getPeriferico();
 
 
                 System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -1426,7 +1450,7 @@ public class GestionConsolaComandos
                 System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
                 System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
                 System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
-                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + pub.getRating() + codigoReset + "\n");
+                System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
 
         }
         return mapa;
@@ -1450,6 +1474,13 @@ public class GestionConsolaComandos
             GeneUnoDM<MetodoDePago> metodos = usuarioNormal.getMetodosDePago(); //para recorrer los metodos
             HashSet<MetodoDePago> set = metodos.getSet();
             Iterator<MetodoDePago> it = set.iterator();
+
+            if(!it.hasNext())
+            {
+                System.out.print("\n");
+                System.out.print(espacio + "No tenes metodos de pago en tu cuenta. Agrega al menos uno para poder hacer una compra.\n");
+                paginaDos(usuarioNormal);
+            }
 
             System.out.print("\n");
             System.out.print("\n");
@@ -1652,6 +1683,7 @@ public class GestionConsolaComandos
         {
             System.out.print(espacio + "Felicidades por realizar su compra. Los plazos de envios y caracteristicas de su compra se veran en Mis Compras.\n" + espacio +"El comprobante fue enviado a su direccion de mail " + usuarioNormal.getMail());
             System.out.print("\n");
+            agregarAVentas(carrito);
             agregarCarritoACompras(carrito,usuarioNormal);
         }
         else
@@ -1671,6 +1703,17 @@ public class GestionConsolaComandos
             usuarioNormal.getCarrito().borrarPublicacion(pub); //se elimina del carrito
         }
 
+    }
+    public void agregarAVentas(HashMap<String,Publicacion> carrito)
+    {
+        Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion pub = entry.getValue();
+            Usuario usuario = pub.getDueno();
+            usuario.agregarVenta(pub);
+        }
     }
     public void favoritos(Usuario usuario)
     {
@@ -1700,13 +1743,14 @@ public class GestionConsolaComandos
         {
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion publi  = entry.getValue();
+            Periferico auxPer = publi.getPeriferico();
 
-                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + publi.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
                 System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + publi.getUrlFoto() + codigoReset + "\n");
                 System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + publi.getPrecio() + codigoReset + "\n");
                 System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + publi.getDueno().getNombre() + codigoReset + "\n");
-                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + publi.getRating() + codigoReset + "\n");
+                System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
 
         }
 
@@ -1737,13 +1781,14 @@ public class GestionConsolaComandos
             while (iterator.hasNext()) {
                 Map.Entry<String, Publicacion> entry = iterator.next();
                 Publicacion publi = entry.getValue();
+                Periferico auxPer = publi.getPeriferico();
 
                 System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + publi.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
                 System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + publi.getUrlFoto() + codigoReset + "\n");
                 System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + publi.getPrecio() + codigoReset + "\n");
                 System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + publi.getDueno().getNombre() + codigoReset + "\n");
-                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + publi.getRating() + codigoReset + "\n");
+                System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
 
             }
 

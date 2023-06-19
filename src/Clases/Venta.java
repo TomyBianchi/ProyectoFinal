@@ -1,6 +1,9 @@
 package Clases;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import Genericas.GeneDosPU;
 
@@ -25,8 +28,23 @@ public class Venta implements Serializable
         return publicaciones;
     }
 
-    public float getTotalRecaudado() {
-        return totalRecaudado;
+        public float getTotalRecaudado() {
+        float total = 0;
+        HashMap<String,Publicacion> mapa = getPublicaciones().getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion aux = entry.getValue();
+            total += aux.getPrecio();
+        }
+        return total;
+    }
+
+
+    public void agregarPublicacion(Publicacion publicacion)
+    {
+        publicaciones.agregar(publicacion.getId(),publicacion);
     }
 
     // Consideramos que no es necesario hacer un equals ni un compareTo

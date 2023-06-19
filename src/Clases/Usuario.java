@@ -5,7 +5,7 @@ import java.io.Serializable;
 import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
-public class Usuario implements Serializable
+public abstract class Usuario implements Serializable
 {
     // ATRIBUTOS
     private String mail;
@@ -89,6 +89,11 @@ public class Usuario implements Serializable
         direcciones.agregar(direccion);
     }
     public void borrarDireccion(Direccion direccion){direcciones.borrar(direccion);}
+
+    public void agregarVenta(Publicacion publicacion)
+    {
+        ventas.agregarPublicacion(publicacion);
+    }
 
 
     // GETTERS, SETTERS Y OTROS

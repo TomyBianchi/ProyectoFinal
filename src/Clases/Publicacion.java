@@ -12,21 +12,17 @@ public class Publicacion implements Serializable
     private float precio;
     private int stock;
     private String id;
-    private String reviews;
-    private int rating;
     private String urlFoto;
     private Usuario dueno; // dueño de la publicación
     private GeneTresE<Envio> envios; // lista de tipos de envío disponibles de la publicación
 
     // CONSTRUCTORES
-    public Publicacion(String nombrePublicacion, Periferico periferico, float precio, int stock, String id, String reviews, int rating, Usuario dueno, String urlFoto) {
+    public Publicacion(String nombrePublicacion, Periferico periferico, float precio, int stock, String id,Usuario dueno, String urlFoto) {
         this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
         this.stock = stock;
         this.id = id;
-        this.reviews = reviews;
-        this.rating = rating;
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
         this.urlFoto = urlFoto;
@@ -38,8 +34,6 @@ public class Publicacion implements Serializable
         this.precio = precio;
         this.stock = stock;
         this.id = id;
-        this.reviews = "";
-        this.rating = 0;
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
         this.urlFoto = urlFoto;
@@ -49,8 +43,6 @@ public class Publicacion implements Serializable
         this.precio = 0;
         this.stock = 0;
         this.id = "";
-        this.reviews = "";
-        this.rating = 0;
         this.dueno = null;
         this.envios = new GeneTresE<>();
         this.urlFoto = "";
@@ -95,13 +87,6 @@ public class Publicacion implements Serializable
         return id;
     }
 
-    public String getReviews() {
-        return reviews;
-    }
-
-    public int getRating() {
-        return rating;
-    }
 
     public Usuario getDueno() {
         return dueno;
@@ -138,12 +123,12 @@ public class Publicacion implements Serializable
     @Override
     public String toString() {
         return "Publicacion{" +
-                "periferico=" + periferico +
+                "nombrePublicacion='" + nombrePublicacion + '\'' +
+                ", periferico=" + periferico +
                 ", precio=" + precio +
                 ", stock=" + stock +
                 ", id='" + id + '\'' +
-                ", reviews='" + reviews + '\'' +
-                ", rating=" + rating +
+                ", urlFoto='" + urlFoto + '\'' +
                 ", dueno=" + dueno +
                 ", envios=" + envios +
                 '}';
