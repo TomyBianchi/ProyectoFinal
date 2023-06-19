@@ -75,6 +75,21 @@ public class Usuario implements Serializable
     {
         publicaciones.agregar(publicacion.getId(),publicacion);
     }
+    public void agregarMetodoDePago(MetodoDePago metodoDePago)
+    {
+        metodosDePago.agregar(metodoDePago);
+    }
+
+    public void borrarMetodoDePago(MetodoDePago metodoDePago)
+    {
+        metodosDePago.borrar(metodoDePago);
+    }
+    public void agregarDireccion(Direccion direccion)
+    {
+        direcciones.agregar(direccion);
+    }
+    public void borrarDireccion(Direccion direccion){direcciones.borrar(direccion);}
+
 
     // GETTERS, SETTERS Y OTROS
     public String getMail() {

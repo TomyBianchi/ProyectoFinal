@@ -10,20 +10,17 @@ public class Envio implements Serializable
     private boolean express;
     private float precio;
     private E_Envio tipoEnvio;
-    private int distancia;
 
     // CONSTRUCTORES
-    public Envio(boolean express, float precio, E_Envio tipoEnvio, int distancia) {
+    public Envio(boolean express, float precio, E_Envio tipoEnvio) {
         this.express = express;
         this.precio = precio;
         this.tipoEnvio = tipoEnvio;
-        this.distancia = distancia;
     }
     public Envio() {
         express = false;
         precio = 0;
         tipoEnvio = E_Envio.Tierra; // inicia en Tierra por default
-        distancia = 0;
     }
 
     // GETTERS, SETTERS Y OTROS
@@ -39,9 +36,7 @@ public class Envio implements Serializable
         return tipoEnvio;
     }
 
-    public int getDistancia() {
-        return distancia;
-    }
+
 
     @Override
     public boolean equals(Object o)
@@ -53,7 +48,7 @@ public class Envio implements Serializable
             if(o instanceof Envio)
             {
                 Envio aux = (Envio) o;
-                if(getDistancia() == aux.getDistancia() && getTipoEnvio().equals(aux.getTipoEnvio()) && getPrecio() == aux.getPrecio())
+                if(getTipoEnvio().equals(aux.getTipoEnvio()) && getPrecio() == aux.getPrecio())
                 {
                     rta = true;
                 }
@@ -72,24 +67,8 @@ public class Envio implements Serializable
                 "express=" + express +
                 ", precio=" + precio +
                 ", tipoEnvio=" + tipoEnvio +
-                ", distancia=" + distancia +
                 '}';
     }
 
-    public int compareTo(Object o)
-    {
-        int rta = 0;
 
-        if(o != null)
-        {
-            if(o instanceof Envio)
-            {
-                Envio aux = (Envio)o;
-                Float auxUno = new Float(getPrecio());  //estos dos errores no impide que compile el programa
-                Float auxDos = new Float(aux.getPrecio());
-                rta = auxDos.compareTo(auxUno);
-            }
-        }
-        return rta;
-    }
 }

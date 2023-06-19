@@ -1,12 +1,13 @@
 package Clases;
 
-import Enums.E_CondFiscal;
-import Enums.E_TipoUsuario;
+import Enums.*;
 import Excepciones.ExcepcionClaveDuplicada;
 import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
+import Genericas.GeneTresE;
+import Genericas.GeneUnoDM;
 
 import java.util.*;
 
@@ -36,7 +37,20 @@ public class GestionConsolaComandos
         //en caso de iniciar sesion, ingresado va a ser el usuario que ingreso, en caso de que no se haya iniciado sesion sera null
         if(ingresado != null)
         {
+            System.out.print(espacio + "Cargando...\n");
+
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                System.out.print(e.getMessage());
+//            }
+
             System.out.print(espacio + "Sesion iniciada con exito.\n");
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                System.out.print(e.getMessage());
+//            }
             paginaDos(ingresado);
         }
 
@@ -338,7 +352,7 @@ public class GestionConsolaComandos
 
         do {
             decision = teclado.nextInt();
-            if (decision > 3 || decision < 0) {
+            if (decision > 6 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
@@ -355,6 +369,27 @@ public class GestionConsolaComandos
         {
             verPublicacionesActivas(usuario);
         }
+        else if(decision == 2)
+        {
+            crearPublicacion(usuario);
+        }
+        else if(decision == 3)
+        {
+
+        }
+        else if(decision == 4)
+        {
+
+        }
+        else if(decision == 5)
+        {
+            miCuenta(usuario);
+        }
+        else
+        {
+            System.exit(0);
+        }
+
 
 
 
@@ -410,9 +445,8 @@ public class GestionConsolaComandos
 
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
-
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
-            verPublicacionesActivas(usuario);
+            paginaDos(usuario);
         }
 
     }
@@ -449,6 +483,7 @@ public class GestionConsolaComandos
 
         Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
 
+
         while(it.hasNext())
         {
             Map.Entry<String,Publicacion> entry = it.next();
@@ -467,10 +502,690 @@ public class GestionConsolaComandos
         }
         return mapa;
     }
+    public void crearPublicacion(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String nombrePublicacion = "";
+        float precio = 0;
+        int stock = 0; //contrasena que ayuda a confirmar la contrasena real
+        String urlFoto = "";
+        ArrayList<Envio> envio = new ArrayList<>();
+
+        int decition = 0;
+        float precioEnvio;
+        E_Envio tipoEnvio = null;
+        boolean express = false;
+        int decitionDos = 0;
+
+        String nombrePeri = "";
+        E_Estado tipoEstado = null;
+        int deciEstado = 0;
+        String marca = "";
+        String modelo = "";
+        String origenPais = "";
+        String plataformasDisponibles = "";
+        String color = "";
+        float peso = 0;
+        boolean inalambrico = false;
+        int deciInalambrico = 0;
+
+
+        System.out.print("\n");
+        String mensaje = " Van a completar los siguientes datos para crear su publicacion";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        System.out.print("\n");
+        teclado.nextLine();
+
+        System.out.print(espacio+ "Nombre de la publicacion: ");
+        nombrePublicacion = teclado.nextLine();
+        System.out.print("\n");
+
+
+        System.out.print(espacio + "Precio: ");
+        precio = teclado.nextFloat();
+        teclado.nextLine(); // Consumir el carácter de salto de línea pendiente
+        System.out.print("\n");
+
+        System.out.print(espacio + "Cantidad disponible: ");
+        stock = teclado.nextInt();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Foto (URL de la foto): ");
+        urlFoto = teclado.next();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Ahora va a agregar los tipos de envio que va a aceptar." + "\n" + espacio +"Obligatoriamente va a tener que tener un envio como minimo.");
+        do {
+            System.out.print("\n");
+            System.out.print(espacio + "Tipo de envio(1-Tierra, 2-Aereo, 3-Maritimo):  ");
+            do {
+                 decition = teclado.nextInt();
+                if((decition < 1 || decition > 3))
+                {
+                    System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                }
+            }
+            while(decition < 1 || decition > 3);
+
+            if(decition == 1)
+            {
+                tipoEnvio = E_Envio.Tierra;
+                express = false;
+            }
+            else if(decition == 2)
+            {
+                tipoEnvio = E_Envio.Avion;
+                express = true;
+            }
+            else
+            {
+                tipoEnvio = E_Envio.Barco;
+                express = true;
+            }
+
+            System.out.print(espacio + "Contacte con su empresa de envios para saber el precio exacto que el comprador debera pagar por este.");
+            System.out.print("\n");
+            System.out.print(espacio + "Precio: ");
+            precioEnvio = teclado.nextFloat();
+
+            Envio aux = new Envio(express,precioEnvio,tipoEnvio);
+            envio.add(aux);
+
+
+            System.out.print("\n");
+            do {
+                System.out.print(espacio + "¿Desea agregar otro tipo de envio? 1-Si 2-No:  ");
+                decitionDos = teclado.nextInt();
+                System.out.print("\n");
+                if(decitionDos < 1 || decitionDos > 2)
+                {
+                    System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                }
+            }
+            while(decitionDos < 1 || decitionDos > 2);
+        }
+        while(decitionDos == 1);
+
+        System.out.print("\n");
+        String mensajeAux = " Excelente! Ahora vamos a completar una serie de datos adicionales de tu periferico...";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAux + codigoReset);
+
+        System.out.print("\n");
+        System.out.print(espacio + "Nombre del Periferico: ");
+        nombrePeri = teclado.nextLine();
+
+        System.out.print("\n");
+        //teclado.nextLine();
+        do
+        {
+            System.out.print(espacio + "Estado(1-Nuevo, 2-Usado): ");
+            deciEstado = teclado.nextInt();
+            if(deciEstado < 1 || deciEstado > 2)
+            {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+            }
+        }
+        while (deciEstado < 1 || deciEstado > 2);
+        if(deciEstado == 1)
+        {
+            tipoEstado = E_Estado.NUEVO;
+        }
+        else
+        {
+            tipoEstado = E_Estado.USADO;
+        }
+
+        System.out.print("\n");
+        System.out.print(espacio + "Marca: ");
+        marca = teclado.nextLine();
+
+        System.out.print("\n");
+        System.out.print(espacio + "Modelo: ");
+        modelo = teclado.nextLine();
+
+        System.out.print("\n");
+        System.out.print(espacio + "Pais de origen: ");
+        origenPais = teclado.nextLine();
+
+        System.out.print("\n");
+        System.out.print(espacio + "Plataformas: ");
+        plataformasDisponibles = teclado.nextLine();
+
+        System.out.print("\n");
+        System.out.print(espacio + "Color/es: ");
+        color = teclado.nextLine();
+
+        System.out.print("\n");
+        System.out.print(espacio + "Peso: ");
+        peso = teclado.nextFloat();
+
+        System.out.print("\n");
+        teclado.nextLine();
+        do
+        {
+            System.out.print(espacio + "Inalambrico(1-Si, 2-No): ");
+            deciInalambrico = teclado.nextInt();
+            if(deciInalambrico < 1 || deciInalambrico > 2)
+            {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+            }
+        }
+        while (deciInalambrico < 1 || deciInalambrico > 2);
+        if(deciInalambrico == 1)
+        {
+            inalambrico = true;
+        }
+        else
+        {
+            inalambrico = false;
+        }
+
+        //se agrega la publicacion
+        Publicacion creada = tienda.agregarPublicacion(nombrePublicacion,nombrePeri,tipoEstado,marca,modelo,origenPais,plataformasDisponibles,color,peso,inalambrico,precio,stock,usuario,urlFoto);
+        for(int i = 0; i < envio.size(); i++) //se agregan todos los envios que quiso el usuario
+        {
+             tienda.agregarEnvioPublicacion(creada,envio.get(i));
+        }
+
+        System.out.print("\n");
+        String mensajeAuxDos = " Publicacion agregada con exito! Ahora va a voler a la pagina su menu principal..";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAuxDos + codigoReset);
+        System.out.print("\n");
+        paginaDos(usuario);
+    }
+//    public void verCarrito()
+//    {
+//
+//    }
+    public void miCuenta(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String bienvenidos = "\n\n" + usuario.getNombre() + ", este es el menu de tu cuenta\n\n";
+        String opcionUno = "1- Mis Metodos de pago";
+        String opcionDos = "2- Mis Direcciones";
+        String opcionTres = "3- Mis compras";
+        String opcionCuatro = "4- Mis ventas";
+        String opcionCinco = "5- Cambiar contrasena"; //dentro de aca va a haber misPublicaciones, misVentas, misCompras, misDirecciones, misMetodos de pago, agregar direccion, agregar metodo de pago, verificar cuenta,
+        String opcionSeis = "6- Volver al menu anterior";
+
+
+        String opcionElecc = "Eleccion: ";
+
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + bienvenidos + codigoReset);
+        System.out.print("\n\n\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCuatro + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCinco + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionSeis + codigoReset + "\n");
+        System.out.print(espacio + opcionElecc);
+        int decision = 0;
+
+        do {
+            decision = teclado.nextInt();
+            if (decision > 6 || decision < 1) {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCuatro + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCinco + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionSeis + codigoReset + "\n");
+                System.out.print(espacio + opcionElecc);
+            }
+        }
+        while (decision > 6 || decision < 1);
+
+        if(decision == 1)
+        {
+            metodosDePago(usuario);
+        }
+        else if(decision == 2)
+        {
+            direcciones(usuario);
+        }
+        else if(decision == 3)
+        {
+
+        }
+        else if(decision == 4)
+        {
+
+        }
+        else if(decision == 5)
+        {
+            ;
+        }
+
+
+
+
+    }
+    public void metodosDePago(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+
+        System.out.print("\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + "Sus metodos de pago" + codigoReset);
+
+        GeneUnoDM<MetodoDePago> metodos = usuario.getMetodosDePago(); //para recorrer los metodos
+        HashSet<MetodoDePago> set = metodos.getSet();
+        Iterator<MetodoDePago> iterator = set.iterator();
+
+        if(!iterator.hasNext())
+        {
+            System.out.print("\n");
+            System.out.print(espacio + "No tiene metodos de pago agregados");
+            System.out.print("\n");
+        }
+        else
+        {
+
+            System.out.print("\n");
+            System.out.print("\n");
+            while(iterator.hasNext())
+            {
+                MetodoDePago aux = iterator.next();
+                System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.print("\n");
+                System.out.print(espacio + "Tipo de tarjeta: " + aux.getTipoPago());
+                System.out.print("\n");
+                System.out.print(espacio +"Tarjeta: " + aux.getUltimosCuatroTargeta());
+                System.out.print("\n");
+                System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+
+        }
+
+        String opcionUno = "1- Agregar metodo de pago";
+        String opcionDos = "2- Borrar metodo de pago";
+        String opcionTres = "3- Volver al menu anterior";
+
+
+
+        String opcionElecc = "Eleccion: ";
+
+        System.out.print("\n\n\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+
+        System.out.print(espacio + opcionElecc);
+        int decision = 0;
+
+        do {
+            decision = teclado.nextInt();
+            if (decision > 6 || decision < 1) {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+                System.out.print(espacio + opcionElecc);
+            }
+        }
+        while (decision > 3 || decision < 1);
+
+        if(decision == 1)
+        {
+            agregarMetodoDePago(usuario);
+        }
+        else if(decision == 2)
+        {
+            borrarMetodoDePago(usuario);
+        }
+        else
+        {
+            miCuenta(usuario);
+        }
 
 
 
 
 
+
+    }
+    public void agregarMetodoDePago(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String nombre = "";
+        E_Pago tipoPago = null;
+        int decitionTipoPago = 0;
+        String numero = "";
+        String cvv = "";
+        String mesVencimiento = "";
+        String anoVencimiento = "";
+
+
+
+        System.out.print("\n");
+        String mensaje = " Van a completar los siguientes datos para agregar su metodo de pago";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        System.out.print("\n");
+        teclado.nextLine();
+
+        System.out.print(espacio+ "Nombre de la tarjeta: ");
+        nombre = teclado.nextLine();
+        System.out.print("\n");
+
+        do
+        {
+            System.out.print(espacio+ "Tipo de tarjeta 1-Debito 2-Credito: ");
+            decitionTipoPago = teclado.nextInt();
+            teclado.nextLine();
+            System.out.print("\n");
+
+            if(decitionTipoPago < 1 || decitionTipoPago > 2)
+            {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+            }
+        }
+        while (decitionTipoPago < 1 || decitionTipoPago > 2);
+        if(decitionTipoPago == 1)
+        {
+            tipoPago = E_Pago.DEBITO;
+        }
+        else
+        {
+            tipoPago = E_Pago.CREDITO;
+
+        }
+
+        System.out.print(espacio + "Numero: ");
+        numero = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "CVV: ");
+        cvv = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Mes de vencimiento: ");
+        mesVencimiento = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Ano vencimiento: ");
+        anoVencimiento = teclado.nextLine();
+        System.out.print("\n");
+
+        MetodoDePago nuevo = new MetodoDePago(tipoPago,nombre,numero,cvv,mesVencimiento,anoVencimiento);
+
+        usuario.agregarMetodoDePago(nuevo); //se agrega el metodo de pago al usuario
+
+        metodosDePago(usuario);
+    }
+    public void borrarMetodoDePago(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String cuatroUlt = " ";
+        boolean bandera = false;
+
+        System.out.print(espacio + "Decime los ultimos 4 numeros de la tarjeta que desea borrar: ");
+        cuatroUlt = teclado.next();
+
+        GeneUnoDM<MetodoDePago> metodos = usuario.getMetodosDePago(); //para recorrer los metodos
+        HashSet<MetodoDePago> set = metodos.getSet();
+        Iterator<MetodoDePago> iterator = set.iterator();
+
+        while (iterator.hasNext())
+        {
+            MetodoDePago aux = iterator.next();
+            if(aux.getUltimosCuatroTargeta().substring(aux.getUltimosCuatroTargeta().length() - 4).equals(cuatroUlt.substring(cuatroUlt.length() - 4)))
+            {
+                usuario.borrarMetodoDePago(aux);
+                System.out.print("\n");
+                System.out.print(espacio + "Borrado con exito.\n\n");
+                bandera = true;
+            }
+        }
+        if(!bandera) {
+
+
+            System.out.print("\n");
+            System.out.print(espacio + "No se encontro un metodo de pago con esas caracteristicas\n\n");
+            System.out.print("\n");
+        }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
+
+        metodosDePago(usuario);
+    }
+    public void direcciones(Usuario usuario)
+    {
+        //va a mostrar direcciones, vas a poder agregar y borrar direcciones.
+
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+
+        System.out.print("\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + "Sus direcciones " + codigoReset);
+
+        GeneUnoDM<Direccion> metodos = usuario.getDirecciones(); //para recorrer los metodos
+        HashSet<Direccion> set = metodos.getSet();
+        Iterator<Direccion> iterator = set.iterator();
+
+        if(!iterator.hasNext())
+        {
+            System.out.print("\n");
+            System.out.print(espacio + "No tiene Direcciones agregadas");
+            System.out.print("\n");
+        }
+        else
+        {
+
+            System.out.print("\n");
+            System.out.print("\n");
+            while(iterator.hasNext())
+            {
+                Direccion aux = iterator.next();
+                System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.print("\n");
+                System.out.print(espacio + "Provincia: " + aux.getProvincia());
+                System.out.print("\n");
+                System.out.print(espacio +"Ciudad: " + aux.getCiudad());
+                System.out.print("\n");
+                System.out.print(espacio +"Calle: " + aux.getCalle());
+                System.out.print("\n");
+                System.out.print(espacio +"Altura: " + aux.getAltura());
+                System.out.print("\n");
+                System.out.print(espacio +"Departamento: " + aux.getDepartamento());
+                System.out.print("\n");
+                System.out.print(espacio +"Codigo postal: " + aux.getCp());
+                System.out.print("\n");
+                System.out.print("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+
+        }
+
+        String opcionUno = "1- Agregar direccion";
+        String opcionDos = "2- Borrar direccion";
+        String opcionTres = "3- Volver al menu anterior";
+
+
+
+        String opcionElecc = "Eleccion: ";
+
+        System.out.print("\n\n\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+
+        System.out.print(espacio + opcionElecc);
+        int decision = 0;
+
+        do {
+            decision = teclado.nextInt();
+            if (decision > 6 || decision < 1) {
+                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+                System.out.print(espacio + opcionElecc);
+            }
+        }
+        while (decision > 3 || decision < 1);
+
+        if(decision == 1)
+        {
+            agregarDireccion(usuario);
+        }
+        else if(decision == 2)
+        {
+            borrarDireccion(usuario);
+        }
+        else
+        {
+            miCuenta(usuario);
+        }
+    }
+    public void agregarDireccion(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String provincia = "";
+        String ciudad = "";
+        String calle = "";
+        String altura = "";
+        String departamento = "";
+        String cp = "";
+
+
+
+        System.out.print("\n");
+        String mensaje = " Van a completar los siguientes datos para agregar su direccion";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        System.out.print("\n");
+        teclado.nextLine();
+
+//        try {
+//            Thread.sleep(1500);
+//        } catch (InterruptedException e) {
+//            System.out.print(e.getMessage());
+//        }
+
+        System.out.print(espacio+ "Provincia: ");
+        provincia= teclado.nextLine();
+        System.out.print("\n");
+
+
+        System.out.print(espacio + "Ciudad: ");
+        ciudad = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Calle: ");
+        calle = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Altura: ");
+        altura = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Departamento (Si es una casa ponga 0): ");
+        departamento = teclado.nextLine();
+        System.out.print("\n");
+
+        System.out.print(espacio + "Codigo Postal: ");
+        cp = teclado.nextLine();
+        System.out.print("\n");
+
+        Direccion nuevo = new Direccion(provincia,ciudad,calle,altura,departamento,cp);
+
+        usuario.agregarDireccion(nuevo); //se agrega el metodo de pago al usuario
+
+        direcciones(usuario);
+    }
+    public void borrarDireccion(Usuario usuario) {
+        String espacio = "                                                                           ";
+        // Códigos de escape ANSI
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String calle = "";
+        String altura = "";
+        boolean bandera = false;
+
+        System.out.print(espacio + "Decime la calle y altura de la direccion que queres borrar. \n");
+        System.out.print(espacio + "Calle: ");
+        calle = teclado.next();
+
+        System.out.print("\n");
+        teclado.nextLine();
+
+        System.out.print(espacio + "Altura: ");
+        altura = teclado.next();
+        System.out.print("\n");
+
+
+        GeneUnoDM<Direccion> metodos = usuario.getDirecciones(); //para recorrer los metodos
+        HashSet<Direccion> set = metodos.getSet();
+        Iterator<Direccion> iterator = set.iterator();
+
+        while (iterator.hasNext()) {
+            Direccion aux = iterator.next();
+            if (aux.getCalle().equals(calle) && aux.getAltura().equals(altura)) {
+                usuario.borrarDireccion(aux);
+                System.out.print("\n");
+                System.out.print(espacio + "Borrado con exito.\n\n");
+                bandera = true;
+            }
+        }
+        if (!bandera) {
+            System.out.print("\n");
+            System.out.print(espacio + "No se encontro una direccion con esas caracteristicas\n\n");
+            System.out.print("\n");
+        }
+
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            System.out.print(e.getMessage());
+//        }
+        direcciones(usuario);
+    }
 
 }

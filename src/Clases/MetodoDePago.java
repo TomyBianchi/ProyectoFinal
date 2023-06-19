@@ -48,6 +48,7 @@ public class MetodoDePago implements Serializable
     public String getUltimosCuatroTargeta()
     {
         String aux = "XXXX XXXX XXXX  ";
+
         aux += this.numeroTarjeta.substring(this.numeroTarjeta.length() - 4);
         return aux; //returna los ultimos 4 numeros de la tarjeta.
     }

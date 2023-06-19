@@ -36,7 +36,7 @@ public class Publicacion implements Serializable
         this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
-        this.stock = 0;
+        this.stock = stock;
         this.id = id;
         this.reviews = "";
         this.rating = 0;

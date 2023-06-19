@@ -204,12 +204,13 @@ public class GestionTienda
         Publicacion publicacion = new Publicacion(nombre,periferico,precio,stock,dueno,urlFoto,id);
         return publicacion;
     }
-    public void agregarPublicacion(String nombre, E_Estado estado, String marca, String modelo, String origen,String plataformas, String color, float peso, boolean inalambrico, float precio, int stock, Usuario dueno, String urlFoto)
+    public Publicacion agregarPublicacion(String nombrePu,String nombrePe, E_Estado estado, String marca, String modelo, String origen,String plataformas, String color, float peso, boolean inalambrico, float precio, int stock, Usuario dueno, String urlFoto)
     {
-        Periferico periferico = crearPeriferico(nombre,estado,marca,modelo,origen,plataformas,color,peso,inalambrico);
-        Publicacion publicacion = crearPublicacion(nombre,periferico,precio,stock,dueno,urlFoto);
+        Periferico periferico = crearPeriferico(nombrePe,estado,marca,modelo,origen,plataformas,color,peso,inalambrico);
+        Publicacion publicacion = crearPublicacion(nombrePu,periferico,precio,stock,dueno,urlFoto);
         publicaciones.agregar(publicacion.getId(), publicacion);
         dueno.agregarPublicacion(publicacion);
+        return publicacion;
     }
 
     /**
@@ -299,6 +300,9 @@ public class GestionTienda
         }
         return rta;
     }
+
+
+
 
     // GETTERS Y TOSTRING
     public GeneDosPU<String, Publicacion> getPublicaciones() {
