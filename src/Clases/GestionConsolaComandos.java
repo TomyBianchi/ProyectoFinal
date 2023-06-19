@@ -37,6 +37,7 @@ public class GestionConsolaComandos
         //en caso de iniciar sesion, ingresado va a ser el usuario que ingreso, en caso de que no se haya iniciado sesion sera null
         if(ingresado != null)
         {
+
             System.out.print(espacio + "Cargando...\n");
 
 //            try {
@@ -51,6 +52,7 @@ public class GestionConsolaComandos
 //            } catch (InterruptedException e) {
 //                System.out.print(e.getMessage());
 //            }
+
             paginaDos(ingresado);
         }
 
@@ -67,7 +69,7 @@ public class GestionConsolaComandos
 
 
             System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            String texto = "BIENVENIDOS A LA TIENDA DE PERIFERICOS ";
+            String texto = "BIENVENIDOS A LA TIENDA DE PERIFÉRICOS ";
             String espacio = "                                                                           ";
             // Códigos de escape ANSI
             String codigoNegrita = "\u001B[1m";
@@ -78,10 +80,10 @@ public class GestionConsolaComandos
             System.out.println(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + texto + codigoReset); //texto principal
 
             System.out.print("\n\n\n");
-            String opcion1 = "1- Iniciar sesion";
+            String opcion1 = "1- Iniciar sesión";
             String opcion2 = "2- Crear cuenta";
-            String opcion3 = "3- Salír";
-            String opcion4 = "Eleccion: ";
+            String opcion3 = "3- Salir";
+            String opcion4 = "Elección: ";
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion1 + codigoReset + "\n"); //opciones
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion2 + codigoReset + "\n");
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion3 + codigoReset + "\n");
@@ -90,7 +92,7 @@ public class GestionConsolaComandos
             do {
                 respuesta = teclado.nextInt();
                 if (respuesta > 3 || respuesta < 0) {
-                    System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                    System.out.print(espacio + "Elección no compatible, inténtelo de nuevo.\n\n");
                     System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion1 + codigoReset + "\n"); //opciones
                     System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion2 + codigoReset + "\n");
                     System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion3 + codigoReset + "\n");
@@ -105,7 +107,7 @@ public class GestionConsolaComandos
             } else if (respuesta == 2) //crear cuenta y manda la cuenta a su correspondiente lista
             {
                 crearCuenta();
-                System.out.print(espacio + "Cuenta creada con exito, ahora se le redirigira a la pagina anterior para que pueda Iniciar sesion con su cuenta.\n");
+                System.out.print(espacio + "Cuenta creada con éxito, ahora se le redirigirá a la página anterior para que pueda iniciar sesión con su cuenta.\n");
             } else {
                 System.exit(0);
             }
@@ -128,19 +130,19 @@ public class GestionConsolaComandos
             existencia = tienda.existeUsuario(ingresarDNIOMail); // es true si existe, si no existe es false
             if(!existencia)
             {
-                System.out.print(espacio + "No existe usuario con ese Mail / DNI, Intentelo denuevo.\n\n");
+                System.out.print(espacio + "No existe usuario con ese mail / DNI. Inténtelo de nuevo.\n\n");
             }
         }
         while (!existencia); //mientras que no exista, le pedimos que lo ingrese nuevamente
 
         do
         {
-            System.out.print(espacio + "Ingrese su Contrasena: ");
+            System.out.print(espacio + "Ingrese su contraseña: ");
             contrasena = teclado.next();
             auxUsuario = tienda.claveConfirmacion(ingresarDNIOMail,contrasena);
             if(auxUsuario == null) //si es null significa que la contrasena es incorrecta
             {
-                System.out.print(espacio + "Contrasena incorrecta, intentelo nuevamente.\n\n");
+                System.out.print(espacio + "Contraseña incorrecta, inténtelo nuevamente.\n\n");
             }
         }
         while (auxUsuario == null);
@@ -168,9 +170,9 @@ public class GestionConsolaComandos
 
         boolean banderaConfirmacionExcep = false; //es una bandera que es falsa mientras que haya excepciones, si no las hay, se vuelve true
 
-        System.out.print(espacio + "ACLARACIONES ANTES DE CREAR LA CUENTA: \n" + espacio + "La cuenta es personal. Por lo que no se puede tener dos cuentas con el mismo mail, DNI o numero telefonico");
+        System.out.print(espacio + "ACLARACIONES ANTES DE CREAR LA CUENTA: \n" + espacio + "La cuenta es personal. Por lo que no se puede tener dos cuentas con el mismo mail, DNI o número telefónico.");
         System.out.print("\n");
-        System.out.print(espacio + "La contrasena debe tener minimo 8 digitos, un caracter en Mayuscula y un digito numerico\n");
+        System.out.print(espacio + "La contraseña debe tener mínimo 8 dígitos, un caracter en mayúscula y un dígito numérico.\n");
         do {
 
 
@@ -180,17 +182,17 @@ public class GestionConsolaComandos
             do
             {
                 System.out.print("\n");
-                System.out.print(espacio + "Ingrese su contrasena: ");
+                System.out.print(espacio + "Ingrese su contraseña: ");
                 contrasena = teclado.next();
 
                 System.out.print("\n");
-                System.out.print(espacio + "ReIngrese su contrasena: ");
+                System.out.print(espacio + "Reingrese su contraseña: ");
                 contraAux = teclado.next();
 
                 if(!contrasena.equals(contraAux))
                 {
                     System.out.print("\n");
-                    System.out.print(espacio + "No coinciden las contrasenas. Intentelo denuevo. \n");
+                    System.out.print(espacio + "No coinciden las contraseñas. Inténtelo de nuevo. \n");
                 }
             }
             while (!contrasena.equals(contraAux));
@@ -205,7 +207,7 @@ public class GestionConsolaComandos
             apellido = teclado.next();
 
             System.out.print("\n");
-            System.out.print(espacio + "Ingrese su numero de telefono: ");
+            System.out.print(espacio + "Ingrese su numero de teléfono: ");
             numeroTelefono = teclado.next();
 
             System.out.print("\n");
@@ -213,16 +215,16 @@ public class GestionConsolaComandos
             dni = teclado.next();
 
             System.out.print("\n");
-            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o solo especializada en venta. Opcion 1 o 2. ");
-            System.out.print(espacio + "ACLARACION \n" + espacio + "El usuario de compra y venta no puede verificarse como pagina de venta especializada.\n");
-            System.out.print(espacio + "En el caso del usuario venta, no podra comprar otras publicaciones. A la vez tambien debera agergar la URL de su pagina de venta, su CUIT y la condiicion fiscal.\n");
+            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o sólo especializada en venta. Ingrese opción 1 o 2. ");
+            System.out.print(espacio + "ACLARACIÓN \n" + espacio + "El usuario de compra y venta no puede verificarse como página de venta oficial.\n");
+            System.out.print(espacio + "En el caso del usuario venta, no podrá comprar productos. A la vez también deberá agregar la URL de su página web de venta, su CUIT y la condiición fiscal.\n");
             System.out.print(espacio + "Todas las reglas mencionadas son obligatorias. En caso contrario, se podrá cerrar la cuenta de manera definitiva. \n");
-            System.out.print(espacio + "Opcion: ");
+            System.out.print(espacio + "Opción: ");
             do {
                 decitionUsuario = teclado.nextInt();
                 if(decitionUsuario != 1 && decitionUsuario != 2)
                 {
-                    System.out.print(espacio + "Decicion erronea. Decida entre Opcion 1 u Opcion 2.\n");
+                    System.out.print(espacio + "Decisión errónea. Decida entre opción 1 u opción 2.\n");
                 }
             }
             while (decitionUsuario != 1 && decitionUsuario != 2);
@@ -236,7 +238,7 @@ public class GestionConsolaComandos
                 usuario = E_TipoUsuario.VENTA;
 
                 System.out.print("\n");
-                System.out.print(espacio + "Ingrese la URL de su pagina de venta: ");
+                System.out.print(espacio + "Ingrese la URL de su página web de venta: ");
                 url = teclado.next();
 
                 System.out.print("\n");
@@ -245,11 +247,11 @@ public class GestionConsolaComandos
 
                 System.out.print("\n");
                 do {
-                    System.out.print(espacio + "Ingrese su tipo de Monotributo. A-F: ");
+                    System.out.print(espacio + "Ingrese su tipo de monotributo. A-F: ");
                     decisionMonotributo = teclado.next();
                     if (!decisionMonotributo.equals("A") && !decisionMonotributo.equals("B") && !decisionMonotributo.equals("C") && !decisionMonotributo.equals("D") && !decisionMonotributo.equals("E") && !decisionMonotributo.equals("F"))
                     {
-                        System.out.print(espacio + "Error. Por favor introducí una respuesta valida. \n");
+                        System.out.print(espacio + "Error. Por favor introduzca una respuesta válida. \n");
                     }
                 }
                 while (!decisionMonotributo.equals("A") && !decisionMonotributo.equals("B") && !decisionMonotributo.equals("C") && !decisionMonotributo.equals("D") && !decisionMonotributo.equals("E") && !decisionMonotributo.equals("F"));
@@ -316,7 +318,7 @@ public class GestionConsolaComandos
         while (!banderaConfirmacionExcep);
 
         System.out.print("\n\n");
-        System.out.print(espacio + "Felicitaciones ! A creado su cuenta con exito.\n");
+        System.out.print(espacio + "Felicitaciones! Ha creado su cuenta con éxito.\n");
     }
 
     public void paginaDos(Usuario usuario)
@@ -328,16 +330,17 @@ public class GestionConsolaComandos
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
 
-        String bienvenidos = "\n\nBienvenido " + usuario.getNombre() + ", este es tu menu principal\n\n";
-        String opcionUno = "1- Ver Publicaciones activas";
-        String opcionDos = "2- Crear publicacion";
+        System.out.print("\n\n");
+        String bienvenidos = "Bienvenido " + usuario.getNombre() + ", este es tu menú principal\n\n";
+        String opcionUno = "1- Ver publicaciones activas";
+        String opcionDos = "2- Crear publicación";
         String opcionTres = "3- Ver mi carrito";
         String opcionCuatro = "4- Favoritos";
         String opcionCinco = "5- Mi cuenta"; //dentro de aca va a haber misPublicaciones, misVentas, misCompras, misDirecciones, misMetodos de pago, agregar direccion, agregar metodo de pago, verificar cuenta,
-        String opcionSeis = "6- Cerrar sesion";
+        String opcionSeis = "6- Cerrar sesión";
 
 
-        String opcionElecc = "Eleccion: ";
+        String opcionElecc = "Elección: ";
 
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + bienvenidos + codigoReset);
         System.out.print("\n\n\n");
@@ -352,8 +355,10 @@ public class GestionConsolaComandos
 
         do {
             decision = teclado.nextInt();
+
             if (decision > 6 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
@@ -408,16 +413,16 @@ public class GestionConsolaComandos
          HashMap<String,Publicacion> publicaciones = recorrerPublicaciones();
         int rta = -1;
         String opcion = "";
-        System.out.print(espacio + "1 para volver al menu anterior, 2 para agregar algun producto al carrito. " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+        System.out.print(espacio + "1 para volver al menú anterior, 2 para agregar un producto al carrito. " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
 
         do
         {
-            System.out.print(espacio + "Opcion: ");
+            System.out.print(espacio + "Opción: ");
             rta = teclado.nextInt();
             teclado.nextLine();
             if ((rta != 1 && rta != 2))
             {
-                System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
+                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
             }
         }
         while (rta != 1 && rta != 2);
@@ -438,13 +443,14 @@ public class GestionConsolaComandos
 
                 if(pub == null) //significa que no lo encontro
                 {
-                    System.out.print("\n" + espacio + "Nombre Incorrecto, proba con alguno de los nombres de la lista.\n");
+                    System.out.print("\n" + espacio + "Nombre incorrecto, pruebe con alguno de los nombres de la lista.\n");
                 }
             }
             while(pub == null);
 
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
+
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
             paginaDos(usuario);
         }
@@ -712,7 +718,8 @@ public class GestionConsolaComandos
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
 
-        String bienvenidos = "\n\n" + usuario.getNombre() + ", este es el menu de tu cuenta\n\n";
+        System.out.print("\n\n");
+        String bienvenidos = usuario.getNombre() + ", este es el menu de tu cuenta\n\n";
         String opcionUno = "1- Mis Metodos de pago";
         String opcionDos = "2- Mis Direcciones";
         String opcionTres = "3- Mis compras";
