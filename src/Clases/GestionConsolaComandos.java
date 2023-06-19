@@ -381,10 +381,20 @@ public class GestionConsolaComandos
         }
         else if(decision == 3)
         {
+            if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
+            {
+                System.out.print(espacio + "Tu tipo de usuario no permite que entres a ver tu carrito.\n");
+                paginaDos(usuario);
+            }
             carrito(usuario);
         }
         else if(decision == 4)
         {
+            if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
+            {
+                System.out.print(espacio + "Tu tipo de usuario no te permite tener favoritos.\n");
+                paginaDos(usuario);
+            }
             favoritos(usuario);
         }
         else if(decision == 5)
@@ -804,6 +814,11 @@ public class GestionConsolaComandos
         }
         else if(decision == 3)
         {
+            if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
+            {
+                System.out.print(espacio + "Tu tipo de usuario no permite que compres.\n");
+                paginaDos(usuario);
+            }
             mostrarCompras(usuario);
         }
         else if(decision == 4)
@@ -1577,13 +1592,13 @@ public class GestionConsolaComandos
             System.out.print("\n");
             System.out.print(espacio + "Decime la calle y altura de la direccion a la que queres mandar el envio. \n");
             System.out.print(espacio + "Calle: ");
-            calle = teclado.next();
+            calle = teclado.nextLine();
 
             System.out.print("\n");
             teclado.nextLine();
 
             System.out.print(espacio + "Altura: ");
-            altura = teclado.next();
+            altura = teclado.nextLine();
             System.out.print("\n");
 
 
