@@ -49,10 +49,13 @@ public class Main
 
         tienda.agregarPublicacion("Auriculares Hyperx Cloud Flight, perfecto estado", E_Estado.USADO,"Hyperx","Cloud Flight","EEUU","PS4/PS5/PC","Rojo",200,true,35000,1,tomas,"foto.com");
         tienda.agregarPublicacion("Joystick PS4", E_Estado.USADO,"Sony","Joystick","EEUU","PS3/PS4/PS5/PC","Negro",150,true,12000,1,tomas,"fotito.com");
-        tienda.agregarPublicacion("Teclado Gamer Razer Ornata V3, luz LED RGB",E_Estado.NUEVO,"Razer","Ornata V3","EEUU","PC","Negro Clásico",3,false,6900,3,ludmila,"fotaza.com");
-        tienda.agregarPublicacion("MightySkins importados NUEVOS",E_Estado.NUEVO,"Mighty Skins","Oculus Quest 2","EEUU","Oculus Quest 2","Algodón de azúcar",1,true,60000,2,ludmila,"foton.com");
-        tienda.agregarPublicacion("Auriculares JBL Reflect Aero - Como nuevos",E_Estado.USADO,"JBL","Reflect Aero TWS","EEUU","Productos con Bluetooth 5.0","Negro",1,true,4000,1,matias,"fotoncito.com");
-        tienda.agregarPublicacion("JBL Tune 510BT inalambricos",E_Estado.NUEVO,"JBL","Tune 510BT","EEUU","Productos con Bluetooth 5.0","Negro",1,true,6000,4,matias,"fotin.com");
+        tienda.agregarPublicacion("Teclado Gamer Razer Ornata V3, luz LED RGB",E_Estado.NUEVO,"Razer","Ornata V3","Canadá","PC","Negro Clásico",3,false,16900,3,ludmila,"fotaza.com");
+        tienda.agregarPublicacion("MightySkins importados NUEVOS",E_Estado.NUEVO,"Mighty Skins","Oculus Quest 2","Japón","Oculus Quest 2","Algodón de azúcar",1,true,60000,2,ludmila,"foton.com");
+        tienda.agregarPublicacion("Auriculares JBL Reflect Aero - Como nuevos",E_Estado.USADO,"JBL","Reflect Aero TWS","Australia","Productos con Bluetooth 5.0","Negro",1,true,4700,1,matias,"fotoncito.com");
+        tienda.agregarPublicacion("JBL Tune 510BT inalambricos",E_Estado.NUEVO,"JBL","Tune 510BT","EEUU","Productos con Bluetooth 5.0","Negro",1,true,6000,4,matias,"fotis.com");
+        tienda.agregarPublicacion("The Apple Magic Mouse 2, superficie multi-touch",E_Estado.NUEVO,"Apple","Magic Mouse 2","EEUU","PC, teclados","Amarillo",2,true,20700,2,tomas,"fotos.com");
+        tienda.agregarPublicacion("OSTENT Joystick Retro Gamer con cable PS2- Buen estado",E_Estado.USADO,"OSTENT","Video Games","China","PS2/PS1/PS/PS one/PSX","Plateado",2,false,3000,1,ludmila,"photo.com");
+        tienda.agregarPublicacion("Control Move Motion para PS4",E_Estado.NUEVO,"Sony","Move Motion","EEUU","PS4/PS3","Negro/Azul",2,true,39000,2,matias,"pics.com");
 
 
 //        System.out.print(tienda.toString());
