@@ -380,7 +380,7 @@ public class GestionConsolaComandos
         }
         else if(decision == 3)
         {
-
+            carrito(usuario);
         }
         else if(decision == 4)
         {
@@ -1325,6 +1325,100 @@ public class GestionConsolaComandos
             System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeCuatro + codigoReset);
         }
         miCuenta(usuario);
+    }
+    public void carrito(Usuario usuario)
+    {
+        UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+
+        HashMap<String,Publicacion> publicaciones = recorrerCarrito(usuario); //se recorre el carrito
+        int rta = -1;
+        String opcion = "";
+        System.out.print(espacio + "1 para volver al menú anterior, 2 para comprar lo que hay en el carrito " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+
+//        do
+//        {
+//            System.out.print(espacio + "Opción: ");
+//            rta = teclado.nextInt();
+//            teclado.nextLine();
+//            if ((rta != 1 && rta != 2))
+//            {
+//                System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
+//            }
+//        }
+//        while (rta != 1 && rta != 2);
+//
+//        if(rta == 1)
+//        {
+//            paginaDos(usuario);
+//        }
+//        else
+//        {
+//            Publicacion pub = null;
+//            recorrerPublicaciones();
+//            do
+//            {
+//                System.out.print(espacio + "Nombre del producto que desea agregar al carrito: ");
+//                opcion = teclado.nextLine();
+//                pub = busquedaPublicacionPorNombre(publicaciones,opcion);
+//
+//                if(pub == null) //significa que no lo encontro
+//                {
+//                    System.out.print("\n" + espacio + "Nombre incorrecto, pruebe con alguno de los nombres de la lista.\n");
+//                }
+//            }
+//            while(pub == null);
+//
+//            usuarioNormal.agregarCarrito(pub);
+//            pub.setStock(pub.getStock() - 1);
+//
+//            System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
+//            paginaDos(usuario);
+//        }
+    }
+    public HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
+    {
+        UsuarioNormal usuNormal = (UsuarioNormal)usuario;
+
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        Carrito carro = usuNormal.getCarrito();
+        GeneDosPU<String,Publicacion> lista = carro.getPublicaciones();
+        HashMap<String,Publicacion> mapa = lista.getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones
+
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+
+        if(!it.hasNext())
+        {
+            System.out.print(espacio + "El carrito esta vacio" + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+        }
+
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion pub  = entry.getValue();
+            if(pub.getStock() >= 1) { // muestro solo los productos que tienen stock
+
+
+                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
+                System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
+                System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
+                System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
+                System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + pub.getRating() + codigoReset + "\n");
+            }
+        }
+        return mapa;
     }
 
 
