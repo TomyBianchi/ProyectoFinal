@@ -8,23 +8,24 @@ import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
 
-import javax.xml.stream.events.Namespace;
-import java.nio.channels.SelectableChannel;
 import java.util.*;
 
 import static Clases.Main.teclado;
 
-
+/**
+ * Clase la cual se encarga de la gestión de la consola de comandos y salidas por pantalla.
+ */
 public class GestionConsolaComandos
 {
-
-
+    // ATRIBUTO
     private GestionTienda tienda;
 
+    // CONSTRUCTOR
     public GestionConsolaComandos(GestionTienda tienda) {
         this.tienda = tienda;
     }
 
+    // MÉTODOS
     public void menuPrincipal() {
 
         String espacio = "                                                                           ";

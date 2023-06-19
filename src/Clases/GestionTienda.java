@@ -13,34 +13,24 @@ import ClasesExtra.GeneradorUUID;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.PrimitiveIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Envoltorio
+ * Clase envoltorio que sirve para gestionar el sistema de la tienda.
  */
 public class GestionTienda
 {
     private GeneDosPU<String,Usuario> usuarios;
     private GeneDosPU<String,Publicacion> publicaciones;
 
-    //constructor
+    // CONSTRUCTOR
     public GestionTienda() {
         this.usuarios = new GeneDosPU<>();
         this.publicaciones = new GeneDosPU<>();
     }
 
-
-    //getters
-    public GeneDosPU<String, Publicacion> getPublicaciones() {
-        return publicaciones;
-    }
-    public GeneDosPU<String, Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    //metodos
+    // MÉTODOS
 
     /**
      * Método para verificar si la contraseña contiene al menos una letra mayúsucla.
@@ -96,8 +86,9 @@ public class GestionTienda
     }
 
     /**
-     * Método que agrega un usuario del tipo UsuarioNormal a la lista de usuarios. Lanza la excepción ClaveDuplicadaException si el dni o el mail ya existen.
-     * Lanza la excepción ContrasenaInvalidaException si la contraseña ingresada no cumple los requisitos mínimos.
+     * Método que agrega un usuario del tipo UsuarioNormal a la lista de usuarios. Lanza la excepción ExcepcionClaveDuplicada si el dni ya existe.
+     * Lanza la excepción ExcepcionContrasenaInvalida si la contraseña ingresada no cumple los requisitos mínimos. Lanza la excepción ExcepcionMailYaExiste
+     * si el mail ingresado ya existe en la lista de usuarios.
      * @param mail
      * @param contrasena
      * @param nombre
@@ -107,7 +98,8 @@ public class GestionTienda
      * @param dni
      * @throws ExcepcionClaveDuplicada Se lanza esta excepción cuando la clave está duplicada.
      * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
-     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
+     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe en la lista de usuarios.
+     * @throws ExcepcionNumeroRepetido Se lanza esta excepción cuando número de teléfono ingresado ya existe.
      */
     public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste,ExcepcionNumeroRepetido
     {
@@ -135,6 +127,8 @@ public class GestionTienda
 
     /**
      * Método que agrega un usuario del tipo UsuarioVenta a la lista de usuarios. Lanza la excepción ClaveDuplicadaException si el dni ya existe.
+     * Lanza la excepción ExcepcionContrasenaInvalida si la contraseña ingresada no cumple los requisitos mínimos. Lanza la excepción ExcepcionMailYaExiste
+     * si el mail ingresado ya existe en la lista de usuarios.
      * @param mail
      * @param contrasena
      * @param nombre
@@ -147,7 +141,8 @@ public class GestionTienda
      * @param condicionFiscal
      * @throws ExcepcionClaveDuplicada Se lanza esta excepción cuando la clave está duplicada.
      * @throws ExcepcionConstrasenaInvalida Se lanza esta excepción cuando la contraseña ingresada no cumple los requisitos mínimos.
-     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe.
+     * @throws ExcepcionMailYaExiste Se lanza esta excepción cuando el mail ingresado ya existe en la lista de usuarios.
+     * @throws ExcepcionNumeroRepetido Se lanza esta excepción cuando número de teléfono ingresado ya existe.
      */
     public void agregar(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni,String url, String cuit, E_CondFiscal condicionFiscal) throws ExcepcionClaveDuplicada, ExcepcionConstrasenaInvalida, ExcepcionMailYaExiste, ExcepcionNumeroRepetido
     {
@@ -173,9 +168,8 @@ public class GestionTienda
         }
     }
 
-
     /**
-     * Se crea un periferico para después agregarlo a una publicacion
+     * Método que crea un periférico para después agregarlo a una publicación.
      * @param nombre
      * @param estado
      * @param marca
@@ -185,7 +179,7 @@ public class GestionTienda
      * @param color
      * @param peso
      * @param inalambrico
-     * @return
+     * @return Retorna el periférico creado.
      */
     public Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico)
     {
@@ -195,14 +189,14 @@ public class GestionTienda
     }
 
     /**
-     * Se crea una publicacion.
+     * Método que crea una publicación.
      * @param nombre
      * @param periferico
      * @param precio
      * @param stock
      * @param dueno
      * @param urlFoto
-     * @return
+     * @return Retorna la publicación.
      */
     public Publicacion crearPublicacion(String nombre,Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto)
     {
@@ -218,27 +212,19 @@ public class GestionTienda
         dueno.agregarPublicacion(publicacion);
     }
 
-
-
-    //agregar envio
-
     /**
-     * Es un metodo para agregar un envio a la publicacion que especifique el usuario.
-     * @param publicacion Publicacion a la que se le va a agregar el envio.
-     * @param envioAgregar Envio a agregar
+     * Método para agregar un envío a la publicación que especifique el usuario.
+     * @param publicacion Publicación a la que se le va a agregar el envío.
+     * @param envioAgregar Envío a agregar.
      */
     public void agregarEnvioPublicacion(Publicacion publicacion, Envio envioAgregar) {
         publicacion.agregarEnvio(envioAgregar); //se agregar el envio en la publicacion
         publicaciones.modificar(publicacion.getId(),publicacion);
     }
 
-    
-
-    //otras
-
     /**
-     * Es una funcion la cual returna true si el mail ya esta en la base de datos, en caso contrario returna false
-     * @return
+     * Es un método que verifica si el mail ingresado está repetido en la lista de usuarios.
+     * @return Retorna true si el mail está repetido, sino false.
      */
     public boolean mailRepetido(String mail)
     {
@@ -256,15 +242,15 @@ public class GestionTienda
     }
 
     /**
-     * Es un metodo el cual returna true si la clave va con el usuario, en caso contrario returna false
-     * @param clave clave a ingresar
-     * @return returna true si es correcto, false si no lo es
+     * Es un método verifica que la clave ingresada corresponda al usuario ingresado.
+     * @param clave Clave a ingresar
+     * @return Retorna true si corresponde, sino false.
      */
-    public Usuario claveConfirmacion(String usuario, String clave) //usuario puede ser mail o dni
+    public Usuario claveConfirmacion(String usuario, String clave) // usuario puede ser mail o dni
     {
         HashMap<String, Usuario> mapa = usuarios.getMapa();
 
-        Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator(); //para recorrerlo
+        Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator(); // para recorrerlo
         boolean rta = false;
         while(it.hasNext()) {
             Map.Entry<String, Usuario> entry = it.next();
@@ -279,22 +265,26 @@ public class GestionTienda
     }
 
     /**
-     * Es un metodo que returna true si existe el usuario, evaluado por dni o mail pasado por parametro
+     * Es un método que verifica si el usuario ingresado existe en la lista de usuarios, evaluando por dni o mail pasado por parámetro.
      * @param metodo Mail o DNI a buscar
-     * @return Returna true si existe, en caso contrario returna false
+     * @return Retorna true si existe, sino false.
      */
     public boolean existeUsuario(String metodo)
     {
         boolean rta = false;
-        if(mailRepetido(metodo) || usuarios.contieneClave(metodo)) //significa que si esta en la base de datos
+        if(mailRepetido(metodo) || usuarios.contieneClave(metodo)) // significa que está en la base de datos
         {
             rta = true;
             return rta;
         }
         return rta;
-
     }
 
+    /**
+     * Es un método que verifica si el número de teléfono ingresado ya existe en la lista de usuarios.
+     * @param numero
+     * @return Retorna true si el número ya existe, sino false.
+     */
     public boolean numeroRepetido(String numero)
     {
         HashMap<String, Usuario> mapa = usuarios.getMapa();
@@ -310,8 +300,13 @@ public class GestionTienda
         return rta;
     }
 
-
-
+    // GETTERS Y TOSTRING
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+    public GeneDosPU<String, Usuario> getUsuarios() {
+        return usuarios;
+    }
 
     @Override
     public String toString() {
