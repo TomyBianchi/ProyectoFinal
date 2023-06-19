@@ -6,9 +6,11 @@ import Genericas.GeneDosPU;
 
 public class Compra implements Serializable
 {
-    private GeneDosPU<String,Publicacion> publicaciones; //coleccion de publicaciones que se compraron
-    private float totalGastado; //total gastado en esas compras
+    // ATRIBUTOS
+    private GeneDosPU<String,Publicacion> publicaciones; // lista de publicaciones que se compraron
+    private float totalGastado; // total gastado en esas compras
 
+    // CONSTRUCTORES
     public Compra(float totalGastado) {
         this.publicaciones = new GeneDosPU<>();
         this.totalGastado = totalGastado;
@@ -18,6 +20,7 @@ public class Compra implements Serializable
         this.totalGastado = 0;
     }
 
+    // GETTERS, SETTERS Y OTROS
     public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }

@@ -1,6 +1,6 @@
 package Interfaces;
 
-public interface I_IBML_Map<T,K>
+public interface I_IBML_Map<K,T>
 {
     public void agregar(K key,T elemento);
 

@@ -6,9 +6,11 @@ import Genericas.GeneDosPU;
 
 public class Venta implements Serializable
 {
+    // ATRIBUTOS
     private GeneDosPU<String,Publicacion> publicaciones; //coleccion de publicaciones que se vendieron
     private float totalRecaudado; //total recaudado con la lista de publicaciones
 
+    // CONSTRUCTORES
     public Venta(float totalRecaudado) {
         this.publicaciones = new GeneDosPU<>();
         this.totalRecaudado = totalRecaudado;
@@ -18,7 +20,7 @@ public class Venta implements Serializable
         this.totalRecaudado = 0;
     }
 
-    //getters y setters
+    // GETTERS, SETTERS Y OTROS
     public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
@@ -27,8 +29,7 @@ public class Venta implements Serializable
         return totalRecaudado;
     }
 
-
-    //aca tambien consideramos que no es necesario hacer un equals ni un compareTo
+    // Consideramos que no es necesario hacer un equals ni un compareTo
     @Override
     public int hashCode() {
         return 10;

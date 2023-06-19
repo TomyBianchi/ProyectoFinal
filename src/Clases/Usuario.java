@@ -5,8 +5,9 @@ import java.io.Serializable;
 import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
-public class Usuario implements Serializable{
-    
+public class Usuario implements Serializable
+{
+    // ATRIBUTOS
     private String mail;
     private String contrasena;
     private String nombre;
@@ -14,15 +15,13 @@ public class Usuario implements Serializable{
     private String numeroTelefono;
     private E_TipoUsuario tipoUsuario;
     private String dni; // vale como ID
-    private GeneDosPU<String,Publicacion> listaPublicaciones; //lista generica de publicaciones
-    private Venta ventas; //adentro de venta hay una lista de todas las ventas que hizo el usuario
-    private GeneUnoDM<Direccion> direcciones; //lista generica, en donde guardo las direcciones. En caso de los de solo venta, es la direccoin desde donde se envia el producto
-    private GeneUnoDM<MetodoDePago> metodosDePago; //lista generica de metodos de pago
+    private GeneDosPU<String,Publicacion> publicaciones; // lista genérica de publicaciones
+    private Venta ventas; // adentro de venta hay una lista de todas las ventas que hizo el usuario
+    private GeneUnoDM<Direccion> direcciones; // lista genérica en donde guardo las direcciones; en caso de los de sólo venta, es la dirección desde donde se envía el producto
+    private GeneUnoDM<MetodoDePago> metodosDePago; // lista genérica de métodos de pago
     private float promedioVentas;
 
-    //constructores
-
-
+    // CONSTRUCTORES
     public Usuario(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas) {
         this.mail = mail;
         this.contrasena = contrasena;
@@ -31,7 +30,7 @@ public class Usuario implements Serializable{
         this.numeroTelefono = numeroTelefono;
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
-        this.listaPublicaciones = new GeneDosPU<>();
+        this.publicaciones = new GeneDosPU<>();
         this.ventas = ventas;
         this.direcciones = new GeneUnoDM();
         this.metodosDePago = new GeneUnoDM();
@@ -45,7 +44,7 @@ public class Usuario implements Serializable{
         this.numeroTelefono = numeroTelefono;
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
-        this.listaPublicaciones = new GeneDosPU<>();
+        this.publicaciones = new GeneDosPU<>();
         this.ventas = null;
         this.direcciones = new GeneUnoDM();
         this.metodosDePago = new GeneUnoDM();
@@ -59,14 +58,25 @@ public class Usuario implements Serializable{
         this.numeroTelefono = "";
         this.tipoUsuario = null;
         this.dni = "";
-        this.listaPublicaciones = null;
+        this.publicaciones = null;
         this.ventas = null;
         this.direcciones = null;
         this.metodosDePago = null;
         this.promedioVentas = 0;
     }
 
-    //setters y getters
+    // MÉTODOS
+
+    /**
+     * Método que agrega una publicación a la lista genérica de publicaciones.
+     * @param publicacion
+     */
+    public void agregarPublicacion(Publicacion publicacion)
+    {
+        publicaciones.agregar(publicacion.getId(),publicacion);
+    }
+
+    // GETTERS, SETTERS Y OTROS
     public String getMail() {
         return mail;
     }
@@ -74,6 +84,7 @@ public class Usuario implements Serializable{
     public String getNombre() {
         return nombre;
     }
+
     public String getContrasena() {
         return contrasena;
     }
@@ -94,8 +105,8 @@ public class Usuario implements Serializable{
         return dni;
     }
 
-    public GeneDosPU<String, Publicacion> getListaPublicaciones() {
-        return listaPublicaciones;
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
+        return publicaciones;
     }
 
     public Venta getVentas() {
@@ -146,14 +157,13 @@ public class Usuario implements Serializable{
                 ", numeroTelefono='" + numeroTelefono + '\'' +
                 ", tipoUsuario=" + tipoUsuario +
                 ", dni='" + dni + '\'' +
-                ", listaPublicaciones=" + listaPublicaciones +
+                ", listaPublicaciones=" + publicaciones +
                 ", ventas=" + ventas +
                 ", direcciones=" + direcciones +
                 ", metodosDePago=" + metodosDePago +
                 ", promedioVentas=" + promedioVentas +
                 '}' + "\n";
     }
-
 
     public int compareTo(Object o)
     {
@@ -164,20 +174,11 @@ public class Usuario implements Serializable{
             if(o instanceof Usuario)
             {
                 Usuario aux = (Usuario)o;
-                String auxUno = new String(getDni());  //estos dos errores no impide que compile el programa
+                String auxUno = new String(getDni());  // estos dos errores no impiden que compile el programa
                 String auxDos = new String(getDni());
                 rta = auxDos.compareTo(auxUno);
             }
         }
         return rta;
     }
-
-    public void agregarPublicacion(Publicacion pub)
-    {
-        listaPublicaciones.agregar(pub.getId(),pub);
-    }
-
-
-
-
 }

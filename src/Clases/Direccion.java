@@ -1,9 +1,10 @@
 package Clases;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-public class Direccion implements Serializable{
+public class Direccion implements Serializable
+{
+    // ATRIBUTOS
     private String provincia;
     private String ciudad;
     private String calle;
@@ -11,7 +12,8 @@ public class Direccion implements Serializable{
     private String departamento; // piso + letra del departamento
     private String cp; // código postal
 
-    // Constructor completo para departamento
+    // CONSTRUCTORES
+    // Completo para departamento
     public Direccion(String provincia, String ciudad, String calle, String altura, String departamento, String cp) {
         this.provincia = provincia;
         this.ciudad = ciudad;
@@ -20,7 +22,7 @@ public class Direccion implements Serializable{
         this.departamento = departamento;
         this.cp = cp;
     }
-    // Constructor completo sin piso para casa
+    // Sin piso para casa
     public Direccion(String provincia, String ciudad, String calle, String altura, String cp) {
         this.provincia = provincia;
         this.ciudad = ciudad;
@@ -38,9 +40,7 @@ public class Direccion implements Serializable{
         cp = "";
     }
 
-    //getters y setters
-
-
+    //GETTERS, SETTERS Y OTROS
     public String getProvincia() {
         return provincia;
     }
@@ -81,7 +81,6 @@ public class Direccion implements Serializable{
                 }
             }
         }
-
         return rta;
     }
 
@@ -118,6 +117,4 @@ public class Direccion implements Serializable{
         }
         return rta;
     }
-
-
 }

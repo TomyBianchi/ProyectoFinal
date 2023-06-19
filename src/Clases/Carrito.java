@@ -7,12 +7,12 @@ import Genericas.GeneDosPU;
 
 public class Carrito implements Serializable
 {
-    //atributos
-    private GeneDosPU<String,Publicacion> publicaciones; //publicaciones disponibles en el carrito
-    private MetodoDePago elegido; //metodo de pago que eligio el usuario
-    private E_Envio envio; // envio que tiene que elegir el usuario
+    // ATRIBUTOS
+    private GeneDosPU<String,Publicacion> publicaciones; // publicaciones disponibles en el carrito
+    private MetodoDePago elegido; // método de pago que eligio por el usuario
+    private E_Envio envio; // envío que elige el usuario
 
-    //constructor
+    // CONSTRUCTORES
     public Carrito(GeneDosPU publicaciones, MetodoDePago elegido, E_Envio envio) {
         this.publicaciones = new GeneDosPU<>();
         this.elegido = elegido;
@@ -24,7 +24,7 @@ public class Carrito implements Serializable
         this.envio = null;
     }
 
-    //getters y setters
+    // GETTERS, SETTERS Y OTROS
     public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
@@ -42,8 +42,7 @@ public class Carrito implements Serializable
         publicaciones.agregar(publicacion.getId(),publicacion);
     }
 
-
-    //no hace falta el equals ni el compareTo, un carrito nunca se va comparar con otro carrito.
+    // No hace falta el equals ni el compareTo, un carrito nunca se va comparar con otro carrito.
     @Override
     public int hashCode() {
         return 8;

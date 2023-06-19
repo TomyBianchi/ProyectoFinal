@@ -2,12 +2,11 @@ package Clases;
 
 import Enums.E_Estado;
 
-import java.util.Objects;
-
-public class Periferico {
+public class Periferico
+{
+    // ATRIBUTOS
     private String nombre;
     private String id; // autogenerable
-    // foto
     private E_Estado estado;
     private String marca;
     private String modelo;
@@ -17,6 +16,7 @@ public class Periferico {
     private float peso;
     private boolean inalambrico; // true: inalámbrico, false: con cable
 
+    // CONSTRUCTORES
     public Periferico(String nombre, String id, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico) {
         this.nombre = nombre;
         this.id = id;
@@ -24,7 +24,6 @@ public class Periferico {
         this.marca = marca;
         this.modelo = modelo;
         this.origen = origen;
-
         this.plataformas = plataformas;
         this.color = color;
         this.peso = peso;
@@ -43,6 +42,7 @@ public class Periferico {
         inalambrico = true;
     }
 
+    // GETTERS, SETTERS Y OTROS
     public String getNombre() {
         return nombre;
     }
@@ -66,8 +66,6 @@ public class Periferico {
     public String getOrigen() {
         return origen;
     }
-
-
 
     public String getPlataformas() {
         return plataformas;

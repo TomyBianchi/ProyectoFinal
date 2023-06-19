@@ -6,13 +6,15 @@ import Enums.E_Pago;
 
 public class MetodoDePago implements Serializable
 {
-    private E_Pago tipoPago; //tipo de metodo de pago
-    private String nombre; //nombre que aparece en la tarjeta
+    // ATRIBUTOS
+    private E_Pago tipoPago; // tipo de método de pago
+    private String nombre; // nombre que aparece en la tarjeta
     private String numeroTarjeta;
     private String cvv;
     private String mesVencimiento;
     private String anoVencimiento;
 
+    // CONSTRUCTORES
     public MetodoDePago(E_Pago tipoPago, String nombre, String numeroTarjeta, String cvv, String mesVencimiento, String anoVencimiento) {
         this.tipoPago = tipoPago;
         this.nombre = nombre;
@@ -30,9 +32,7 @@ public class MetodoDePago implements Serializable
         this.anoVencimiento = "";
     }
 
-    //getters y setters
-
-
+    // GETTERS, SETTERS Y OTROS
     public E_Pago getTipoPago() {
         return tipoPago;
     }
@@ -51,7 +51,6 @@ public class MetodoDePago implements Serializable
         aux += this.numeroTarjeta.substring(this.numeroTarjeta.length() - 4);
         return aux; //returna los ultimos 4 numeros de la tarjeta.
     }
-
 
     @Override
     public boolean equals(Object o)

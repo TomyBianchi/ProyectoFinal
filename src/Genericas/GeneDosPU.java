@@ -13,7 +13,7 @@ import java.util.Map;
  * y la clase Usuario para su lista de publicaciones.
  * @author tomas
  */
-public class GeneDosPU<K,T> implements I_IBML_Map<T,K>, Serializable
+public class GeneDosPU<K,T> implements I_IBML_Map<K,T>, Serializable
 {
     private HashMap<K,T> mapa;
 

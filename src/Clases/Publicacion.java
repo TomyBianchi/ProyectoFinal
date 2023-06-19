@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import Genericas.GeneTresE;
 
-public class Publicacion implements Serializable{
+public class Publicacion implements Serializable
+{
+    // ATRIBUTOS
     private String nombrePublicacion;
     private Periferico periferico;
     private float precio;
@@ -13,10 +15,11 @@ public class Publicacion implements Serializable{
     private String reviews;
     private int rating;
     private String urlFoto;
-    private Usuario dueno; //dueno de la publicacion
-    private GeneTresE<Envio> envios; //lista de envios disponibles de la publicacion.
+    private Usuario dueno; // dueño de la publicación
+    private GeneTresE<Envio> envios; // lista de tipos de envío disponibles de la publicación
 
-    public Publicacion(String nombrePublicacion, Periferico periferico, float precio, int stock, String id, String reviews, int rating, Usuario dueno) {
+    // CONSTRUCTORES
+    public Publicacion(String nombrePublicacion, Periferico periferico, float precio, int stock, String id, String reviews, int rating, Usuario dueno, String urlFoto) {
         this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
@@ -26,11 +29,10 @@ public class Publicacion implements Serializable{
         this.rating = rating;
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
+        this.urlFoto = urlFoto;
     }
-
-    //constructor sin reviews, rating ni id (porque se autogenera) para agregar publicacion
-    public Publicacion(String nombrePublicacion,Periferico periferico, float precio, int stock, Usuario dueno,String urlFoto,String id) {
-
+    // Constructor sin reviews ni rating para agregar publicacion
+    public Publicacion(String nombrePublicacion,Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto, String id) {
         this.nombrePublicacion = nombrePublicacion;
         this.periferico = periferico;
         this.precio = precio;
@@ -41,7 +43,6 @@ public class Publicacion implements Serializable{
         this.dueno = dueno;
         this.envios = new GeneTresE<>();
         this.urlFoto = urlFoto;
-        this.stock = stock;
     }
     public Publicacion() {
         this.periferico = null;
@@ -52,8 +53,20 @@ public class Publicacion implements Serializable{
         this.rating = 0;
         this.dueno = null;
         this.envios = new GeneTresE<>();
+        this.urlFoto = "";
     }
 
+    // MÉTODOS
+
+    /**
+     * Este método agrega un envío a la lista de envíos. Se pueden agregar todos los que el vendedor quiera.
+     */
+    public void agregarEnvio(Envio envio)
+    {
+        envios.agregar(envio);
+    }
+
+    // GETTERS, SETTERS Y OTROS
     public void setStock(int stock) {
         this.stock = stock;
     }
@@ -122,7 +135,6 @@ public class Publicacion implements Serializable{
         return 7;
     }
 
-
     @Override
     public String toString() {
         return "Publicacion{" +
@@ -153,16 +165,4 @@ public class Publicacion implements Serializable{
         }
         return rta;
     }
-
-    //metodos
-
-    /**
-     * Agrega un envio a la lista de envios, se pueden agregar todos los que el vendedor quiera.
-     */
-    public void agregarEnvio(Envio envio)
-    {
-        envios.agregar(envio);
-    }
-
-
 }

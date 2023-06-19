@@ -5,14 +5,14 @@ import java.io.Serializable;
 import Enums.E_TipoUsuario;
 import Genericas.GeneDosPU;
 
-public class UsuarioNormal extends Usuario
-implements Serializable
+public class UsuarioNormal extends Usuario implements Serializable
 {
-    //atributos
+    // ATRIBUTOS
     private GeneDosPU<String, Publicacion> favoritas;
     private Carrito carrito; 
-    private Compra compras; // clase la cual tiene una coleccion de publicaciones las cuales ya fueron compradas por este comprador
+    private Compra compras; // clase la cual tiene una lista de publicaciones las cuales ya fueron compradas por este usuario
 
+    // CONSTRUCTORES
     public UsuarioNormal(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas) {
         super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, ventas, promedioVentas);
         this.favoritas = new GeneDosPU<>();
@@ -32,7 +32,18 @@ implements Serializable
         this.compras = null;
     }
 
-    //getters y setters
+    // MÉTODOS
+
+    /**
+     * Método que agrega una publicación al carrito.
+     * @param publicacion
+     */
+    public void agregarCarrito(Publicacion publicacion)
+    {
+        carrito.agregarPublicacion(publicacion);
+    }
+
+    // GETTERS, SETTERS Y OTROS
     public GeneDosPU<String, Publicacion> getFavoritas() {
         return favoritas;
     }
@@ -94,11 +105,4 @@ implements Serializable
         }
         return rta;
     }
-
-    public void agregarCarrito(Publicacion publicacion)
-    {
-        carrito.agregarPublicacion(publicacion);
-    }
-
-
 }

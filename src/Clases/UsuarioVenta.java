@@ -5,15 +5,15 @@ import java.io.Serializable;
 import Enums.E_CondFiscal;
 import Enums.E_TipoUsuario;
 
-public class UsuarioVenta extends Usuario
-implements Serializable{
-
-    //atributos
+public class UsuarioVenta extends Usuario implements Serializable
+{
+    // ATRIBUTOS
     private boolean verificado; // true: identidad verificada, false: no verificada
     private String url;
     private String cuit;
     private E_CondFiscal condicionFiscal;
 
+    // CONSTRUCTORES
     public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) {
         super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, ventas, promedioVentas);
         this.verificado = verificado;
@@ -35,7 +35,7 @@ implements Serializable{
         this.condicionFiscal = null;
     }
 
-    //getters y setters
+    //GETTERS, SETTERS Y OTROS
     public boolean isVerificado() {
         return verificado;
     }
@@ -102,8 +102,4 @@ implements Serializable{
         }
         return rta;
     }
-
-
-
-
 }

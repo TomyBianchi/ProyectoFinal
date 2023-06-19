@@ -3,14 +3,16 @@ package Clases;
 import Enums.E_Envio;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-public class Envio implements Serializable{
+public class Envio implements Serializable
+{
+    // ATRIBUTOS
     private boolean express;
     private float precio;
     private E_Envio tipoEnvio;
     private int distancia;
 
+    // CONSTRUCTORES
     public Envio(boolean express, float precio, E_Envio tipoEnvio, int distancia) {
         this.express = express;
         this.precio = precio;
@@ -20,10 +22,11 @@ public class Envio implements Serializable{
     public Envio() {
         express = false;
         precio = 0;
-        tipoEnvio = tipoEnvio; // iniciar con un tipo de enum
+        tipoEnvio = E_Envio.Tierra; // inicia en Tierra por default
         distancia = 0;
     }
 
+    // GETTERS, SETTERS Y OTROS
     public boolean isExpress() {
         return express;
     }
