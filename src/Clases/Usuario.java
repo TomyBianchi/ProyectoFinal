@@ -31,7 +31,7 @@ public class Usuario implements Serializable
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
         this.publicaciones = new GeneDosPU<>();
-        this.ventas = ventas;
+        this.ventas = new Venta();
         this.direcciones = new GeneUnoDM();
         this.metodosDePago = new GeneUnoDM();
         this.promedioVentas = promedioVentas;
@@ -45,7 +45,7 @@ public class Usuario implements Serializable
         this.tipoUsuario = tipoUsuario;
         this.dni = dni;
         this.publicaciones = new GeneDosPU<>();
-        this.ventas = null;
+        this.ventas = new Venta();
         this.direcciones = new GeneUnoDM();
         this.metodosDePago = new GeneUnoDM();
         this.promedioVentas = 0;
@@ -138,6 +138,10 @@ public class Usuario implements Serializable
 
     public float getPromedioVentas() {
         return promedioVentas;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     @Override

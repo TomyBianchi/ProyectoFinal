@@ -392,7 +392,7 @@ public class GestionConsolaComandos
         }
         else
         {
-            System.exit(0);
+            menuPrincipal();
         }
 
 
@@ -705,10 +705,6 @@ public class GestionConsolaComandos
         System.out.print("\n");
         paginaDos(usuario);
     }
-//    public void verCarrito()
-//    {
-//
-//    }
     public void miCuenta(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -766,20 +762,20 @@ public class GestionConsolaComandos
         }
         else if(decision == 3)
         {
-
+            mostrarCompras(usuario);
         }
         else if(decision == 4)
         {
-
+            mostrarVentas(usuario);
         }
         else if(decision == 5)
         {
-            ;
+            cambiarContrasena(usuario);
         }
-
-
-
-
+        else
+        {
+            paginaDos(usuario);
+        }
     }
     public void metodosDePago(Usuario usuario)
     {
@@ -1194,5 +1190,142 @@ public class GestionConsolaComandos
 //        }
         direcciones(usuario);
     }
+    public void mostrarCompras(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        UsuarioNormal user = (UsuarioNormal)usuario; //por que no se va a poder mostrar compras del UsuarioVenta ya que no tiene
+        Compra comprasHechas = user.getCompras();
+
+        GeneDosPU<String,Publicacion> gene = comprasHechas.getPublicaciones();
+        HashMap<String,Publicacion> mapa = gene.getMapa();
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+
+        if(!it.hasNext())
+        {
+            System.out.print("\n");
+            System.out.print(espacio + "No tiene compras registradas en esta cuenta." + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+            System.out.print("\n");
+        }
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion aux = entry.getValue();
+
+            System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + aux.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+            System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + aux.getUrlFoto() + codigoReset + "\n");
+            System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + aux.getPrecio() + codigoReset + "\n");
+            System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
+            System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + aux.getRating() + codigoReset + "\n");
+        }
+        System.out.print(espacio + "Total Gastado: " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
+        miCuenta(usuario);
+    }
+    public void mostrarVentas(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+
+        Venta ventasHechas = usuario.getVentas();
+
+
+        GeneDosPU<String,Publicacion> gene = ventasHechas.getPublicaciones();
+        HashMap<String,Publicacion> mapa = gene.getMapa();
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+
+
+        if(!it.hasNext())
+        {
+            System.out.print("\n");
+            System.out.print(espacio + "No tiene ventas registradas en esta cuenta." + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+            System.out.print("\n");
+        }
+
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion aux = entry.getValue();
+
+            System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + aux.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+            System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + aux.getUrlFoto() + codigoReset + "\n");
+            System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + aux.getPrecio() + codigoReset + "\n");
+            System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
+            System.out.print(espacio + "Rating: " + codigoNegrita + codigoSubrayado + aux.getRating() + codigoReset + "\n");
+        }
+        System.out.print(espacio + "Total Ganado: " + codigoNegrita + codigoSubrayado + ventasHechas.getTotalRecaudado() + codigoReset + "\n");
+        miCuenta(usuario);
+    }
+    public void cambiarContrasena(Usuario usuario)
+    {
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
+
+        String nuevaContra = "";
+        String verificacion = "";
+
+        System.out.print("\n");
+        String mensaje = "Para cambiarla vas a tener conocer tu contrasena anterior.";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        System.out.print("\n");
+
+        System.out.print("\n");
+        String mensajeDos = "Contrasena vieja: ";
+        System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeDos + codigoReset);
+        teclado.nextLine();
+        String contraVieja = teclado.next();
+
+        if(usuario.getContrasena().equals(contraVieja))
+        {
+            do
+            {
+                System.out.print("\n\n");
+                System.out.print("\n");
+                String mensajeTres = "Nueva contrasena: ";
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeTres + codigoReset);
+                teclado.nextLine();
+                nuevaContra = teclado.next();
+                System.out.print("\n");
+
+
+                String mensajeCinco = "Repite la contrasena: ";
+                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeCinco + codigoReset);
+                teclado.nextLine();
+                verificacion = teclado.next();
+
+                if(!nuevaContra.equals(verificacion))
+                {
+                    String mensajeAdv = "Las contrasenas no coinciden, por favor intentelo denuevo.";
+                    System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAdv + codigoReset);
+                }
+            }
+            while (!nuevaContra.equals(verificacion));
+
+            usuario.setContrasena(nuevaContra);
+            String mensajeExito = "Cambiaste tu contrasena con exito.";
+            System.out.print("\n\n");
+            System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeExito + codigoReset);
+        }
+        else
+        {
+            System.out.print("\n");
+            String mensajeCuatro= "Contrasena incorrecta, intentelo denuevo.";
+            System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeCuatro + codigoReset);
+        }
+        miCuenta(usuario);
+    }
+
 
 }

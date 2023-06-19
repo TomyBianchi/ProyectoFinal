@@ -1,6 +1,9 @@
 package Clases;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import Genericas.GeneDosPU;
 
@@ -26,6 +29,15 @@ public class Compra implements Serializable
     }
 
     public float getTotalGastado() {
+        float total = 0;
+        HashMap<String,Publicacion> mapa = getPublicaciones().getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones
+        Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion aux = entry.getValue();
+            total += aux.getPrecio();
+        }
         return totalGastado;
     }
 

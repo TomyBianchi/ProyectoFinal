@@ -34,6 +34,8 @@ public class UsuarioNormal extends Usuario implements Serializable
 
     // MÉTODOS
 
+
+
     /**
      * Método que agrega una publicación al carrito.
      * @param publicacion
