@@ -55,18 +55,19 @@ public class GestionConsolaComandos implements Serializable
         {
             System.out.print(espacio + "Cargando...\n");
 
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                System.out.print(e.getMessage());
-//            }
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
 
             System.out.print(espacio + "Sesion iniciada con exito.\n");
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                System.out.print(e.getMessage());
-//            }
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
 
             paginaDos(ingresado);
         }
@@ -149,6 +150,11 @@ public class GestionConsolaComandos implements Serializable
                 }
                 catch (JSONException e){};
                 //salgo del programa
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 System.exit(0);
             }
         }
@@ -222,14 +228,18 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + "ACLARACIONES ANTES DE CREAR LA CUENTA: \n" + espacio + "La cuenta es personal. Por lo que no se puede tener dos cuentas con el mismo mail, DNI o número telefónico.");
         System.out.print("\n");
         System.out.print(espacio + "La contraseña debe tener mínimo 8 dígitos, un caracter en mayúscula y un dígito numérico.\n");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         do {
 
 
-            System.out.print(espacio +"Ingrese su mail: ");
+            System.out.print(espacio + "Ingrese su mail: ");
             mail = teclado.next();
 
-            do
-            {
+            do {
                 System.out.print("\n");
                 System.out.print(espacio + "Ingrese su contraseña: ");
                 contrasena = teclado.next();
@@ -238,10 +248,15 @@ public class GestionConsolaComandos implements Serializable
                 System.out.print(espacio + "Reingrese su contraseña: ");
                 contraAux = teclado.next();
 
-                if(!contrasena.equals(contraAux))
-                {
+
+                if (!contrasena.equals(contraAux)) {
                     System.out.print("\n");
                     System.out.print(espacio + "No coinciden las contraseñas. Inténtelo de nuevo. \n");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        System.out.print(e.getMessage());
+                    }
                 }
             }
             while (!contrasena.equals(contraAux));
@@ -251,23 +266,34 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + "Ingrese su nombre: ");
             nombre = teclado.next();
 
+
             System.out.print("\n");
             System.out.print(espacio + "Ingrese su apellido: ");
             apellido = teclado.next();
 
+
+
             System.out.print("\n");
             System.out.print(espacio + "Ingrese su numero de teléfono: ");
             numeroTelefono = teclado.next();
+
+
 
             System.out.print("\n");
             System.out.print(espacio + "Ingrese su documento de identidad: ");
             dni = teclado.next();
 
             System.out.print("\n");
-            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o sólo especializada en venta. Ingrese opción 1 o 2. ");
-            System.out.print(espacio + "ACLARACIÓN \n" + espacio + "El usuario de compra y venta no puede verificarse como página de venta oficial.\n");
+            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o sólo especializada en venta. Ingrese opción 1 o 2. \n");
+            System.out.print(espacio + "ACLARACIÓN \n" + espacio + "El usuario de compra y venta no podrá poner URl de su su pagina de venta.\n");
             System.out.print(espacio + "En el caso del usuario venta, no podrá comprar productos. A la vez también deberá agregar la URL de su página web de venta, su CUIT y la condiición fiscal.\n");
             System.out.print(espacio + "Todas las reglas mencionadas son obligatorias. En caso contrario, se podrá cerrar la cuenta de manera definitiva. \n");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
+
             System.out.print(espacio + "Opción: ");
             do {
                 decitionUsuario = teclado.nextInt();
@@ -290,6 +316,7 @@ public class GestionConsolaComandos implements Serializable
                 System.out.print(espacio + "Ingrese la URL de su página web de venta: ");
                 url = teclado.next();
 
+
                 System.out.print("\n");
                 System.out.print(espacio + "Ingrese su CUIT personal: ");
                 cuit = teclado.next();
@@ -298,6 +325,7 @@ public class GestionConsolaComandos implements Serializable
                 do {
                     System.out.print(espacio + "Ingrese su tipo de monotributo. A-F: ");
                     decisionMonotributo = teclado.next();
+
                     if (!decisionMonotributo.equals("A") && !decisionMonotributo.equals("B") && !decisionMonotributo.equals("C") && !decisionMonotributo.equals("D") && !decisionMonotributo.equals("E") && !decisionMonotributo.equals("F"))
                     {
                         System.out.print(espacio + "Error. Por favor introduzca una respuesta válida. \n");
@@ -365,6 +393,11 @@ public class GestionConsolaComandos implements Serializable
         }
         while (!banderaConfirmacionExcep);
 
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print("\n\n");
         System.out.print(espacio + "Felicitaciones! Ha creado su cuenta con éxito.\n");
     }
@@ -427,10 +460,21 @@ public class GestionConsolaComandos implements Serializable
 
         if(decision == 1)
         {
+            System.out.print(espacio + "Cargando publicaciones...\n");
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             verPublicacionesActivas(usuario);
         }
         else if(decision == 2)
-        {
+        {            System.out.print(espacio + "Cargando...\n");
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             crearPublicacion(usuario);
         }
         else if(decision == 3)
@@ -498,7 +542,7 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + "Opción: ");
             rta = teclado.nextInt();
             teclado.nextLine();
-            if ((rta != 1 && rta != 2))
+            if (rta != 1 && rta != 2 && rta != 3)
             {
                 System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
             }
@@ -514,10 +558,14 @@ public class GestionConsolaComandos implements Serializable
             if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
             {
                 System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto al carrito.\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 paginaDos(usuario);
             }
             Publicacion pub = null;
-            recorrerPublicaciones();
             do
             {
                 System.out.print(espacio + "Nombre del producto que desea agregar al carrito: ");
@@ -534,6 +582,11 @@ public class GestionConsolaComandos implements Serializable
             if(pub.getDueno().equals(usuario))
             {
                 System.out.print(espacio + "Error, no podes agregar al carrito una publicacion que es tuya.\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 paginaDos(usuario);
             }
 
@@ -541,17 +594,26 @@ public class GestionConsolaComandos implements Serializable
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
-            verPublicacionesActivas(usuario);
+            try {
+                Thread.sleep(1400);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
+            paginaDos(usuario);
         }
         else
         {
             if(usuario instanceof UsuarioVenta) // no puede agregar nada al carrito
             {
-                System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto al carrito.\n");
+                System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto a favoritos.\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 paginaDos(usuario);
             }
             Publicacion pub = null;
-            recorrerPublicaciones();
             do
             {
                 System.out.print(espacio + "Nombre del producto que desea agregar a favoritos: ");
@@ -568,12 +630,23 @@ public class GestionConsolaComandos implements Serializable
             if(pub.getDueno().equals(usuario))
             {
                 System.out.print(espacio + "Error, no podes agregar a favoritos una publicacion que es tuya.\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 paginaDos(usuario);
             }
 
+
             usuarioNormal.agregarFavorito(pub);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito a tus favoritos\n");
-            verPublicacionesActivas(usuario);
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
+            paginaDos(usuario);
         }
 
     }
@@ -687,13 +760,24 @@ public class GestionConsolaComandos implements Serializable
         if(!usuario.tieneDebitoYcredito())
         {
             System.out.print(espacio + "Necesitas agregar por lo menos una tarjeta de debito y una de credito para poder crear una publicacion.\n");
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             paginaDos(usuario);
+
         }
 
 
         System.out.print("\n");
         String mensaje = " Van a completar los siguientes datos para crear su publicacion";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print("\n");
         teclado.nextLine();
 
@@ -716,6 +800,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
 
         System.out.print(espacio + "Ahora va a agregar los tipos de envio que va a aceptar." + "\n" + espacio +"Obligatoriamente va a tener que tener un envio como minimo.");
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         do {
             System.out.print("\n");
             System.out.print(espacio + "Tipo de envio(1-Tierra, 2-Aereo, 3-Maritimo):  ");
@@ -745,6 +834,11 @@ public class GestionConsolaComandos implements Serializable
             }
 
             System.out.print(espacio + "Contacte con su empresa de envios para saber el precio exacto que el comprador debera pagar por este.");
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             System.out.print("\n");
             System.out.print(espacio + "Precio: ");
             precioEnvio = teclado.nextFloat();
@@ -770,6 +864,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
         String mensajeAux = " Excelente! Ahora vamos a completar una serie de datos adicionales de tu periferico...";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAux + codigoReset);
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
 
         System.out.print("\n");
         teclado.nextLine();
@@ -854,6 +953,11 @@ public class GestionConsolaComandos implements Serializable
 
         System.out.print("\n");
         String mensajeAuxDos = " Publicacion agregada con exito! Ahora va a volver a la pagina su menu principal..";
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAuxDos + codigoReset);
         System.out.print("\n");
         paginaDos(usuario);
@@ -992,6 +1096,11 @@ public class GestionConsolaComandos implements Serializable
         String opcionUno = "1- Agregar metodo de pago";
         String opcionDos = "2- Borrar metodo de pago";
         String opcionTres = "3- Volver al menu anterior";
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
 
 
 
@@ -1001,6 +1110,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
 
         System.out.print(espacio + opcionElecc);
         int decision = 0;
@@ -1030,11 +1144,6 @@ public class GestionConsolaComandos implements Serializable
             miCuenta(usuario);
         }
 
-
-
-
-
-
     }
 
     /**
@@ -1063,6 +1172,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
         String mensaje = " Van a completar los siguientes datos para agregar su metodo de pago";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print("\n");
         teclado.nextLine();
 
@@ -1147,6 +1261,11 @@ public class GestionConsolaComandos implements Serializable
                 usuario.borrarMetodoDePago(aux);
                 System.out.print("\n");
                 System.out.print(espacio + "Borrado con exito.\n\n");
+                try {
+                    Thread.sleep(1200);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 bandera = true;
             }
         }
@@ -1155,14 +1274,14 @@ public class GestionConsolaComandos implements Serializable
 
             System.out.print("\n");
             System.out.print(espacio + "No se encontro un metodo de pago con esas caracteristicas\n\n");
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             System.out.print("\n");
         }
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            System.out.print(e.getMessage());
-        }
 
         metodosDePago(usuario);
     }
@@ -1234,6 +1353,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionTres + codigoReset + "\n");
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
 
         System.out.print(espacio + opcionElecc);
         int decision = 0;
@@ -1289,6 +1413,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
         String mensaje = " Van a completar los siguientes datos para agregar su direccion";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print("\n");
         teclado.nextLine();
 
@@ -1347,6 +1476,11 @@ public class GestionConsolaComandos implements Serializable
         boolean bandera = false;
 
         System.out.print(espacio + "Decime la calle y altura de la direccion que queres borrar. \n");
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print(espacio + "Calle: ");
         calle = teclado.next();
 
@@ -1491,6 +1625,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
         String mensaje = "Para cambiarla vas a tener conocer tu contrasena anterior.";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         System.out.print("\n");
 
         System.out.print("\n");
@@ -1559,7 +1698,11 @@ public class GestionConsolaComandos implements Serializable
         int rta = -1;
         String opcion = "";
         System.out.print(espacio + "1 para volver al menú anterior, 2 para comprar lo que hay en el carrito, 3 para borrar una publicacion del carrito " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
-
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
         do
         {
             System.out.print(espacio + "Opción: ");
@@ -1622,6 +1765,11 @@ public class GestionConsolaComandos implements Serializable
         {
             System.out.print("\n");
             System.out.print(espacio + "Decime el nombre de la publicacion del carrito que deseas borrar.\n");
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             System.out.print(espacio + "Opcion: ");
             decision = teclado.nextLine();
 

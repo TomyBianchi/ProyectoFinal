@@ -8,7 +8,6 @@ import Enums.E_TipoUsuario;
 public class UsuarioVenta extends Usuario implements Serializable
 {
     // ATRIBUTOS
-    private boolean verificado; // true: identidad verificada, false: no verificada
     private String url;
     private String cuit;
     private E_CondFiscal condicionFiscal;
@@ -16,7 +15,6 @@ public class UsuarioVenta extends Usuario implements Serializable
     // CONSTRUCTORES
     public UsuarioVenta(String mail, String contrasena, String nombre, String apellido, String numeroTelefono, E_TipoUsuario tipoUsuario, String dni, Venta ventas, float promedioVentas, boolean verificado, String url, String cuit, E_CondFiscal condicionFiscal) {
         super(mail, contrasena, nombre, apellido, numeroTelefono, tipoUsuario, dni, ventas, promedioVentas);
-        this.verificado = verificado;
         this.url = url;
         this.cuit = cuit;
         this.condicionFiscal = condicionFiscal;
@@ -29,16 +27,12 @@ public class UsuarioVenta extends Usuario implements Serializable
     }
     public UsuarioVenta() {
         super();
-        this.verificado = false;
         this.url = "";
         this.cuit = "";
         this.condicionFiscal = null;
     }
 
     //GETTERS, SETTERS Y OTROS
-    public boolean isVerificado() {
-        return verificado;
-    }
 
     public String getUrl() {
         return url;
@@ -78,11 +72,10 @@ public class UsuarioVenta extends Usuario implements Serializable
 
     @Override
     public String toString() {
-        return super.toString() + "     UsuarioVenta{" +
-                "verificado=" + verificado +
-                ", url='" + url + '\'' +
+        return "UsuarioVenta{" +
+                "url='" + url + '\'' +
                 ", cuit='" + cuit + '\'' +
-                ", condicionFiscal=" + condicionFiscal + "\n\n\n" +
+                ", condicionFiscal=" + condicionFiscal +
                 '}';
     }
 
