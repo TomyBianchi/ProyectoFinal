@@ -18,6 +18,7 @@ import static Clases.Main.teclado;
 
 /**
  * Clase la cual se encarga de la gestión de la consola de comandos y salidas por pantalla.
+ * Es la encargada de hacer la aplicacion un lugar amigable y util para el usuario
  */
 public class GestionConsolaComandos implements Serializable
 {
@@ -30,6 +31,16 @@ public class GestionConsolaComandos implements Serializable
     }
 
     // MÉTODOS
+
+    /**
+     *Este metodo, antes de hacer todo, baja un archivo de usuarios y otro de publicaciones. Esos archivos son la "Base de datos" de los usuarios y de las
+     * publicaciones que se van creando.
+     *
+     * Este metodo es el principal cuando se llama desde el main. Este mismo llama a Pagino uno que es la que se usa para iniciar sesion, crear una cuenta o
+     * simplemente salir.
+     *
+     * En caso de iniciar sesion correctamente, se va a paginaDos(), el cual es el menu de la aplicacion una vez se haya logueado el usuario.
+     */
     public void menuPrincipal() {
 
         String espacio = "                                                                           ";
@@ -59,13 +70,25 @@ public class GestionConsolaComandos implements Serializable
 
             paginaDos(ingresado);
         }
-
-
-
-
-
-
     }
+
+    /**
+     * Este metodo es la interfaz principal para loguearse en la aplicacion.
+     * Se puede crear una cuenta, iniciar sesion o simplemente salir del programa
+     *
+     * Al crear una cuenta, te redirige a crearCuenta(), el cual te da los pasos necesarios para crear una cuenta en la aplicacion.
+     *Una vez terminada la creacion de la cuenta, te redirige denuevo a paginaUno().
+     *
+     * Al Iniciar sesion, te redirige a iniciarSesion(), el cual es un formulario para poder entrar a tu cuenta. Esta funcion es la que returna el usuario
+     * que va a necesitar menuPrincipal, para poder confirmar que se inicio sesion. Esto llama denuevo a menuPrincipal(), el cual en caso de que se haya
+     * iniciado sesion con un usuario valido, sigue a la paginaDos(), que es la interfaz de la aplicacion una vez el usuario ya esta logueado
+     *
+     * NECESARIAMENTE ES IMPORTANTE QUE CADA VEZ QUE SE SALGA DEL PROGRAMA SE APRETE EN SALIR. Esto hace que se guarde todo lo que se hizo en el archivo.
+     * y tambien se guarden las publicaciones en un JSON
+     *
+     *
+     * @return Returna el usuario que inicio sesion.
+     */
     public Usuario paginaUno()
     {
         Usuario usuarioRetorno = null;
@@ -117,12 +140,15 @@ public class GestionConsolaComandos implements Serializable
             }
             else {
 
+                //convierto todo en un archivo una vez el usuario desea salir del programa
                 this.tienda.toArchivo("archivoUsuarios","archivoPublicaciones");
+                //convierto todas las publicaciones en un JSON
                 try
                 {
-                    tienda.toJSONArray(); //pone todas las publicaciones en un json
+                    tienda.toJSONArray();
                 }
                 catch (JSONException e){};
+                //salgo del programa
                 System.exit(0);
             }
         }
@@ -131,6 +157,11 @@ public class GestionConsolaComandos implements Serializable
         return usuarioRetorno;
     }
 
+    /**
+     * Es un metodo llamado por paginaUno. Este pide los datos necesarios, para iniciar sesion, y a la vez tiene todas las verificaciones de seguridad necesarias
+     * para que funcione correctamente
+     * @return Returna el usuario que inicio sesion satisfactoriamente
+     */
     public Usuario iniciarSesion()
     {
         String espacio = "                                                                           ";
@@ -138,7 +169,7 @@ public class GestionConsolaComandos implements Serializable
         String contrasena = "";
         boolean existencia = false;
         Usuario auxUsuario = null;
-        do {                                        //verificacion de que el usuario este intentando poner un mail correcto.
+        do {                                        //verificacion de que el usuario este intentando poner un mail o dni correcto.
             System.out.print(espacio + "Ingrese su Mail o DNI: ");
             ingresarDNIOMail= teclado.next();
             existencia = tienda.existeUsuario(ingresarDNIOMail); // es true si existe, si no existe es false
@@ -165,6 +196,10 @@ public class GestionConsolaComandos implements Serializable
 
     }
 
+    /**
+     * Es la interfaz que se usa a la hora de ingresar los datos necesarios para hacer el tipo de cuenta que el usuario desee. Una vez terminado el proceso
+     * de creacion de cuenta, se redirige a paginaUno() para que el usuario pueda iniciar sesion con su cuenta.
+     */
     public void crearCuenta()
     {
         String espacio = "                                                                           ";
@@ -300,16 +335,15 @@ public class GestionConsolaComandos implements Serializable
 
                 }
 
-
             }
 
             try
             {
-                if(decitionUsuario == 1)
+                if(decitionUsuario == 1) //tipo de usuario normal
                 {
                     tienda.agregar(mail,contrasena,nombre,apellido,numeroTelefono,usuario,dni);
                 }
-                else
+                else //tipo de usuario solo venta
                 {
                     tienda.agregar(mail,contrasena,nombre,apellido,numeroTelefono,usuario,dni,url,cuit,cond);
                 }
@@ -335,6 +369,13 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + "Felicitaciones! Ha creado su cuenta con éxito.\n");
     }
 
+    /**
+     * Este metodo es la interfaz que se muestra de la aplicacion una vez el usuario se pudo loguear con exito a la publicacion
+     * Cada opcion elegida por el usuario, lo va a redirigir al metodo necesario. Este metodo necesario tendra la interfaz de esa opcion,
+     * y a la vez las utilidades necesarias para manipular usuarios, y publicaciones.
+     *
+     * @param usuario Usuario que se logueo en la aplicacion
+     */
     public void paginaDos(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -424,6 +465,14 @@ public class GestionConsolaComandos implements Serializable
 
     }
 
+    /**
+     * Este metodo es la opcion 1 de paginaDos(). Esta opcion te muestra todas las publicaciones activas de la aplicacion. A la vez
+     * te permite volver a la paginaDos(), agregar una publicacion al carrito (Una vez se agregar al carrito, se disminuye el stock del producto)
+     *  y agregar una publicacion a favoritos
+     *
+     *
+     * @param usuario Es el usuario logueado, se necesita para verificaciones dentro del programa
+     */
     public void verPublicacionesActivas(Usuario usuario)
     {
         UsuarioNormal usuarioNormal = null;
@@ -528,6 +577,14 @@ public class GestionConsolaComandos implements Serializable
         }
 
     }
+
+    /**
+     * Es un metodo simple, que se usa en otras funciones. Recorre el mapa pasado por parametro, y compara cada uno de sus elementos con
+     * el nombre pasado por parametro. Esto se usa cada vez que se quiere buscar una públicacion por un nombre en especifico
+     * @param mapa coleccion de Publicaciones a recorrer
+     * @param nombre Nombre que se quiere buscar
+     * @return Returna la publicacion que tenia el nombre pasado por parametro. En caso de que el nombre no este, returna null
+     */
     public Publicacion busquedaPublicacionPorNombre(HashMap<String,Publicacion> mapa, String nombre)
     {
         Publicacion pub = null;
@@ -548,6 +605,11 @@ public class GestionConsolaComandos implements Serializable
         }
         return pub;
     }
+
+    /**
+     * Metodo usado en otras funciones, sirve para recorrer todas las publicaciones de la tienda.
+     * @return Returna el mapa que tuvo que recorrer.
+     */
     public HashMap<String,Publicacion> recorrerPublicaciones()
     {
         String espacio = "                                                                           ";
@@ -581,6 +643,13 @@ public class GestionConsolaComandos implements Serializable
         }
         return mapa;
     }
+
+    /**
+     * Metodo que es el que hace que un usuario pueda crear una publicacion. Este pide por parametro el usuario que va a crear la publicacion,
+     * y dentro del metodo, pide todo los datos necesarios para que se pueda hacer una publiacion. Tambie tiene verificaciones que se les hace
+     * a los usurios.
+     * @param usuario Usuario que va a crear la publicacion
+     */
     public void crearPublicacion(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -789,6 +858,12 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
         paginaDos(usuario);
     }
+
+    /**
+     * Apartado de eleccion numero 5 de paginaDos(). Este es la interfaz del usuario, en donde este puede elegir distintas opciones
+     * como cambiar contraseña, ver sus compras o sus ventas, etc.
+     * @param usuario Usuario al que se va acceder a sus datos
+     */
     public void miCuenta(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -866,6 +941,12 @@ public class GestionConsolaComandos implements Serializable
             paginaDos(usuario);
         }
     }
+
+    /**
+     * Es un metodo el cual muestra los metodos de pago que tiene disponibles un usuario, y a la vez tambien le deja agregar y borrar
+     * metodos de pago
+     * @param usuario Usuario al que se va acceder a sus metodos de pago
+     */
     public void metodosDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -955,6 +1036,11 @@ public class GestionConsolaComandos implements Serializable
 
 
     }
+
+    /**
+     * Metodo usado en metodosDePago, hace que se le pueda agregar un metodo de pago al usuario.
+     * @param usuario Usuario al que se le va a agregar un metodo de pago
+     */
     public void agregarMetodoDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1029,6 +1115,11 @@ public class GestionConsolaComandos implements Serializable
 
         metodosDePago(usuario);
     }
+
+    /**
+     * Metodo usado en metodosDePago, hace que se le pueda borrar un metodo de pago al usuario.
+     * @param usuario Usuario al que se le va a borrar un metodo de pago
+     */
     public void borrarMetodoDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1075,9 +1166,13 @@ public class GestionConsolaComandos implements Serializable
 
         metodosDePago(usuario);
     }
+    /**
+     * Usado en miCuenta(), hace que se muestren todas las direcciones del usuario, y a la vez que este pueda agreagar o borrar una direccion.
+     *
+     * @param usuario Usuario al que se le va a mostrar, y/o modificar una direccion.
+     */
     public void direcciones(Usuario usuario)
     {
-        //va a mostrar direcciones, vas a poder agregar y borrar direcciones.
 
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1168,6 +1263,11 @@ public class GestionConsolaComandos implements Serializable
             miCuenta(usuario);
         }
     }
+    /**
+     * Usado en direcciones(), hace que se pueda agregar una direccion al usuario.
+     *
+     * @param usuario Usuario al que se le va a agregar una direccion.
+     */
     public void agregarDireccion(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1229,6 +1329,11 @@ public class GestionConsolaComandos implements Serializable
 
         direcciones(usuario);
     }
+    /**
+     * Usado en direcciones(), hace que se pueda borrar una direccion al usuario.
+     *
+     * @param usuario Usuario al que se le va a borrar una direccion.
+     */
     public void borrarDireccion(Usuario usuario) {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1279,6 +1384,11 @@ public class GestionConsolaComandos implements Serializable
 //        }
         direcciones(usuario);
     }
+
+    /**
+     * Apartado en miCuenta(), el cual muestra todas las compras del usuario pasado por parametro.
+     * @param usuario Usuario al que se le van a recorrer las compras
+     */
     public void mostrarCompras(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1316,6 +1426,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + "Total Gastado (sin contar envios): " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
         miCuenta(usuario);
     }
+
+    /**
+     * Apartado en miCuenta(), el cual va s mostrar todas las ventas que tuvo el usuario pasado por parametro.
+     * @param usuario Usuario al que se le van a recorrer las ventas que hizo.
+     */
     public void mostrarVentas(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1357,6 +1472,11 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + "Total Ganado: " + codigoNegrita + codigoSubrayado + ventasHechas.getTotalRecaudado() + codigoReset + "\n");
         miCuenta(usuario);
     }
+
+    /**
+     * Apartado en miCuenta(), el cual sirve para que el usuario pueda cambiar su contrasena. Se tiene que saber su anterior contrasena.
+     * @param usuario Usuario al que se le va a cambiar la contrasena
+     */
     public void cambiarContrasena(Usuario usuario)
     {
         String espacio = "                                                                           ";
@@ -1418,6 +1538,12 @@ public class GestionConsolaComandos implements Serializable
         }
         miCuenta(usuario);
     }
+
+    /**
+     * Opcion a elegir en paginaDos(), esta opcion te va a mostrar todas las publicaciones en el carrito. A la vez te da la opcion de comprar
+     * UNA publicacion que hay en el carrito.
+     * @param usuario
+     */
     public void carrito(Usuario usuario)
     {
         UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
@@ -1525,6 +1651,12 @@ public class GestionConsolaComandos implements Serializable
             paginaDos(usuario);
         }
     }
+
+    /**
+     * Metodo que se llama desde carrito(), este recorre todas las publicaciones que hay en el carrito
+     * @param usuario
+     * @return
+     */
     public HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
     {
         UsuarioNormal usuNormal = (UsuarioNormal)usuario;
@@ -1563,6 +1695,12 @@ public class GestionConsolaComandos implements Serializable
         }
         return mapa;
     }
+
+    /**
+     * Metodo que se llama desde carrito, este hace todo el metodo necesario para que se efectue una compra.
+     * @param usuarioNormal usuario que va a realizar la compra
+     * @param carrito carrito del usuario que realiza la compra
+     */
     public void comprarProductos(UsuarioNormal usuarioNormal, HashMap<String,Publicacion> carrito)
     {
         String espacio = "                                                                           ";
@@ -1685,13 +1823,13 @@ public class GestionConsolaComandos implements Serializable
             System.out.print("\n");
             System.out.print(espacio + "Decime la calle y altura de la direccion a la que queres mandar el envio. \n");
             System.out.print(espacio + "Calle: ");
-            calle = teclado.nextLine();
+            calle = teclado.next();
 
             System.out.print("\n");
             teclado.nextLine();
 
             System.out.print(espacio + "Altura: ");
-            altura = teclado.nextLine();
+            altura = teclado.next();
             System.out.print("\n");
 
 
@@ -1800,6 +1938,12 @@ public class GestionConsolaComandos implements Serializable
         }
         paginaDos(usuarioNormal);
     }
+
+    /**
+     * Metodo que se llama desde comprarProdutos(), el cual hace que se pasen los productos del carrito, a compras.
+     * @param carrito carrito que se va a pasar a compras
+     * @param usuarioNormal usuario el cual compro esos productos
+     */
     public void agregarCarritoACompras(HashMap<String,Publicacion> carrito, UsuarioNormal usuarioNormal)
     {
         Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
@@ -1808,10 +1952,16 @@ public class GestionConsolaComandos implements Serializable
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion pub = entry.getValue();
             usuarioNormal.agregarcompra(pub); //se agregar a compras
-            usuarioNormal.getCarrito().borrarPublicacion(pub); //se elimina del carrito
+            //usuarioNormal.getCarrito().borrarPublicacion(pub); //se elimina del carrito
+            it.remove();
         }
 
     }
+
+    /**
+     * Funcion que se llama desde comprarProductos, esta hace que las publicaciones del vendedor que se hayan vendido, se vayan a vendidos.
+     * @param carrito carrito el cual se compro
+     */
     public void agregarAVentas(HashMap<String,Publicacion> carrito)
     {
         Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
@@ -1823,6 +1973,13 @@ public class GestionConsolaComandos implements Serializable
             usuario.agregarVenta(pub);
         }
     }
+
+    /**
+     * Funcion la cual hace que se muestren todas las publicaciones Favoritas de un usuario. Estos favoritos desde aca, pueden ser agregados al carrito.
+     *
+     * @param usuario Usuario el cual se le va a recorrer y manipular las publicaciones que esten en sus favoritos
+     *
+     */
     public void favoritos(Usuario usuario)
     {
         String espacio = "                                                                           ";
