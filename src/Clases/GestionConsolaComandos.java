@@ -119,6 +119,8 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion2 + codigoReset + "\n");
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion3 + codigoReset + "\n");
 
+            System.out.print(espacio + "Aclaracion: Para que se guarde progreso de lo que haga, debe cerrar sesion, y poner 3, para salír. En caso contrario no se guardara su usuario ni las publicaciones que haya hecho.\n");
+
 
             ;
 
@@ -254,9 +256,20 @@ public class GestionConsolaComandos implements Serializable
         do {
 
 
-            System.out.print(espacio + "Ingrese su mail: ");
-            mail = teclado.next();
+            String patronEmail = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.com.*$"; //para que el usuario ingrese un formato mail
+            boolean formatoCorrecto = false;
+            while (!formatoCorrecto) {
+                System.out.print(espacio + "Ingrese su mail: ");
+                mail = teclado.next();
 
+                if (mail.matches(patronEmail)) {
+                    formatoCorrecto = true;
+                } else {
+                    System.out.println(espacio + "Formato de correo electrónico incorrecto. Inténtelo de nuevo.");
+                }
+            }
+
+            System.out.print(espacio + "En caso de que la contrasena no cumpla con lo aclarado, al tratar de crear el usuario tendra que hacerlo denuevo.\n");
             do {
                 System.out.print("\n");
                 System.out.print(espacio + "Ingrese su contraseña: ");
@@ -291,18 +304,52 @@ public class GestionConsolaComandos implements Serializable
 
 
 
+
+
+
+            String patronNumero = "^\\d{10,}$"; // Patrón para 10 dígitos o más
+
+            boolean formatoCorrectoNum = false;
             System.out.print("\n");
-            System.out.print(espacio + "Ingrese su numero de teléfono: ");
-            numeroTelefono = teclado.next();
+            teclado.nextLine();
 
+            while (!formatoCorrectoNum) {
+
+                System.out.print(espacio + "Ingrese su número de teléfono: ");
+                numeroTelefono = teclado.next();
+                if (numeroTelefono.matches(patronNumero)) {
+                    formatoCorrectoNum = true;
+                } else {
+                    System.out.println(espacio + "Formato de número de teléfono incorrecto. Debe tener al menos 10 dígitos numericos\n");
+                }
+            }
+
+
+
+//            System.out.print("\n");
+//            System.out.print(espacio + "Ingrese su documento de identidad: ");
+//            dni = teclado.next();
+
+            String patronNumerodni = "^\\d{8,}$"; // Patrón para 10 dígitos o más
+
+            boolean formatoCorrectodni = false;
+            System.out.print("\n");
+            teclado.nextLine();
+
+            while (!formatoCorrectodni) {
+
+                System.out.print(espacio + "Ingrese su documento de identidad: ");
+                dni = teclado.next();
+                if (dni.matches(patronNumerodni)) {
+                    formatoCorrectodni = true;
+                } else {
+                    System.out.println(espacio + "Formato de DNI. Debe tener al menos 8 dígitos numericos.\n");
+                }
+            }
 
 
             System.out.print("\n");
-            System.out.print(espacio + "Ingrese su documento de identidad: ");
-            dni = teclado.next();
-
-            System.out.print("\n");
-            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o sólo especializada en venta. Ingrese opción 1 o 2. \n");
+            System.out.print(espacio + "Ahora elija si su cuenta va a ser compra y venta, o sólo especializada en venta. Ingrese opción 1 o 2. \n\n");
             System.out.print(espacio + "ACLARACIÓN \n" + espacio + "El usuario de compra y venta no podrá poner URl de su su pagina de venta.\n");
             System.out.print(espacio + "En el caso del usuario venta, no podrá comprar productos. A la vez también deberá agregar la URL de su página web de venta, su CUIT y la condiición fiscal.\n");
             System.out.print(espacio + "Todas las reglas mencionadas son obligatorias. En caso contrario, se podrá cerrar la cuenta de manera definitiva. \n");
@@ -335,9 +382,28 @@ public class GestionConsolaComandos implements Serializable
                 url = teclado.next();
 
 
+
+
+                String patronNumeroCuit = "^\\d{11,}$"; // Patrón para 10 dígitos o más
+
+                boolean formatoCorrectoCuit = false;
                 System.out.print("\n");
-                System.out.print(espacio + "Ingrese su CUIT personal: ");
-                cuit = teclado.next();
+                teclado.nextLine();
+
+                while (!formatoCorrectoCuit) {
+
+                    System.out.print(espacio + "Ingrese su CUIT personal: ");
+                    cuit = teclado.next();
+                    if (cuit.matches(patronNumeroCuit)) {
+                        formatoCorrectoCuit = true;
+                    } else {
+                        System.out.println(espacio + "Formato de CUIT. Debe tener al menos 11 dígitos numericos.\n");
+                    }
+                }
+
+
+
+
 
                 System.out.print("\n");
                 do {
@@ -608,7 +674,7 @@ public class GestionConsolaComandos implements Serializable
             {
                 System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto al carrito.\n");
                 try {
-                    Thread.sleep(800);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     System.out.print(e.getMessage());
                 }
@@ -624,6 +690,11 @@ public class GestionConsolaComandos implements Serializable
                 if(pub == null) //significa que no lo encontro
                 {
                     System.out.print("\n" + espacio + "Nombre incorrecto, pruebe con alguno de los nombres de la lista.\n");
+                    try {
+                        Thread.sleep(1200);
+                    } catch (InterruptedException e) {
+                        System.out.print(e.getMessage());
+                    }
                 }
             }
             while(pub == null);
@@ -632,7 +703,7 @@ public class GestionConsolaComandos implements Serializable
             {
                 System.out.print(espacio + "Error, no podes agregar al carrito una publicacion que es tuya.\n");
                 try {
-                    Thread.sleep(800);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     System.out.print(e.getMessage());
                 }
@@ -644,7 +715,7 @@ public class GestionConsolaComandos implements Serializable
             pub.setStock(pub.getStock() - 1);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
             try {
-                Thread.sleep(1400);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 System.out.print(e.getMessage());
             }
@@ -656,7 +727,7 @@ public class GestionConsolaComandos implements Serializable
             {
                 System.out.print(espacio + "Tu tipo de usuario no permite que agregues un producto a favoritos.\n");
                 try {
-                    Thread.sleep(800);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     System.out.print(e.getMessage());
                 }
@@ -680,7 +751,7 @@ public class GestionConsolaComandos implements Serializable
             {
                 System.out.print(espacio + "Error, no podes agregar a favoritos una publicacion que es tuya.\n");
                 try {
-                    Thread.sleep(800);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     System.out.print(e.getMessage());
                 }
@@ -691,7 +762,7 @@ public class GestionConsolaComandos implements Serializable
             usuarioNormal.agregarFavorito(pub);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito a tus favoritos\n");
             try {
-                Thread.sleep(800);
+                Thread.sleep(1400);
             } catch (InterruptedException e) {
                 System.out.print(e.getMessage());
             }
@@ -2548,7 +2619,7 @@ public class GestionConsolaComandos implements Serializable
 
             do {
                 System.out.print("\n");
-                System.out.print(espacio + "Nombre de la publicacion: ");
+                System.out.print(espacio + "Nombre de la publicacion que desea pasar de favoritos al carrito: ");
                 decision = teclado.nextLine();
                 System.out.print("\n");
 
@@ -2572,6 +2643,13 @@ public class GestionConsolaComandos implements Serializable
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito\n");
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
+
             paginaDos(usuarioNormal);
         }
 
