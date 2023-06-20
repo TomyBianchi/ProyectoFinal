@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import Enums.E_Pago;
 
+/**
+ * Se usa en Usuario, con una lista generica. Sirve para saber que tipos de metodos de pago tienen los distintos tipos
+ * de usuarios. Tambien para verificar compras dentro de la clase GestionConsolaComandos.
+ */
 public class MetodoDePago implements Serializable
 {
     // ATRIBUTOS
@@ -45,6 +49,10 @@ public class MetodoDePago implements Serializable
         return numeroTarjeta;
     }
 
+    /**
+     * Te devuelve un String, que se completa con X, menos los ultimos cuatro digitos que son de la tarjeta.
+     * @return Returna el String lleno de X, menos los ultimos cuatro digitos que son de la tarjeta
+     */
     public String getUltimosCuatroTargeta()
     {
         String aux = "XXXX XXXX XXXX  ";

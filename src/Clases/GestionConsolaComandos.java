@@ -702,16 +702,33 @@ public class GestionConsolaComandos implements Serializable
             Map.Entry<String,Publicacion> entry = it.next();
             Publicacion pub  = entry.getValue();
             Periferico aux = pub.getPeriferico();
-            if(pub.getStock() >= 1) { // muestro solo los productos que tienen stock
+            Usuario user = pub.getDueno();
 
 
-                System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-                System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
-                System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
-                System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
-                System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
-                System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + aux.isEstado() + codigoReset + "\n");
-                System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
+            if(pub.getStock() >= 1)
+            { // muestro solo los productos que tienen stock
+
+                if(user instanceof UsuarioNormal) {
+                    System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                    System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
+                    System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
+                    System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
+                    System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + aux.isEstado() + codigoReset + "\n");
+                    System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
+                }else
+                {
+                    UsuarioVenta ventaUser = (UsuarioVenta)user;
+                    System.out.print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + pub.getNombrePublicacion() + codigoReset + "\n\n"); //nombre de la publicacion
+                    System.out.print(espacio + "URL Foto: " + codigoNegrita + codigoSubrayado + pub.getUrlFoto() + codigoReset + "\n");
+                    System.out.print(espacio + "Precio: " + codigoNegrita + codigoSubrayado + pub.getPrecio() + codigoReset + "\n");
+                    System.out.print(espacio + "Stock: " + codigoNegrita + codigoSubrayado + pub.getStock() + codigoReset + "\n");
+                    System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + aux.isEstado() + codigoReset + "\n");
+                    System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + pub.getDueno().getNombre() + codigoReset + "\n");
+                    System.out.print(espacio + "URL Comercial del vendedor: " + codigoNegrita + codigoSubrayado + ventaUser.getUrl() + codigoReset + "\n");
+
+                }
             }
         }
         return mapa;
@@ -1557,6 +1574,7 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + "Vendedor: " + codigoNegrita + codigoSubrayado + aux.getDueno().getNombre() + codigoReset + "\n");
             System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
         }
+        System.out.print("\n\n\n");
         System.out.print(espacio + "Total Gastado (sin contar envios): " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
         miCuenta(usuario);
     }
@@ -1869,10 +1887,27 @@ public class GestionConsolaComandos implements Serializable
             HashSet<MetodoDePago> set = metodos.getSet();
             Iterator<MetodoDePago> it = set.iterator();
 
+            Map.Entry<String,Publicacion>entry = itCarrito.next();
+            Publicacion auxialiar = entry.getValue();
+
+            System.out.print("\n\n");
+            System.out.print(espacio + "Publicacion en proceso de compra: " + auxialiar.getNombrePublicacion());
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
+
+
             if(!it.hasNext())
             {
                 System.out.print("\n");
-                System.out.print(espacio + "No tenes metodos de pago en tu cuenta. Agrega al menos uno para poder hacer una compra.\n");
+                System.out.print(espacio + "No tenes metodos de pago en tu cuenta. Agrega al menos uno para poder hacer una compra.. Redirigiendose al menu principal...\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 paginaDos(usuarioNormal);
             }
 
@@ -1919,7 +1954,12 @@ public class GestionConsolaComandos implements Serializable
 
 
                 System.out.print("\n");
-                System.out.print(espacio + "No se encontro un metodo de pago con esas caracteristicas\n\n");
+                System.out.print(espacio + "No se encontro un metodo de pago con esas caracteristicas. Redirigiendose a ver mi carrito...\n\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 System.out.print("\n");
                 carrito(usuarioNormal);
             }
@@ -1935,7 +1975,12 @@ public class GestionConsolaComandos implements Serializable
             if(!iteratorCuatro.hasNext())
             {
                 System.out.print("\n");
-                System.out.print(espacio + "No tiene Direcciones agregadas, agregue una direccion antes de poder avanzar.");
+                System.out.print(espacio + "No tiene Direcciones agregadas, agregue una direccion antes de poder avanzar. Redirigiendose al menu principal...");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 System.out.print("\n");
                 paginaDos(usuarioNormal);
             }
@@ -1995,7 +2040,12 @@ public class GestionConsolaComandos implements Serializable
             }
             if (!banderaDos) {
                 System.out.print("\n");
-                System.out.print(espacio + "No se encontro una direccion con esas caracteristicas\n\n");
+                System.out.print(espacio + "No se encontro una direccion con esas caracteristicas. Redirigiendose a ver carrito..\n\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 System.out.print("\n");
                 carrito(usuarioNormal);
             }
@@ -2005,8 +2055,8 @@ public class GestionConsolaComandos implements Serializable
             System.out.print("\n");
 
 
-            Map.Entry<String,Publicacion>entry = itCarrito.next();
-            Publicacion auxialiar = entry.getValue();
+//            Map.Entry<String,Publicacion>entry = itCarrito.next();
+//            Publicacion auxialiar = entry.getValue();
 
             GeneTresE<Envio> geneTresLista = auxialiar.getEnvios(); //bajo todos los envios disponibles de cada una de las publicaciones
             ArrayList<Envio> arrayLista = geneTresLista.getLista();
@@ -2048,7 +2098,12 @@ public class GestionConsolaComandos implements Serializable
             }
             if(!banderaEnvio)
             {
-                System.out.print(espacio + "Ese envio no existe.\n");
+                System.out.print(espacio + "Ese envio no existe. Redirigiendose a ver carrito...\n");
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    System.out.print(e.getMessage());
+                }
                 carrito(usuarioNormal);
             }
 
@@ -2076,6 +2131,11 @@ public class GestionConsolaComandos implements Serializable
         if(respuestaFinal == 1)
         {
             System.out.print(espacio + "Felicidades por realizar su compra. Los plazos de envios y caracteristicas de su compra se veran en Mis Compras.\n" + espacio +"El comprobante fue enviado a su direccion de mail " + usuarioNormal.getMail());
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
             System.out.print("\n");
             agregarAVentas(carrito);
             agregarCarritoACompras(carrito,usuarioNormal);
@@ -2083,6 +2143,11 @@ public class GestionConsolaComandos implements Serializable
         else
         {
             System.out.print(espacio + "Los elementos se quedaran dentro de su carrito.");
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                System.out.print(e.getMessage());
+            }
         }
         paginaDos(usuarioNormal);
     }

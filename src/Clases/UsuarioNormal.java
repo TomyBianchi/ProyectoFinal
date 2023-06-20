@@ -5,6 +5,10 @@ import java.io.Serializable;
 import Enums.E_TipoUsuario;
 import Genericas.GeneDosPU;
 
+/**
+ * Es la clase hija de Usuario.Tiene las caracteristicas de un usuarioNormal, es decir, que puede comprar como vender.
+ * Es el tipo de usuario que mas se suele usar. Se usa en la clase envoltorio implementada con una clase generica.
+ */
 public class UsuarioNormal extends Usuario implements Serializable
 {
     // ATRIBUTOS
@@ -44,10 +48,18 @@ public class UsuarioNormal extends Usuario implements Serializable
     {
         carrito.agregarPublicacion(publicacion);
     }
+    /**
+     * Método que agrega una compra a la variable compras
+     * @param publicacion
+     */
     public void agregarcompra(Publicacion publicacion)
     {
         compras.agregarCompra(publicacion);
     }
+    /**
+     * Método que agrega a favoritos una publicacion
+     * @param publicacion
+     */
     public void agregarFavorito(Publicacion publicacion)
     {
         favoritas.agregar(publicacion.getId(),publicacion);

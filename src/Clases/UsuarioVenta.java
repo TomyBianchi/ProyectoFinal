@@ -5,6 +5,11 @@ import java.io.Serializable;
 import Enums.E_CondFiscal;
 import Enums.E_TipoUsuario;
 
+/**
+ * Es una clase que hereda de Usuario. Esta clase es la especialidad que hace que este tipo de usuario solo pueda
+ * vender articulos, y no comprarlos. A la vez tiene esta serie de atributos que lo hacen diferente, y mejor posicionado
+ * a la hora de vender que UsuarioNormal.
+ */
 public class UsuarioVenta extends Usuario implements Serializable
 {
     // ATRIBUTOS

@@ -7,6 +7,10 @@ import java.util.Map;
 
 import Genericas.GeneDosPU;
 
+/**
+ * Clase que tiene una lista de publicaciones un usuario vendio. Esta clase esta en Usuario. Implementa una lista
+ * generica para poder guardar todas las publicaciones que un usuario pudo vender.
+ */
 public class Venta implements Serializable
 {
     // ATRIBUTOS
@@ -24,11 +28,18 @@ public class Venta implements Serializable
     }
 
     // GETTERS, SETTERS Y OTROS
+
+
     public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
 
-        public float getTotalRecaudado() {
+    /**
+     * Metodo que recorre todasd las publicaciones que se vendieron, y calcula el total recaudado.
+     * @return returna el total recaudado
+     */
+    public float getTotalRecaudado()
+    {
         float total = 0;
         HashMap<String,Publicacion> mapa = getPublicaciones().getMapa(); //obtengo el mapa para poder recorrerlo y mostrar todas las publicaciones
         Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
@@ -42,6 +53,10 @@ public class Venta implements Serializable
     }
 
 
+    /**
+     * Se agrega una publicacion a la lista de publicaciones vendidas.
+     * @param publicacion
+     */
     public void agregarPublicacion(Publicacion publicacion)
     {
         publicaciones.agregar(publicacion.getId(),publicacion);

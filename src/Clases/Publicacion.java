@@ -7,6 +7,10 @@ import Interfaces.I_toJSONObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Es una de las clases principales. Tiene como atributo todo lo necesario para poder crear una publicacion. Se usa
+ * en la clase envoltorio, implementada con una lista generica.
+ */
 public class Publicacion implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS

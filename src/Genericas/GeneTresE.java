@@ -10,6 +10,10 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Clase generica que utiliza Publicacion, para guardar a los diferentes envios aca dentro.
+ * Tambien la usa la clase GestionConsolaComandos, para hacer algunas verificaciones dentro de ella.
+ */
 public class GeneTresE <T extends I_toJSONObject> implements I_ABML<T>, Serializable, I_toJSONArray
 {
     private ArrayList<T> lista;

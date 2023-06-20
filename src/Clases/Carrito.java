@@ -5,6 +5,10 @@ import java.io.Serializable;
 import Enums.E_Envio;
 import Genericas.GeneDosPU;
 
+/**
+ * Es una clase que forma parte de usuario normal. Dentro de esta se encuentra una lista generica que guarda las publicaciones que
+ * estan en el carrito, guarda el metodo de pago elegido por el usuario, y el tiipo de envio que elige el usuario.
+ */
 public class Carrito implements Serializable
 {
     // ATRIBUTOS
@@ -37,11 +41,19 @@ public class Carrito implements Serializable
         return envio;
     }
 
+    /**
+     * Se agrega una publicacion al carrito
+     * @param publicacion publicacion a agregar
+     */
     public void agregarPublicacion(Publicacion publicacion)
     {
         publicaciones.agregar(publicacion.getId(),publicacion);
     }
 
+    /**
+     * Se borra una publicacion al carrito
+     * @param publicacion publicacion a borrar
+     */
     public void borrarPublicacion(Publicacion publicacion)
     {
         publicaciones.borrar(publicacion.getId());

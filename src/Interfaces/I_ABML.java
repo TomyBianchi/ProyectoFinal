@@ -2,8 +2,8 @@ package Interfaces;
 
 
 /**
- * Interfaz que van a implementar las clases en las cuales sea necesario agregar, borrar, modificar y listar elementos.
- * @author  tomy
+ * Interfaz que van a implementar las clases genericas en las cuales sea necesario agregar, borrar, modificar y listar elementos.
+ * Estas clases genericas van a tener que usar una coleccion. No puede usar un map.
  */
 public interface I_ABML <T> {
 

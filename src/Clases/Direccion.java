@@ -2,6 +2,9 @@ package Clases;
 
 import java.io.Serializable;
 
+/**
+ * Es usada en Usuario, con una lista generica. Guarda la direccion del usuario
+ */
 public class Direccion implements Serializable
 {
     // ATRIBUTOS

@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Clase genérica que va a utilizar la clase envoltorio GestionTienda para su lista de usuarios,
  * y la clase Usuario para su lista de publicaciones.
- * @author tomas
+ *
  */
 public class GeneDosPU<K,T> implements I_IBML_Map<K,T>, Serializable
 {

@@ -9,6 +9,10 @@ import java.util.Iterator;
 import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
+/**
+ * Es una clase abstracta. Padre de UsuarioNormal y UsuarioVenta. Esta tiene todas las caracteristicas que comarten
+ * entre esas dos. Es de las clases mas importantes, que se usa en la Envoltorio, implementada con una lista generica.
+ */
 public abstract class Usuario implements Serializable
 {
     // ATRIBUTOS
@@ -72,33 +76,57 @@ public abstract class Usuario implements Serializable
     // MÉTODOS
 
     /**
-     * Método que agrega una publicación a la lista genérica de publicaciones.
+     * Agrega una publicacion a las publicaciones del usuario
      * @param publicacion
      */
     public void agregarPublicacion(Publicacion publicacion)
     {
         publicaciones.agregar(publicacion.getId(),publicacion);
     }
+    /**
+     * Agrega un metodo de pago a la lista de metodos de pago
+     * @param metodoDePago
+     */
     public void agregarMetodoDePago(MetodoDePago metodoDePago)
     {
         metodosDePago.agregar(metodoDePago);
     }
 
+    /**
+     * Borra un metodo de pago de la lista de metodos de pago
+     * @param metodoDePago
+     */
     public void borrarMetodoDePago(MetodoDePago metodoDePago)
     {
         metodosDePago.borrar(metodoDePago);
     }
+    /**
+     * Agrega una direccion a la lista de direcciones
+     * @param direccion
+     */
     public void agregarDireccion(Direccion direccion)
     {
         direcciones.agregar(direccion);
     }
+    /**
+     * Borra una direccion de la lista de direcciones
+     * @param direccion
+     */
     public void borrarDireccion(Direccion direccion){direcciones.borrar(direccion);}
 
+    /**
+     * Agrega una nueva venta a la variable ventas.
+     * @param publicacion
+     */
     public void agregarVenta(Publicacion publicacion)
     {
         ventas.agregarPublicacion(publicacion);
     }
 
+    /**
+     * Metodo que ayuda para la verificacoin de los usuarios de tipo venta. Esta funcion te dice si tienen al menos un tipo de Metodo de pago de cada uno.
+     * @return Te devuelve true si tiene al menos un metodo de pago de cada uno, en caso contrario returna false.
+     */
     public boolean tieneDebitoYcredito()
     {
         HashSet<MetodoDePago> set = getMetodosDePago().getSet();

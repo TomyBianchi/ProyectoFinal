@@ -217,6 +217,12 @@ public class GestionTienda implements Serializable, I_toJSONArray
         return publicacion;
     }
 
+
+    /**
+     * Se agrega una direccion al usuario especificado por parametro
+     * @param usuario Usuario a agregar direccion
+     * @param direccion direccion a agregar al usuario
+     */
     public void agregarDireccion(Usuario usuario, Direccion direccion)
     {
         usuario.agregarDireccion(direccion);
@@ -358,7 +364,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
     /**
      *
      * Baja el archivo del usuario, y lo introduce a la lista generica.
-     * @param nameUsuario
+     * @param nameUsuario nombre del archivo
      *
      */
     public void bajarArchivoUsuarios(String nameUsuario)
@@ -379,6 +385,12 @@ public class GestionTienda implements Serializable, I_toJSONArray
         catch(IOException e){}
         catch(Exception e){};
     }
+    /**
+     *
+     * Baja el archivo de publicaciones, y lo introduce a la lista generica.
+     * @param namePublicacion nombre del archivo
+     *
+     */
     public void bajarArchivoPublicaciones(String namePublicacion)
     {
         try

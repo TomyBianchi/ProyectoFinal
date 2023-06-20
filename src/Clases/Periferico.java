@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * Es una clase la cual usa Publicacion, esta tiene las caracteristicas mas especificas de cada publicacion.
+ *
+ */
 public class Periferico implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS
