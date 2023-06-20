@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * Es una clase la cual se usa en Publicacion, implementada con una lista generica. Esta clase tiene todas las variables necesarias
+ * para hacer un envio. El cual se le va a agregar a una publicacion obligatoriamente.
+ */
 public class Envio implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS

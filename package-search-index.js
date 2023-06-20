@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"Clases"},{"l":"ClasesExtra"},{"l":"Enums"},{"l":"Excepciones"},{"l":"Genericas"},{"l":"Interfaces"}];updateSearchResults();
