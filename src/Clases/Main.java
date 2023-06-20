@@ -6,6 +6,7 @@ import Excepciones.ExcepcionConstrasenaInvalida;
 import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
+import org.json.JSONException;
 
 import java.io.Serializable;
 import java.net.URISyntaxException;
@@ -18,7 +19,7 @@ public class Main implements Serializable
     public static void main(String[] args) throws InterruptedException, URISyntaxException
     {
         GestionTienda tienda = new GestionTienda();
-//
+
 //        try
 //        {
 //            tienda.agregar("tomy","Aa1234567","Tomas","Bianchi","2233128691", E_TipoUsuario.NORMAL,"1");
@@ -64,9 +65,13 @@ public class Main implements Serializable
 
 
 
+
+
+
 //        tienda.toArchivo("archivoUsuarios","archivoPublicaciones");
 //        tienda.bajarArchivoUsuarios("archivoUsuarios");
 //        tienda.bajarArchivoPublicaciones("archivoPublicaciones");
+
 
 
         GestionConsolaComandos consola = new GestionConsolaComandos(tienda);

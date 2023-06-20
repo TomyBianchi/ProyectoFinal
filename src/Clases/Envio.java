@@ -1,10 +1,13 @@
 package Clases;
 
 import Enums.E_Envio;
+import Interfaces.I_toJSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class Envio implements Serializable
+public class Envio implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS
     private boolean express;
@@ -59,6 +62,16 @@ public class Envio implements Serializable
     @Override
     public int hashCode() {
         return 9;
+    }
+
+    public JSONObject toJSONObject()throws JSONException
+    {
+        JSONObject obj = new JSONObject();
+        obj.put("tipoEnvio", getTipoEnvio());
+        obj.put("precioEnvio", getPrecio());
+        obj.put("expressEnvio", isExpress());
+
+        return obj;
     }
 
     @Override

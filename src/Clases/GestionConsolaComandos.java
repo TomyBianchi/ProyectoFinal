@@ -8,6 +8,7 @@ import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
 import Genericas.GeneTresE;
 import Genericas.GeneUnoDM;
+import org.json.JSONException;
 
 import javax.swing.plaf.DesktopPaneUI;
 import java.io.Serializable;
@@ -113,8 +114,15 @@ public class GestionConsolaComandos implements Serializable
             {
                 crearCuenta();
                 System.out.print(espacio + "Cuenta creada con éxito, ahora se le redirigirá a la página anterior para que pueda iniciar sesión con su cuenta.\n");
-            } else {
+            }
+            else {
+
                 this.tienda.toArchivo("archivoUsuarios","archivoPublicaciones");
+                try
+                {
+                    tienda.toJSONArray(); //pone todas las publicaciones en un json
+                }
+                catch (JSONException e){};
                 System.exit(0);
             }
         }

@@ -3,8 +3,11 @@ package Clases;
 import java.io.Serializable;
 
 import Genericas.GeneTresE;
+import Interfaces.I_toJSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Publicacion implements Serializable
+public class Publicacion implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS
     private String nombrePublicacion;
@@ -118,6 +121,21 @@ public class Publicacion implements Serializable
     public int hashCode()
     {
         return 7;
+    }
+
+    public JSONObject toJSONObject()throws JSONException
+    {
+        JSONObject obj = new JSONObject();
+        obj.put("nombrePublicacion", getNombrePublicacion());
+        obj.put("periferico", getPeriferico().toJSONObject());
+        obj.put("precio", getPrecio());
+        obj.put("stock", getStock());
+        obj.put("id", getId());
+        obj.put("urlFoto", getUrlFoto());
+        obj.put("nombreDueno", getDueno().getNombre());
+        obj.put("envios", envios.toJSONArray());
+
+        return obj;
     }
 
     @Override

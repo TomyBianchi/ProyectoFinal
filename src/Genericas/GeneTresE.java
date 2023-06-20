@@ -1,11 +1,16 @@
 package Genericas;
 
 import Interfaces.I_ABML;
+import Interfaces.I_toJSONArray;
+import Interfaces.I_toJSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GeneTresE <T> implements I_ABML<T>, Serializable
+public class GeneTresE <T extends I_toJSONObject> implements I_ABML<T>, Serializable, I_toJSONArray
 {
     private ArrayList<T> lista;
 
@@ -46,6 +51,24 @@ public class GeneTresE <T> implements I_ABML<T>, Serializable
             }
         }
     }
+
+    /**
+     * Convierte a toda la lista en un json array, lo que hace que T necesite implementar I_toJSONObject
+     * @return returna el arrau
+     * @throws JSONException
+     */
+    public JSONArray toJSONArray()throws JSONException
+    {
+        JSONArray array = new JSONArray();
+        for(int i = 0; i < lista.size(); i++)
+        {
+            T variable = lista.get(i);
+            JSONObject object = variable.toJSONObject();
+            array.put(object);
+        }
+    return array;
+    }
+
 
     @Override
     public String toString() {

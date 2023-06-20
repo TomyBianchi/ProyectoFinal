@@ -1,10 +1,13 @@
 package Clases;
 
 import Enums.E_Estado;
+import Interfaces.I_toJSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class Periferico implements Serializable
+public class Periferico implements Serializable, I_toJSONObject
 {
     // ATRIBUTOS
     private String nombre;
@@ -107,6 +110,22 @@ public class Periferico implements Serializable
     @Override
     public int hashCode() {
         return 1;
+    }
+
+    public JSONObject toJSONObject()throws JSONException
+    {
+        JSONObject obj = new JSONObject();
+        obj.put("nombre", getNombre());
+        obj.put("id", getId());
+        obj.put("estado", isEstado());
+        obj.put("marca", getMarca());
+        obj.put("origen", getOrigen());
+        obj.put("plataformas", getPlataformas());
+        obj.put("color", getColor());
+        obj.put("peso", getPeso());
+        obj.put("inalambrico", isInalambrico());
+
+        return obj;
     }
 
     @Override

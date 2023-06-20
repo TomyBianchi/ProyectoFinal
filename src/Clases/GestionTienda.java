@@ -9,6 +9,9 @@ import Excepciones.ExcepcionMailYaExiste;
 import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
 import ClasesExtra.GeneradorUUID;
+import Interfaces.I_toJSONArray;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.*;
 import java.util.HashMap;
@@ -20,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * Clase envoltorio que sirve para gestionar el sistema de la tienda.
  */
-public class GestionTienda implements Serializable
+public class GestionTienda implements Serializable, I_toJSONArray
 {
     private GeneDosPU<String,Usuario> usuarios;
     private GeneDosPU<String,Publicacion> publicaciones;
@@ -403,6 +406,27 @@ public class GestionTienda implements Serializable
     }
     public GeneDosPU<String, Usuario> getUsuarios() {
         return usuarios;
+    }
+
+    /**
+     * Se ingresan todas las publicaciones a JSONArray, el cual puede ser exportado.
+     */
+    public JSONArray toJSONArray() throws JSONException
+    {
+        HashMap<String,Publicacion> mapaPub = getPublicaciones().getMapa();
+        Iterator<Map.Entry<String,Publicacion>> it = mapaPub.entrySet().iterator();
+
+        JSONArray array = new JSONArray();
+
+        while(it.hasNext())
+        {
+            Map.Entry<String,Publicacion> entry = it.next();
+            Publicacion publicacion = entry.getValue();
+
+            array.put(publicacion.toJSONObject());
+        }
+        JsonUtiles.grabar(array,"JSONPublicaciones");
+        return array;
     }
 
     @Override
