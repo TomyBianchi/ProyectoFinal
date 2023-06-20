@@ -27,16 +27,25 @@ public class Venta implements Serializable
         this.totalRecaudado = 0;
     }
 
+    // MÉTODOS
+
+    /**
+     * Se agrega una publicacion a la lista de publicaciones vendidas.
+     * @param publicacion
+     */
+    public void agregarPublicacion(Publicacion publicacion)
+    {
+        publicaciones.agregar(publicacion.getId(),publicacion);
+    }
+
     // GETTERS, SETTERS Y OTROS
-
-
     public GeneDosPU<String, Publicacion> getPublicaciones() {
         return publicaciones;
     }
 
     /**
-     * Metodo que recorre todasd las publicaciones que se vendieron, y calcula el total recaudado.
-     * @return returna el total recaudado
+     * MÉtodo que recorre todas las publicaciones que se vendieron y calcula el total recaudado.
+     * @return Retorna el total recaudado.
      */
     public float getTotalRecaudado()
     {
@@ -50,16 +59,6 @@ public class Venta implements Serializable
             total += aux.getPrecio();
         }
         return total;
-    }
-
-
-    /**
-     * Se agrega una publicacion a la lista de publicaciones vendidas.
-     * @param publicacion
-     */
-    public void agregarPublicacion(Publicacion publicacion)
-    {
-        publicaciones.agregar(publicacion.getId(),publicacion);
     }
 
     // Consideramos que no es necesario hacer un equals ni un compareTo

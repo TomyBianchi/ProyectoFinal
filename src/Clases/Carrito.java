@@ -28,18 +28,7 @@ public class Carrito implements Serializable
         this.envio = null;
     }
 
-    // GETTERS, SETTERS Y OTROS
-    public GeneDosPU<String, Publicacion> getPublicaciones() {
-        return publicaciones;
-    }
-
-    public MetodoDePago getElegido() {
-        return elegido;
-    }
-
-    public E_Envio getEnvio() {
-        return envio;
-    }
+    // MÉTODOS
 
     /**
      * Se agrega una publicacion al carrito
@@ -57,6 +46,19 @@ public class Carrito implements Serializable
     public void borrarPublicacion(Publicacion publicacion)
     {
         publicaciones.borrar(publicacion.getId());
+    }
+
+    // GETTERS, SETTERS Y OTROS
+    public GeneDosPU<String, Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public MetodoDePago getElegido() {
+        return elegido;
+    }
+
+    public E_Envio getEnvio() {
+        return envio;
     }
 
     // No hace falta el equals ni el compareTo, un carrito nunca se va comparar con otro carrito.

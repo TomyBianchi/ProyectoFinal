@@ -70,7 +70,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
      * @param contrasena
      * @return Retorna true si la contraseña cumple los requisitos, sino false.
      */
-    public boolean verificarContrasena(String contrasena)
+    private boolean verificarContrasena(String contrasena)
     {
         if(contrasena.length() < 8)
         {
@@ -185,7 +185,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
      * @param inalambrico
      * @return Retorna el periférico creado.
      */
-    public Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico)
+    private Periferico crearPeriferico(String nombre, E_Estado estado, String marca, String modelo, String origen, String plataformas, String color, float peso, boolean inalambrico)
     {
         String id = GeneradorUUID.generarID();
         Periferico periferico = new Periferico(nombre,id,estado,marca,modelo,origen,plataformas,color,peso,inalambrico);
@@ -202,7 +202,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
      * @param urlFoto
      * @return Retorna la publicación.
      */
-    public Publicacion crearPublicacion(String nombre,Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto)
+    private Publicacion crearPublicacion(String nombre,Periferico periferico, float precio, int stock, Usuario dueno, String urlFoto)
     {
         String id = GeneradorUUID.generarID();
         Publicacion publicacion = new Publicacion(nombre,periferico,precio,stock,dueno,urlFoto,id);
@@ -216,7 +216,6 @@ public class GestionTienda implements Serializable, I_toJSONArray
         dueno.agregarPublicacion(publicacion);
         return publicacion;
     }
-
 
     /**
      * Se agrega una direccion al usuario especificado por parametro
@@ -242,7 +241,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
      * Es un método que verifica si el mail ingresado está repetido en la lista de usuarios.
      * @return Retorna true si el mail está repetido, sino false.
      */
-    public boolean mailRepetido(String mail)
+    private boolean mailRepetido(String mail)
     {
         HashMap<String, Usuario> mapa = usuarios.getMapa();
         Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator();
@@ -301,7 +300,7 @@ public class GestionTienda implements Serializable, I_toJSONArray
      * @param numero
      * @return Retorna true si el número ya existe, sino false.
      */
-    public boolean numeroRepetido(String numero)
+    private boolean numeroRepetido(String numero)
     {
         HashMap<String, Usuario> mapa = usuarios.getMapa();
         Iterator<Map.Entry<String,Usuario>> it = mapa.entrySet().iterator();
@@ -409,8 +408,6 @@ public class GestionTienda implements Serializable, I_toJSONArray
         catch(IOException e){}
         catch(Exception e){};
     }
-
-
 
     // GETTERS Y TOSTRING
     public GeneDosPU<String, Publicacion> getPublicaciones() {
