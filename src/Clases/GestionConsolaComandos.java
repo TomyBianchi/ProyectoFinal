@@ -13,6 +13,7 @@ import org.json.JSONException;
 import javax.swing.plaf.DesktopPaneUI;
 import java.io.Serializable;
 import java.util.*;
+import java.util.InputMismatchException;
 
 import static Clases.Main.teclado;
 
@@ -90,7 +91,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @return Returna el usuario que inicio sesion.
      */
-    public Usuario paginaUno()
+    private Usuario paginaUno()
     {
         Usuario usuarioRetorno = null;
         int respuesta = -1;
@@ -117,10 +118,27 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion1 + codigoReset + "\n"); //opciones
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion2 + codigoReset + "\n");
             System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion3 + codigoReset + "\n");
-            System.out.print(espacio + opcion4);
+
+
+            ;
 
             do {
-                respuesta = teclado.nextInt();
+                boolean banderaAntiBolud = false;
+                while (!banderaAntiBolud)
+                {
+                    try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                    {
+                        System.out.print(espacio + opcion4);
+                        respuesta = teclado.nextInt();
+                        banderaAntiBolud = true;
+                    }
+                    catch (InputMismatchException e)
+                    {
+                        System.out.print("\n");
+                        System.out.println(espacio +"Entrada inválida. Ingrese un numero entero por favor.");
+                        teclado.next();
+                    }
+                }
                 if (respuesta > 3 || respuesta < 0) {
                     System.out.print(espacio + "Elección no compatible, inténtelo de nuevo.\n\n");
                     System.out.print(espacio + codigoNegrita + codigoSubrayado + opcion1 + codigoReset + "\n"); //opciones
@@ -168,7 +186,7 @@ public class GestionConsolaComandos implements Serializable
      * para que funcione correctamente
      * @return Returna el usuario que inicio sesion satisfactoriamente
      */
-    public Usuario iniciarSesion()
+    private Usuario iniciarSesion()
     {
         String espacio = "                                                                           ";
         String ingresarDNIOMail = "";
@@ -206,7 +224,7 @@ public class GestionConsolaComandos implements Serializable
      * Es la interfaz que se usa a la hora de ingresar los datos necesarios para hacer el tipo de cuenta que el usuario desee. Una vez terminado el proceso
      * de creacion de cuenta, se redirige a paginaUno() para que el usuario pueda iniciar sesion con su cuenta.
      */
-    public void crearCuenta()
+    private void crearCuenta()
     {
         String espacio = "                                                                           ";
         String mail = "";
@@ -294,8 +312,8 @@ public class GestionConsolaComandos implements Serializable
                 System.out.print(e.getMessage());
             }
 
-            System.out.print(espacio + "Opción: ");
             do {
+                System.out.print(espacio + "Opción: ");
                 decitionUsuario = teclado.nextInt();
                 if(decitionUsuario != 1 && decitionUsuario != 2)
                 {
@@ -393,13 +411,13 @@ public class GestionConsolaComandos implements Serializable
         }
         while (!banderaConfirmacionExcep);
 
+        System.out.print("\n\n");
+        System.out.print(espacio + "Felicitaciones! Ha creado su cuenta con éxito.\n");
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
             System.out.print(e.getMessage());
         }
-        System.out.print("\n\n");
-        System.out.print(espacio + "Felicitaciones! Ha creado su cuenta con éxito.\n");
     }
 
     /**
@@ -409,7 +427,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @param usuario Usuario que se logueo en la aplicacion
      */
-    public void paginaDos(Usuario usuario)
+    private void paginaDos(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -438,11 +456,26 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCuatro + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCinco + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionSeis + codigoReset + "\n");
-        System.out.print(espacio + opcionElecc);
+
         int decision = 0;
 
         do {
-            decision = teclado.nextInt();
+            boolean banderaAntiBolud = false;
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + opcionElecc);
+                    decision = teclado.nextInt();
+                    banderaAntiBolud = true;
+                }
+                catch (InputMismatchException e)
+                {
+                    System.out.print("\n");
+                    System.out.println(espacio +"Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
 
             if (decision > 6 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
@@ -517,7 +550,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @param usuario Es el usuario logueado, se necesita para verificaciones dentro del programa
      */
-    public void verPublicacionesActivas(Usuario usuario)
+    private void verPublicacionesActivas(Usuario usuario)
     {
         UsuarioNormal usuarioNormal = null;
 
@@ -539,8 +572,24 @@ public class GestionConsolaComandos implements Serializable
 
         do
         {
-            System.out.print(espacio + "Opción: ");
-            rta = teclado.nextInt();
+
+            boolean banderaAntiBolud = false;
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Opción: ");
+                    rta = teclado.nextInt();
+                    banderaAntiBolud = true;
+                }
+                catch (InputMismatchException e)
+                {
+                    System.out.print("\n");
+                    System.out.println(espacio +"Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+
             teclado.nextLine();
             if (rta != 1 && rta != 2 && rta != 3)
             {
@@ -658,7 +707,7 @@ public class GestionConsolaComandos implements Serializable
      * @param nombre Nombre que se quiere buscar
      * @return Returna la publicacion que tenia el nombre pasado por parametro. En caso de que el nombre no este, returna null
      */
-    public Publicacion busquedaPublicacionPorNombre(HashMap<String,Publicacion> mapa, String nombre)
+    private Publicacion busquedaPublicacionPorNombre(HashMap<String,Publicacion> mapa, String nombre)
     {
         Publicacion pub = null;
         Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
@@ -683,7 +732,7 @@ public class GestionConsolaComandos implements Serializable
      * Metodo usado en otras funciones, sirve para recorrer todas las publicaciones de la tienda.
      * @return Returna el mapa que tuvo que recorrer.
      */
-    public HashMap<String,Publicacion> recorrerPublicaciones()
+    private HashMap<String,Publicacion> recorrerPublicaciones()
     {
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
@@ -740,7 +789,7 @@ public class GestionConsolaComandos implements Serializable
      * a los usurios.
      * @param usuario Usuario que va a crear la publicacion
      */
-    public void crearPublicacion(Usuario usuario)
+    private void crearPublicacion(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -756,7 +805,7 @@ public class GestionConsolaComandos implements Serializable
         ArrayList<Envio> envio = new ArrayList<>();
 
         int decition = 0;
-        float precioEnvio;
+        float precioEnvio = 0;
         E_Envio tipoEnvio = null;
         boolean express = false;
         int decitionDos = 0;
@@ -772,6 +821,8 @@ public class GestionConsolaComandos implements Serializable
         float peso = 0;
         boolean inalambrico = false;
         int deciInalambrico = 0;
+
+        boolean banderaAntiBolud = false;
 
 
         if(!usuario.tieneDebitoYcredito())
@@ -803,13 +854,38 @@ public class GestionConsolaComandos implements Serializable
         System.out.print("\n");
 
 
-        System.out.print(espacio + "Precio: ");
-        precio = teclado.nextFloat();
+        while (!banderaAntiBolud) {
+            try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+            {
+                System.out.print(espacio + "Precio: ");
+                precio = teclado.nextFloat();
+                banderaAntiBolud = true;
+            } catch (InputMismatchException e) {
+                System.out.print("\n");
+                System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                teclado.nextLine();
+            }
+        }
+        banderaAntiBolud  =false;
         teclado.nextLine(); // Consumir el carácter de salto de línea pendiente
         System.out.print("\n");
 
-        System.out.print(espacio + "Cantidad disponible: ");
-        stock = teclado.nextInt();
+
+
+
+        while (!banderaAntiBolud) {
+            try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+            {
+                System.out.print(espacio + "Cantidad disponible: ");
+                stock = teclado.nextInt();
+                banderaAntiBolud = true;
+            } catch (InputMismatchException e) {
+                System.out.print("\n");
+                System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                teclado.next();
+            }
+        }
+        banderaAntiBolud  =false;
         System.out.print("\n");
 
         System.out.print(espacio + "Foto (URL de la foto): ");
@@ -824,9 +900,23 @@ public class GestionConsolaComandos implements Serializable
         }
         do {
             System.out.print("\n");
-            System.out.print(espacio + "Tipo de envio(1-Tierra, 2-Aereo, 3-Maritimo):  ");
+
             do {
-                 decition = teclado.nextInt();
+                while (!banderaAntiBolud)
+                {
+                    try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                    {
+                        System.out.print(espacio + "Tipo de envio(1-Tierra, 2-Aereo, 3-Maritimo):  ");
+                        decition = teclado.nextInt();
+                        banderaAntiBolud = true;
+                    } catch (InputMismatchException e) {
+                        System.out.print("\n");
+                        System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                        teclado.next();
+                    }
+                }
+                banderaAntiBolud  =false;
+
                 if((decition < 1 || decition > 3))
                 {
                     System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
@@ -857,8 +947,23 @@ public class GestionConsolaComandos implements Serializable
                 System.out.print(e.getMessage());
             }
             System.out.print("\n");
-            System.out.print(espacio + "Precio: ");
-            precioEnvio = teclado.nextFloat();
+
+
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Precio: ");
+                    precioEnvio = teclado.nextFloat();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
 
             Envio aux = new Envio(express,precioEnvio,tipoEnvio);
             envio.add(aux);
@@ -866,8 +971,21 @@ public class GestionConsolaComandos implements Serializable
 
             System.out.print("\n");
             do {
-                System.out.print(espacio + "¿Desea agregar otro tipo de envio? 1-Si 2-No:  ");
-                decitionDos = teclado.nextInt();
+                while (!banderaAntiBolud)
+                {
+                    try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                    {
+                        System.out.print(espacio + "¿Desea agregar otro tipo de envio? 1-Si 2-No:  ");
+                        decitionDos = teclado.nextInt();
+                        banderaAntiBolud = true;
+                    } catch (InputMismatchException e) {
+                        System.out.print("\n");
+                        System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                        teclado.next();
+                    }
+                }
+                banderaAntiBolud  =false;
+
                 System.out.print("\n");
                 if(decitionDos < 1 || decitionDos > 2)
                 {
@@ -896,8 +1014,21 @@ public class GestionConsolaComandos implements Serializable
         //teclado.nextLine();
         do
         {
-            System.out.print(espacio + "Estado(1-Nuevo, 2-Usado): ");
-            deciEstado = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Estado(1-Nuevo, 2-Usado): ");
+                    deciEstado = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
             if(deciEstado < 1 || deciEstado > 2)
             {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
@@ -937,15 +1068,42 @@ public class GestionConsolaComandos implements Serializable
         color = teclado.nextLine();
 
         System.out.print("\n");
-        System.out.print(espacio + "Peso: ");
-        peso = teclado.nextFloat();
+
+        while (!banderaAntiBolud)
+        {
+            try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+            {
+                System.out.print(espacio + "Peso: ");
+                peso = teclado.nextFloat();
+                banderaAntiBolud = true;
+            } catch (InputMismatchException e) {
+                System.out.print("\n");
+                System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                teclado.next();
+            }
+        }
+        banderaAntiBolud  =false;
+
+
 
         System.out.print("\n");
         teclado.nextLine();
         do
         {
-            System.out.print(espacio + "Inalambrico(1-Si, 2-No): ");
-            deciInalambrico = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Inalambrico(1-Si, 2-No): ");
+                    deciInalambrico = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
             if(deciInalambrico < 1 || deciInalambrico > 2)
             {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
@@ -985,7 +1143,7 @@ public class GestionConsolaComandos implements Serializable
      * como cambiar contraseña, ver sus compras o sus ventas, etc.
      * @param usuario Usuario al que se va acceder a sus datos
      */
-    public void miCuenta(Usuario usuario)
+    private void miCuenta(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -993,6 +1151,7 @@ public class GestionConsolaComandos implements Serializable
         String codigoSubrayado = "\u001B[4m";
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
+        boolean banderaAntiBolud = false;
 
         System.out.print("\n\n");
         String bienvenidos = usuario.getNombre() + ", este es el menu de tu cuenta\n\n";
@@ -1014,11 +1173,26 @@ public class GestionConsolaComandos implements Serializable
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCuatro + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionCinco + codigoReset + "\n");
         System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionSeis + codigoReset + "\n");
-        System.out.print(espacio + opcionElecc);
+
         int decision = 0;
 
         do {
-            decision = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + opcionElecc);
+                    decision = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
+
             if (decision > 6 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
@@ -1068,7 +1242,7 @@ public class GestionConsolaComandos implements Serializable
      * metodos de pago
      * @param usuario Usuario al que se va acceder a sus metodos de pago
      */
-    public void metodosDePago(Usuario usuario)
+    private void metodosDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1076,6 +1250,7 @@ public class GestionConsolaComandos implements Serializable
         String codigoSubrayado = "\u001B[4m";
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
+        boolean banderaAntiBolud = false;
 
 
         System.out.print("\n");
@@ -1133,11 +1308,24 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(e.getMessage());
         }
 
-        System.out.print(espacio + opcionElecc);
+
         int decision = 0;
 
         do {
-            decision = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + opcionElecc);
+                    decision = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
             if (decision > 6 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
@@ -1167,7 +1355,7 @@ public class GestionConsolaComandos implements Serializable
      * Metodo usado en metodosDePago, hace que se le pueda agregar un metodo de pago al usuario.
      * @param usuario Usuario al que se le va a agregar un metodo de pago
      */
-    public void agregarMetodoDePago(Usuario usuario)
+    private void agregarMetodoDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1183,6 +1371,8 @@ public class GestionConsolaComandos implements Serializable
         String cvv = "";
         String mesVencimiento = "";
         String anoVencimiento = "";
+
+        boolean banderaAntiBolud = false;
 
 
 
@@ -1203,8 +1393,21 @@ public class GestionConsolaComandos implements Serializable
 
         do
         {
-            System.out.print(espacio+ "Tipo de tarjeta 1-Debito 2-Credito: ");
-            decitionTipoPago = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio+ "Tipo de tarjeta 1-Debito 2-Credito: ");
+                    decitionTipoPago = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
             teclado.nextLine();
             System.out.print("\n");
 
@@ -1251,7 +1454,7 @@ public class GestionConsolaComandos implements Serializable
      * Metodo usado en metodosDePago, hace que se le pueda borrar un metodo de pago al usuario.
      * @param usuario Usuario al que se le va a borrar un metodo de pago
      */
-    public void borrarMetodoDePago(Usuario usuario)
+    private void borrarMetodoDePago(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1307,7 +1510,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @param usuario Usuario al que se le va a mostrar, y/o modificar una direccion.
      */
-    public void direcciones(Usuario usuario)
+    private void direcciones(Usuario usuario)
     {
 
         String espacio = "                                                                           ";
@@ -1316,6 +1519,8 @@ public class GestionConsolaComandos implements Serializable
         String codigoSubrayado = "\u001B[4m";
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
+
+        boolean banderaAntiBolud = false;
 
 
         System.out.print("\n");
@@ -1376,12 +1581,25 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(e.getMessage());
         }
 
-        System.out.print(espacio + opcionElecc);
         int decision = 0;
 
         do {
-            decision = teclado.nextInt();
-            if (decision > 6 || decision < 1) {
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + opcionElecc);
+                    decision = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
+            if (decision > 3 || decision < 1) {
                 System.out.print(espacio + "Eleccion no comprendida, intentelo denuevo.\n\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionUno + codigoReset + "\n");
                 System.out.print(espacio + codigoNegrita + codigoSubrayado + opcionDos + codigoReset + "\n");
@@ -1409,7 +1627,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @param usuario Usuario al que se le va a agregar una direccion.
      */
-    public void agregarDireccion(Usuario usuario)
+    private void agregarDireccion(Usuario usuario)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1480,7 +1698,7 @@ public class GestionConsolaComandos implements Serializable
      *
      * @param usuario Usuario al que se le va a borrar una direccion.
      */
-    public void borrarDireccion(Usuario usuario) {
+    private void borrarDireccion(Usuario usuario) {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
         String codigoNegrita = "\u001B[1m";
@@ -1540,7 +1758,7 @@ public class GestionConsolaComandos implements Serializable
      * Apartado en miCuenta(), el cual muestra todas las compras del usuario pasado por parametro.
      * @param usuario Usuario al que se le van a recorrer las compras
      */
-    public void mostrarCompras(Usuario usuario)
+    private void mostrarCompras(Usuario usuario)
     {
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
@@ -1576,6 +1794,13 @@ public class GestionConsolaComandos implements Serializable
         }
         System.out.print("\n\n\n");
         System.out.print(espacio + "Total Gastado (sin contar envios): " + codigoNegrita + codigoSubrayado + comprasHechas.getTotalGastado() + codigoReset + "\n");
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
+
         miCuenta(usuario);
     }
 
@@ -1583,7 +1808,7 @@ public class GestionConsolaComandos implements Serializable
      * Apartado en miCuenta(), el cual va s mostrar todas las ventas que tuvo el usuario pasado por parametro.
      * @param usuario Usuario al que se le van a recorrer las ventas que hizo.
      */
-    public void mostrarVentas(Usuario usuario)
+    private void mostrarVentas(Usuario usuario)
     {
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
@@ -1622,6 +1847,13 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + "Estado: " + codigoNegrita + codigoSubrayado + auxPer.isEstado() + codigoReset + "\n");
         }
         System.out.print(espacio + "Total Ganado: " + codigoNegrita + codigoSubrayado + ventasHechas.getTotalRecaudado() + codigoReset + "\n");
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.print(e.getMessage());
+        }
+
         miCuenta(usuario);
     }
 
@@ -1629,7 +1861,7 @@ public class GestionConsolaComandos implements Serializable
      * Apartado en miCuenta(), el cual sirve para que el usuario pueda cambiar su contrasena. Se tiene que saber su anterior contrasena.
      * @param usuario Usuario al que se le va a cambiar la contrasena
      */
-    public void cambiarContrasena(Usuario usuario)
+    private void cambiarContrasena(Usuario usuario)
     {
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
@@ -1701,7 +1933,7 @@ public class GestionConsolaComandos implements Serializable
      * UNA publicacion que hay en el carrito.
      * @param usuario
      */
-    public void carrito(Usuario usuario)
+    private void carrito(Usuario usuario)
     {
         UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
         String espacio = "                                                                           ";
@@ -1709,6 +1941,8 @@ public class GestionConsolaComandos implements Serializable
         String codigoSubrayado = "\u001B[4m";
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
+
+        boolean banderaAntiBolud= false;
 
 
         HashMap<String,Publicacion> mapa = recorrerCarrito(usuario); //se recorre el carrito
@@ -1723,8 +1957,20 @@ public class GestionConsolaComandos implements Serializable
         }
         do
         {
-            System.out.print(espacio + "Opción: ");
-            rta = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Opción: ");
+                    rta = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
             teclado.nextLine();
             if (rta != 1 && rta != 2 && rta != 3)
             {
@@ -1765,7 +2011,7 @@ public class GestionConsolaComandos implements Serializable
      * @param usuario Usuario el cual va a borrar una Publicacion del carrito
      * @param mapa El mapa en el cual estan almacenadasd las publicaciones de un carrito
      */
-    public void borrarPublicacionCarrito(Usuario usuario, HashMap<String,Publicacion> mapa)
+    private void borrarPublicacionCarrito(Usuario usuario, HashMap<String,Publicacion> mapa)
     {
         UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
         String espacio = "                                                                           ";
@@ -1823,7 +2069,7 @@ public class GestionConsolaComandos implements Serializable
      * @param usuario
      * @return
      */
-    public HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
+    private HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
     {
         UsuarioNormal usuNormal = (UsuarioNormal)usuario;
 
@@ -1867,7 +2113,7 @@ public class GestionConsolaComandos implements Serializable
      * @param usuarioNormal usuario que va a realizar la compra
      * @param carrito carrito del usuario que realiza la compra
      */
-    public void comprarProductos(UsuarioNormal usuarioNormal, HashMap<String,Publicacion> carrito)
+    private void comprarProductos(UsuarioNormal usuarioNormal, HashMap<String,Publicacion> carrito)
     {
         String espacio = "                                                                           ";
         // Códigos de escape ANSI
@@ -1876,6 +2122,8 @@ public class GestionConsolaComandos implements Serializable
         String codigoTamanioGrande = "\u001B[5m";
         String codigoReset = "\u001B[0m";
         float sumaProductos = 0;
+
+        boolean banderaAntiBolud = false;
 
         Iterator<Map.Entry<String,Publicacion>> itCarrito = carrito.entrySet().iterator();
 
@@ -2119,14 +2367,27 @@ public class GestionConsolaComandos implements Serializable
             System.out.print(espacio + "¿Esta seguro de hacer la compra?.1-Si 2-No. La suma de los productos es " + sumaProductos + "$.");
             System.out.print("\n");
             teclado.nextLine();
-            System.out.print(espacio + "Opcion: ");
-            respuestaFinal = teclado.nextInt();
-            if (respuestaFinal < 1 && respuestaFinal > 2)
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Opcion: ");
+                    respuestaFinal = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
+            if (respuestaFinal < 1 || respuestaFinal > 2)
             {
                 System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
             }
         }
-        while(respuestaFinal < 1 && respuestaFinal > 2);
+        while(respuestaFinal < 1 || respuestaFinal > 2);
 
         if(respuestaFinal == 1)
         {
@@ -2157,7 +2418,7 @@ public class GestionConsolaComandos implements Serializable
      * @param carrito carrito que se va a pasar a compras
      * @param usuarioNormal usuario el cual compro esos productos
      */
-    public void agregarCarritoACompras(HashMap<String,Publicacion> carrito, UsuarioNormal usuarioNormal)
+    private void agregarCarritoACompras(HashMap<String,Publicacion> carrito, UsuarioNormal usuarioNormal)
     {
         Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
         while(it.hasNext())
@@ -2175,7 +2436,7 @@ public class GestionConsolaComandos implements Serializable
      * Funcion que se llama desde comprarProductos, esta hace que las publicaciones del vendedor que se hayan vendido, se vayan a vendidos.
      * @param carrito carrito el cual se compro
      */
-    public void agregarAVentas(HashMap<String,Publicacion> carrito)
+    private void agregarAVentas(HashMap<String,Publicacion> carrito)
     {
         Iterator<Map.Entry<String,Publicacion>> it = carrito.entrySet().iterator();
         while(it.hasNext())
@@ -2193,7 +2454,7 @@ public class GestionConsolaComandos implements Serializable
      * @param usuario Usuario el cual se le va a recorrer y manipular las publicaciones que esten en sus favoritos
      *
      */
-    public void favoritos(Usuario usuario)
+    private void favoritos(Usuario usuario)
     {
         String espacio = "                                                                           ";
         String codigoNegrita = "\u001B[1m";
@@ -2205,6 +2466,7 @@ public class GestionConsolaComandos implements Serializable
         boolean bandera = false; //para recorrer los favoritos
         String decision = " ";
         Publicacion pub = null;
+        boolean banderaAntiBolud = false;
 
         GeneDosPU<String, Publicacion> favoritos = usuarioNormal.getFavoritas();
         HashMap<String,Publicacion>  mapa = favoritos.getMapa();
@@ -2238,8 +2500,21 @@ public class GestionConsolaComandos implements Serializable
 
         do
         {
-            System.out.print(espacio + "Opción: ");
-            rta = teclado.nextInt();
+            while (!banderaAntiBolud)
+            {
+                try // esto es para que el usuario en caso de que ponga un dato que no pida, no se rompa el programa.
+                {
+                    System.out.print(espacio + "Opción: ");
+                    rta = teclado.nextInt();
+                    banderaAntiBolud = true;
+                } catch (InputMismatchException e) {
+                    System.out.print("\n");
+                    System.out.println(espacio + "Entrada inválida. Ingrese un numero entero por favor.");
+                    teclado.next();
+                }
+            }
+            banderaAntiBolud  =false;
+
             teclado.nextLine();
             if ((rta != 1 && rta != 2))
             {
