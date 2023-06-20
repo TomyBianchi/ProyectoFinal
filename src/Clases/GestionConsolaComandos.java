@@ -10,6 +10,7 @@ import Genericas.GeneTresE;
 import Genericas.GeneUnoDM;
 
 import javax.swing.plaf.DesktopPaneUI;
+import java.io.Serializable;
 import java.util.*;
 
 import static Clases.Main.teclado;
@@ -17,7 +18,7 @@ import static Clases.Main.teclado;
 /**
  * Clase la cual se encarga de la gestión de la consola de comandos y salidas por pantalla.
  */
-public class GestionConsolaComandos
+public class GestionConsolaComandos implements Serializable
 {
     // ATRIBUTO
     private GestionTienda tienda;
@@ -32,13 +33,14 @@ public class GestionConsolaComandos
 
         String espacio = "                                                                           ";
 
+        //cada vez que entramos al menu principal, se bajan todos los datos del archivo.
+        this.tienda.bajarArchivoUsuarios("archivoUsuarios");
+        this.tienda.bajarArchivoPublicaciones("archivoPublicaciones");
 
-        //aca va a haber una porcion de codigo que baje todo una archivo completo para que nos de todas las publicaciones y los usuarios ya creados
         Usuario ingresado = paginaUno(); //pagina uno, la cual podes iniciar sesion, crear una cuenta o simplemente salir
         //en caso de iniciar sesion, ingresado va a ser el usuario que ingreso, en caso de que no se haya iniciado sesion sera null
         if(ingresado != null)
         {
-
             System.out.print(espacio + "Cargando...\n");
 
 //            try {
@@ -56,6 +58,8 @@ public class GestionConsolaComandos
 
             paginaDos(ingresado);
         }
+
+
 
 
 
@@ -110,6 +114,7 @@ public class GestionConsolaComandos
                 crearCuenta();
                 System.out.print(espacio + "Cuenta creada con éxito, ahora se le redirigirá a la página anterior para que pueda iniciar sesión con su cuenta.\n");
             } else {
+                this.tienda.toArchivo("archivoUsuarios","archivoPublicaciones");
                 System.exit(0);
             }
         }
@@ -771,7 +776,7 @@ public class GestionConsolaComandos
         }
 
         System.out.print("\n");
-        String mensajeAuxDos = " Publicacion agregada con exito! Ahora va a voler a la pagina su menu principal..";
+        String mensajeAuxDos = " Publicacion agregada con exito! Ahora va a volver a la pagina su menu principal..";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensajeAuxDos + codigoReset);
         System.out.print("\n");
         paginaDos(usuario);

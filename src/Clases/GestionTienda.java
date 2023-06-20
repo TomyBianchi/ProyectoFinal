@@ -10,6 +10,7 @@ import Excepciones.ExcepcionNumeroRepetido;
 import Genericas.GeneDosPU;
 import ClasesExtra.GeneradorUUID;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * Clase envoltorio que sirve para gestionar el sistema de la tienda.
  */
-public class GestionTienda
+public class GestionTienda implements Serializable
 {
     private GeneDosPU<String,Usuario> usuarios;
     private GeneDosPU<String,Publicacion> publicaciones;
@@ -306,6 +307,93 @@ public class GestionTienda
         return rta;
     }
 
+    /**
+     * Mete a todos los usuarios y a todas las publicaciones en dos diferentes archivos.
+     * @param nameUsuario nombre del archivo de usuarios
+     * @param namePublicacion nombre del archivo de publicaciones
+     */
+    public void toArchivo(String nameUsuario, String namePublicacion)
+    {
+        //para hacer esto tengo que recorrer enteras las dos listas
+        HashMap<String,Usuario> mapaUsuarios = usuarios.getMapa();
+        HashMap<String,Publicacion> mapaPublicaciones = publicaciones.getMapa();
+
+        Iterator<Map.Entry<String, Usuario>> itUsuarios = mapaUsuarios.entrySet().iterator();
+        Iterator<Map.Entry<String, Publicacion>> itPublicaciones = mapaPublicaciones.entrySet().iterator();
+
+
+            try
+            {
+                FileOutputStream archivoUsuario = new FileOutputStream(nameUsuario + ".dat");
+                FileOutputStream archivoPublicacion = new FileOutputStream(namePublicacion + ".dat");
+
+                ObjectOutputStream objetoUsuarios = new ObjectOutputStream(archivoUsuario);
+                ObjectOutputStream objetoPublicaciones = new ObjectOutputStream(archivoPublicacion);
+
+                while(itUsuarios.hasNext()) //se escriben los usuarios
+                {
+                    Map.Entry<String,Usuario> entryU = itUsuarios.next();
+                    Usuario auxUsuario = entryU.getValue();
+                    objetoUsuarios.writeObject(auxUsuario);
+                }
+                while(itPublicaciones.hasNext()) //se escriben las publicaciones
+                {
+                    Map.Entry<String,Publicacion> entryP = itPublicaciones.next();
+                    Publicacion auxUsuario = entryP.getValue();
+                    objetoPublicaciones.writeObject(auxUsuario);
+                }
+                objetoUsuarios.close();
+                objetoPublicaciones.close();
+                archivoUsuario.close();
+                archivoPublicacion.close();
+            }
+            catch(EOFException e){}
+            catch(IOException e){}
+            catch(Exception e){};
+    }
+
+    /**
+     *
+     * Baja el archivo del usuario, y lo introduce a la lista generica.
+     * @param nameUsuario
+     *
+     */
+    public void bajarArchivoUsuarios(String nameUsuario)
+    {
+        try
+        {
+            FileInputStream archivoUsuario = new FileInputStream(nameUsuario  + ".dat");
+            ObjectInputStream objetoUsuarios = new ObjectInputStream(archivoUsuario);
+
+            while (true)
+            {
+                Object object = objetoUsuarios.readObject();
+                Usuario usuario = (Usuario) object;
+                usuarios.agregar(usuario.getDni(),usuario);
+            }
+        }
+        catch(EOFException e){}
+        catch(IOException e){}
+        catch(Exception e){};
+    }
+    public void bajarArchivoPublicaciones(String namePublicacion)
+    {
+        try
+        {
+            FileInputStream archivoPubli = new FileInputStream(namePublicacion  + ".dat");
+            ObjectInputStream objetoPubli = new ObjectInputStream(archivoPubli);
+
+            while (true)
+            {
+                Object object = objetoPubli.readObject();
+                Publicacion publicacion = (Publicacion) object;
+                publicaciones.agregar(publicacion.getId(),publicacion);
+            }
+        }
+        catch(EOFException e){}
+        catch(IOException e){}
+        catch(Exception e){};
+    }
 
 
 

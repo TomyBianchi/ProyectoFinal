@@ -2,7 +2,9 @@ package Clases;
 
 import Enums.E_Estado;
 
-public class Periferico
+import java.io.Serializable;
+
+public class Periferico implements Serializable
 {
     // ATRIBUTOS
     private String nombre;

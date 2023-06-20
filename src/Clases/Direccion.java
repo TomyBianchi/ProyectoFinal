@@ -110,8 +110,8 @@ public class Direccion implements Serializable
             if(o instanceof Direccion)
             {
                 Direccion aux = (Direccion)o;
-                Integer auxUno = new Integer(getAltura());  //estos dos errores no impide que compile el programa
-                Integer auxDos = new Integer(aux.getAltura());
+                String auxUno = new String(getAltura());  //estos dos errores no impide que compile el programa
+                String auxDos = new String(aux.getAltura());
                 rta = auxDos.compareTo(auxUno);
             }
         }
