@@ -469,6 +469,12 @@ public class GestionConsolaComandos
             }
             while(pub == null);
 
+            if(pub.getDueno().equals(usuario))
+            {
+                System.out.print(espacio + "Error, no podes agregar al carrito una publicacion que es tuya.\n");
+                paginaDos(usuario);
+            }
+
             //System.out.print("\nARRIBA DE AGREGARCARRITO\n\n");
             usuarioNormal.agregarCarrito(pub);
             pub.setStock(pub.getStock() - 1);
@@ -496,6 +502,12 @@ public class GestionConsolaComandos
                 }
             }
             while(pub == null);
+
+            if(pub.getDueno().equals(usuario))
+            {
+                System.out.print(espacio + "Error, no podes agregar a favoritos una publicacion que es tuya.\n");
+                paginaDos(usuario);
+            }
 
             usuarioNormal.agregarFavorito(pub);
             System.out.print(espacio + pub.getNombrePublicacion() + " Agregado con exito a tus favoritos\n");
@@ -1407,25 +1419,25 @@ public class GestionConsolaComandos
         Iterator<Map.Entry<String,Publicacion>> iterator = mapa.entrySet().iterator();
         int rta = -1;
         String opcion = "";
-        System.out.print(espacio + "1 para volver al menú anterior, 2 para comprar lo que hay en el carrito " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
+        System.out.print(espacio + "1 para volver al menú anterior, 2 para comprar lo que hay en el carrito, 3 para borrar una publicacion del carrito " + codigoNegrita + codigoSubrayado + codigoReset + "\n");
 
         do
         {
             System.out.print(espacio + "Opción: ");
             rta = teclado.nextInt();
             teclado.nextLine();
-            if ((rta != 1 && rta != 2))
+            if (rta != 1 && rta != 2 && rta != 3)
             {
                 System.out.print(espacio + "Elección no comprendida, inténtelo de nuevo.\n\n");
             }
         }
-        while (rta != 1 && rta != 2);
+        while (rta != 1 && rta != 2 && rta != 3);
 
         if(rta == 1)
         {
             paginaDos(usuario);
         }
-        else
+        else if (rta == 2)
         {
             if(!iterator.hasNext())
             {
@@ -1435,8 +1447,69 @@ public class GestionConsolaComandos
             }
 
         comprarProductos(usuarioNormal,mapa);
+        }
+        else
+        {
+            if(!iterator.hasNext())
+            {
+                System.out.print("\n");
+                System.out.print(espacio + "No podes comprar, el carrito esta vacio.\n");
+                paginaDos(usuario);
+            }
+        borrarPublicacionCarrito(usuario,mapa);
+        }
+    }
+
+    /**
+     * Es una funcion la cual borra la publicacion que el usuario queda del carrito, es llamada en carrito
+     * @param usuario Usuario el cual va a borrar una Publicacion del carrito
+     * @param mapa El mapa en el cual estan almacenadasd las publicaciones de un carrito
+     */
+    public void borrarPublicacionCarrito(Usuario usuario, HashMap<String,Publicacion> mapa)
+    {
+        UsuarioNormal usuarioNormal = (UsuarioNormal)usuario;
+        String espacio = "                                                                           ";
+        String codigoNegrita = "\u001B[1m";
+        String codigoSubrayado = "\u001B[4m";
+        String codigoTamanioGrande = "\u001B[5m";
+        String codigoReset = "\u001B[0m";
 
 
+        String decision = "";
+        boolean bandera = false;
+        Publicacion aux = null;
+
+        do
+        {
+            System.out.print("\n");
+            System.out.print(espacio + "Decime el nombre de la publicacion del carrito que deseas borrar.\n");
+            System.out.print(espacio + "Opcion: ");
+            decision = teclado.nextLine();
+
+            Iterator<Map.Entry<String,Publicacion>> it = mapa.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<String,Publicacion> entry = it.next();
+                Publicacion publi = entry.getValue();
+                if(publi.getNombrePublicacion().equals(decision))
+                {
+                    bandera = true;
+                    publi.setStock(publi.getStock() + 1);
+                    usuarioNormal.getCarrito().borrarPublicacion(publi);
+
+                }
+            }
+            if(!bandera)
+            {
+                System.out.print(espacio + "Publicacion no encontrada. Intentelo denuevo.");
+            }
+        }
+        while (!bandera);
+
+        if(bandera)
+        {
+            System.out.print(espacio + "Publicacion borrada con exito del carrito.");
+            paginaDos(usuario);
         }
     }
     public HashMap<String,Publicacion> recorrerCarrito(Usuario usuario)
