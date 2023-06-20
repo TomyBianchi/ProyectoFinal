@@ -590,6 +590,13 @@ public class GestionConsolaComandos
         int deciInalambrico = 0;
 
 
+        if(!usuario.tieneDebitoYcredito())
+        {
+            System.out.print(espacio + "Necesitas agregar por lo menos una tarjeta de debito y una de credito para poder crear una publicacion.\n");
+            paginaDos(usuario);
+        }
+
+
         System.out.print("\n");
         String mensaje = " Van a completar los siguientes datos para crear su publicacion";
         System.out.print(espacio + codigoNegrita + codigoSubrayado + codigoTamanioGrande + mensaje + codigoReset);

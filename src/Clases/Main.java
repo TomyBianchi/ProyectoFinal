@@ -42,6 +42,7 @@ public class Main
         HashMap<String,Usuario> mapa = usuarios.getMapa();
         Usuario tomas = mapa.get("1");
         tomas.agregarMetodoDePago(new MetodoDePago(E_Pago.DEBITO,"Tomas Bianchi Silvestre", "4234778699087654","876","06","27"));
+        tomas.agregarMetodoDePago(new MetodoDePago(E_Pago.CREDITO,"Tomas Bianchi Silvestre", "123561263752631","821","06","27"));
         tomas.agregarDireccion(new Direccion("Buenos aires","Mar del plata","Calasanz","926", "0","7600"));
         Usuario ludmila = mapa.get("2");
         Usuario matias = mapa.get("3");

@@ -1,7 +1,11 @@
 package Clases;
 
+import Enums.E_Pago;
 import Enums.E_TipoUsuario;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+
 import Genericas.GeneUnoDM;
 import Genericas.GeneDosPU;
 
@@ -93,6 +97,32 @@ public abstract class Usuario implements Serializable
     public void agregarVenta(Publicacion publicacion)
     {
         ventas.agregarPublicacion(publicacion);
+    }
+
+    public boolean tieneDebitoYcredito()
+    {
+        HashSet<MetodoDePago> set = getMetodosDePago().getSet();
+        Iterator<MetodoDePago> it = set.iterator();
+        int contdorDebito = 0;
+        int contadorCredito = 0;
+        boolean rta = false;
+        while(it.hasNext())
+        {
+            MetodoDePago metodo = it.next();
+            if(metodo.getTipoPago().equals(E_Pago.DEBITO))
+            {
+                contdorDebito++;
+            }
+            else
+            {
+                contadorCredito++;
+            }
+        }
+        if(contdorDebito >= 1 && contadorCredito >= 1)
+        {
+            rta = true;
+        }
+        return rta;
     }
 
 
